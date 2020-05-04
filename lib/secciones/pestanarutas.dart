@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/vista/itemruta.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 
@@ -31,30 +30,20 @@ class _ReservaRutasState extends State<ReservaRutas> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context){
     return new Scaffold(
-      body: ConstruirReservaRutas(datos: datos)
+      body: _construirLista(),
+    );
+  }
+
+  Widget _construirLista(){
+    return ListView.builder(
+      itemCount: datos.rutas.length,
+      itemBuilder: (context, int index){
+        return new Container(
+          child: ItemRuta(datos.rutas[index])
+        );
+      }
     );
   }
 }
 
-class ConstruirReservaRutas extends StatelessWidget{
-  final DatosPrueba datos;
-  ConstruirReservaRutas({@required this.datos});
-  List<Ruta> _construirRutas(){
-
-    return datos.rutas;
-  }
-
-  List<ItemRuta> _construirLista(){
-    return _construirRutas().map(
-      (ruta) => new ItemRuta(ruta)
-    ).toList();
-  }
-
-  Widget build(BuildContext context){
-    return new ListView(
-      children: _construirLista(),
-    );
-  }
-
-}
 

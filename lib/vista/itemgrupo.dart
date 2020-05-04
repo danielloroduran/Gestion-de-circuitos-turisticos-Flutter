@@ -29,7 +29,7 @@ class ItemGrupo extends StatelessWidget{
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesGrupoTurista(grupoTurista: this._grupoTurista),
+        builder: (context) => DetallesGrupo(grupo: this._grupoTurista),
       )
     );
   }

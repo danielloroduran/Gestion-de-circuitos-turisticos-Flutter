@@ -298,6 +298,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                   decoration: const InputDecoration(
                                     hintText: "Introduzca su correo electrónico",
                                   ),
+                                  keyboardType: TextInputType.emailAddress,
                                   enabled: _editable,
                                   autocorrect: _editable,
                                 ),
@@ -425,8 +426,6 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                     hintText: "Introduzca el precio por dia"
                                   ),
                                   enabled: _editable,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                                 ),
                                 flex: 2,
                               ),
@@ -619,7 +618,21 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        Navigator.pop(context);
+//                        Navigator.pop(context);
+                        if(this.guia == null){
+                          if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
+                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), foto, "3/5 estrellas", idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
+                            datos.guias.add(nuevoGuia);
+                            Navigator.pop(context, datos);
+                          }
+                        }else{
+                          if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
+                            this.guia.nombre = nombreController.text;
+                          }
+//                            this.guias.
+                        }
+
+                        
                       });
                     },
                     shape: new RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
+import 'package:practica_ipo2/secciones/detallesturista.dart';
 
 class ItemTurista extends StatelessWidget{
 
@@ -16,7 +17,18 @@ class ItemTurista extends StatelessWidget{
         backgroundColor: Colors.blueAccent,
       ),
       title: new Text(_turista.nombre+" "+_turista.apellidos),
-      subtitle: new Text(_turista.telefono.toString()),
+      onTap: () {
+        enviarDatos(context);
+      },
+    );
+  }
+
+  void enviarDatos(BuildContext context){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetallesTurista(turista: this._turista)
+      )
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:practica_ipo2/secciones/detallesguia.dart';
 
 class ItemGuia extends StatelessWidget{
 
-  final Guia _guia;
+  Guia _guia;
 
   ItemGuia(this._guia);
 
@@ -19,17 +19,28 @@ class ItemGuia extends StatelessWidget{
       title: new Text(_guia.nombre+" "+_guia.apellidos),
       subtitle: new Text(_guia.movil.toString()),
       onTap: () {
-        enviarDatos(context);
+        _esperarResultado(context);
       }
     );
   }
 
-    void enviarDatos(BuildContext context){
+  void enviarDatos(BuildContext context){
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesGuia(guia: this._guia),
       )
     );
+  }
+
+  void _esperarResultado(BuildContext context) async{
+
+    final nuevoGuia = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetallesGuia(guia: _guia),
+      )
+    );
+
   }
 }

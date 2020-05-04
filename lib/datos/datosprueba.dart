@@ -46,10 +46,10 @@ class DatosPrueba{
 
     puntoInteres = new List<PuntoInteres>();
 
-    PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "/imagenes/iglesia.jpg", "Gratuita", "Descripción de la iglesia", "Todos días de 8:00h a 22:00h", "30 minutos");
-		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "/imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Cuando se quiera", "5 minutos");
-		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "/imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Todos días de 8:00h a 22:00h", "2 horas");
-		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "/imagenes/galería.jpg", "Gratuita", "Descripción de la exposición", "Martes y Domingo, de 9:00h a 14:00h", "3 horas");
+    PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita", "Descripción de la iglesia", "Todos días de 8:00h a 22:00h", "30 minutos");
+		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Cuando se quiera", "5 minutos");
+		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Todos días de 8:00h a 22:00h", "2 horas");
+		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galería.jpg", "Gratuita", "Descripción de la exposición", "Martes y Domingo, de 9:00h a 14:00h", "3 horas");
 
     puntoInteres.add(pi1);
 		puntoInteres.add(pi2);
@@ -61,16 +61,16 @@ class DatosPrueba{
     turistasGeneral = new List<Turista>();
 
     
-		Turista turista1 = new Turista("Antonia", "Lopez",  655555555, "44444444-I", "antonia@correo.es", "/imagenes/cara5.jpg", 23);
-		Turista turista2 = new Turista("Ana", "Rosa", 666666666, "55555555-I", "rosa@correo.es", "/imagenes/cara6.png", 50);
-		Turista turista3 = new Turista("Pepe", "Lopez", 677777777, "66666666-K", "pepe@correo.es", "/imagenes/cara1.jpg", 65);
-		Turista turista4 = new Turista("Roberto", "Asín", 688888888, "77777777-L", "roberto@correo.es", "/imagenes/personagenerica.png", 43);
-		Turista turista5 = new Turista("Elena", "Jimenez",  699999999, "88888888-N", "elena@correo.es", "/imagenes/personagenerica.png", 20);
-		Turista turista6 = new Turista("Roberta", "Gonzalez", 699999991, "99999999-M", "roberta@correo.es", "/imagenes/personagenerica.png", 72);
-		Turista turista7 = new Turista("José", "Domingo", 611111112, "11111112-D", "jose@correo.es", "/imagenes/personagenerica.png", 30);
-		Turista turista8 = new Turista("Lolo", "Cañiz", 123456789, "12345678-H", "lolo@correo.es", "/imagenes/personagenerica.png", 47);
-		Turista turista9 = new Turista("Pepa", "Diez", 987654321, "12345678-Q", "pepa@correo.es", "/imagenes/personagenerica.png", 32);
-		Turista turista10 = new Turista("Angel", "Ortega", 623232323, "23232323-A", "angel@correo.es", "/imagenes/cara1.jpg", 41);
+		Turista turista1 = new Turista("Antonia", "Lopez",  655555555, "44444444-I", "antonia@correo.es", "imagenes/cara5.jpg", 23);
+		Turista turista2 = new Turista("Ana", "Rosa", 666666666, "55555555-I", "rosa@correo.es", "imagenes/cara6.png", 50);
+		Turista turista3 = new Turista("Pepe", "Lopez", 677777777, "66666666-K", "pepe@correo.es", "imagenes/cara1.jpg", 65);
+		Turista turista4 = new Turista("Roberto", "Asín", 688888888, "77777777-L", "roberto@correo.es", "imagenes/personagenerica.png", 43);
+		Turista turista5 = new Turista("Elena", "Jimenez",  699999999, "88888888-N", "elena@correo.es", "imagenes/personagenerica.png", 20);
+		Turista turista6 = new Turista("Roberta", "Gonzalez", 699999991, "99999999-M", "roberta@correo.es", "imagenes/personagenerica.png", 72);
+		Turista turista7 = new Turista("José", "Domingo", 611111112, "11111112-D", "jose@correo.es", "imagenes/personagenerica.png", 30);
+		Turista turista8 = new Turista("Lolo", "Cañiz", 123456789, "12345678-H", "lolo@correo.es", "imagenes/personagenerica.png", 47);
+		Turista turista9 = new Turista("Pepa", "Diez", 987654321, "12345678-Q", "pepa@correo.es", "imagenes/personagenerica.png", 32);
+		Turista turista10 = new Turista("Angel", "Ortega", 623232323, "23232323-A", "angel@correo.es", "imagenes/cara1.jpg", 41);
 
     turistasGeneral.add(turista1);
 		turistasGeneral.add(turista2);
