@@ -118,12 +118,12 @@ class DatosPrueba{
 
     rutas = new List<Ruta>();
 
-    Ruta ruta1 = new Ruta("Ruta1", "Pendiente", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real");
-		Ruta ruta2 = new Ruta("Ruta2", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón");
-		Ruta ruta3 = new Ruta("Ruta3", "Pendiente", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra");
-		Ruta ruta4 = new Ruta("Ruta4", "Realizada", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano");
-		Ruta ruta5 = new Ruta("Ruta5", "Pendiente", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno");
-		Ruta ruta6 = new Ruta("Ruta6", "Realizada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos");
+    Ruta ruta1 = new Ruta("Ruta1", "Pendiente", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "imagenes/ciudadreal.jpg");
+		Ruta ruta2 = new Ruta("Ruta2", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón", "imagenes/malagon.jpg");
+		Ruta ruta3 = new Ruta("Ruta3", "Pendiente", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "imagenes/miguelturra.jpg");
+		Ruta ruta4 = new Ruta("Ruta4", "Realizada", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "imagenes/puertollano.jpg");
+		Ruta ruta5 = new Ruta("Ruta5", "Pendiente", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "imagenes/fuenteelfresno.jpg");
+		Ruta ruta6 = new Ruta("Ruta6", "Realizada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "imagenes/loscortijos.jpg");
 
     ruta1.grupoTurista.add(gt1);
     ruta1.setTuristasTotal();
@@ -132,7 +132,6 @@ class DatosPrueba{
     guia1.rutasAsignadas.add(ruta1);
     guia1.rutasAsignadas.add(ruta2);
     guia1.rutasHistorial.add(ruta3);
-
 
     ruta2.grupoTurista.add(gt2);
     ruta2.setTuristasTotal();
