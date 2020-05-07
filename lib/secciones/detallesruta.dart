@@ -116,4 +116,19 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
       ),
     );
   }
+
+    Text _crearEstrellas(){
+    String estrellas = '';
+    
+    if(ruta.puntuacion > 0){
+      for(int i = 0; i < ruta.puntuacion; i++){
+        estrellas += '⭐ ';
+      }
+      estrellas.trim();
+      return Text(estrellas);
+    }else{
+      return Text('0');
+    }
+
+  }
 }

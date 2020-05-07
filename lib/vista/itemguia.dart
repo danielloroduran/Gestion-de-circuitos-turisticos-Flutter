@@ -24,18 +24,9 @@ class ItemGuia extends StatelessWidget{
     );
   }
 
-  void enviarDatos(BuildContext context){
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetallesGuia(guia: this._guia),
-      )
-    );
-  }
-
   void _esperarResultado(BuildContext context) async{
 
-    final nuevoGuia = await Navigator.push(
+    final guiaActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesGuia(guia: _guia),

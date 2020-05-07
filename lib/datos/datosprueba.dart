@@ -38,8 +38,8 @@ class DatosPrueba{
 
     guias = new List<Guia>();
 
-    Guia guia1 = new Guia("Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", "3/5 estrellas", "Español", "Todos los días", "3€", "20€", "11111111-H", "antonio@correo.es");
-    Guia guia2 = new Guia("Laura", "Moreno", 677777777, "imagenes/cara5.jpg", "1/5 estrellas", "Español e Inglés", "Todos los días", "4€", "30€", "22222222-J", "laura@correo.es");
+    Guia guia1 = new Guia("Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", "3€", "20€", "11111111-H", "antonio@correo.es");
+    Guia guia2 = new Guia("Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", "4€", "30€", "22222222-J", "laura@correo.es");
 
     guias.add(guia1);
     guias.add(guia2);
@@ -118,12 +118,12 @@ class DatosPrueba{
 
     rutas = new List<Ruta>();
 
-    Ruta ruta1 = new Ruta("Ruta1", "Pendiente", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "imagenes/ciudadreal.jpg");
-		Ruta ruta2 = new Ruta("Ruta2", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón", "imagenes/malagon.jpg");
-		Ruta ruta3 = new Ruta("Ruta3", "Pendiente", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "imagenes/miguelturra.jpg");
-		Ruta ruta4 = new Ruta("Ruta4", "Realizada", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "imagenes/puertollano.jpg");
-		Ruta ruta5 = new Ruta("Ruta5", "Pendiente", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "imagenes/fuenteelfresno.jpg");
-		Ruta ruta6 = new Ruta("Ruta6", "Realizada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "imagenes/loscortijos.jpg");
+    Ruta ruta1 = new Ruta("Ruta1", "Pendiente", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "imagenes/ciudadreal.jpg", 5);
+		Ruta ruta2 = new Ruta("Ruta2", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón", "imagenes/malagon.jpg", 4);
+		Ruta ruta3 = new Ruta("Ruta3", "Pendiente", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "imagenes/miguelturra.jpg", 3);
+		Ruta ruta4 = new Ruta("Ruta4", "Realizada", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "imagenes/puertollano.jpg", 2);
+		Ruta ruta5 = new Ruta("Ruta5", "Pendiente", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "imagenes/fuenteelfresno.jpg", 1);
+		Ruta ruta6 = new Ruta("Ruta6", "Realizada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "imagenes/loscortijos.jpg", 0);
 
     ruta1.grupoTurista.add(gt1);
     ruta1.setTuristasTotal();

@@ -32,7 +32,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
   TextEditingController precioDiaController;
   TextEditingController dniController;
   TextEditingController correoController;
-  String foto;
+  String _foto;
 
   void initState(){
     super.initState();
@@ -57,7 +57,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     precioDiaController.text = guia.precioDia;
     dniController.text = guia.dni;
     correoController.text = guia.correo;
-    foto = guia.foto;
+    _foto = guia.foto;
   }else{
     nombreController.text = "";
     apellidosController.text = "";
@@ -68,7 +68,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     precioDiaController.text = "";
     dniController.text = "";
     correoController.text = "";
-    foto = "imagenes/personagenerica.png";
+    _foto = "imagenes/personagenerica.png";
     _editable = true;
     
   }
@@ -108,7 +108,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                 decoration: new BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
-                                    image: new ExactAssetImage(foto),
+                                    image: new ExactAssetImage(_foto),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -166,7 +166,6 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                //  _status ? _getEditIcon() : new Container()
                                   Container(
                                     child: getEditIcon()
                                   )
@@ -436,42 +435,55 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                           padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
                           child: new Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              new Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      new Text("Idiomas",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
+                              Expanded(
+                                child: Container(
+                                  child: new Text("Idiomas",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w500),
                                   ),
-                                ],
+                                ),
+                                flex: 2,
                               ),
+                              Expanded(
+                                child: Container(
+                                  child: new Text("Puntuación",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                flex: 2,
+                              )
                             ],
                           )
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
                           child: new Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextField(
-                                  controller: idiomasController,
-                                  decoration: const InputDecoration(
-                                    hintText: "Introduzca los idiomas",
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 10.0),
+                                  child: new TextField(
+                                    controller: idiomasController,
+                                    decoration: const InputDecoration(
+                                      hintText: "Introduzca los idiomas"
+                                    ),
+                                    enabled: _editable,
+                                    autocorrect: _editable,
                                   ),
-                                  enabled: _editable,
-                                  autocorrect: _editable,
                                 ),
-                              )
+                                flex: 2,
+                              ),
+                              new Flexible(
+                                child: _crearEstrellas(),
+                                flex: 2,
+                              ),
                             ],
                           )
                         ),
@@ -621,7 +633,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
 //                        Navigator.pop(context);
                         if(this.guia == null){
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), foto, "3/5 estrellas", idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
+                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
                             datos.guias.add(nuevoGuia);
                             Navigator.pop(context, datos);
                           }
@@ -646,8 +658,6 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
       )
     );
   }
-
-  
 
   Widget getEditIcon(){
     return new Row(
@@ -699,4 +709,18 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     );
   }
 
+  Text _crearEstrellas(){
+    String estrellas = '';
+    
+    if(guia.puntuacion > 0){
+      for(int i = 0; i < guia.puntuacion; i++){
+        estrellas += '⭐ ';
+      }
+      estrellas.trim();
+      return Text(estrellas);
+    }else{
+      return Text('0');
+    }
+
+  }
 }

@@ -66,7 +66,7 @@ class _ConstruirTuristasState extends State<ListadoTuristas> with SingleTickerPr
 
   void _esperarResultado(BuildContext context) async{
 
-    final turista = await Navigator.push(
+    final nuevoturista = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesTurista(),
@@ -75,9 +75,9 @@ class _ConstruirTuristasState extends State<ListadoTuristas> with SingleTickerPr
 
     setState((){
 
-      if(turista!= null){
-        turistas.add(turista);
-        datos.turistasGeneral.add(turista);
+      if(nuevoturista!= null){
+        turistas.add(nuevoturista);
+        datos.turistasGeneral.add(nuevoturista);
       }
     });
 

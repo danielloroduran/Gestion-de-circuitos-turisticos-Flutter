@@ -26,7 +26,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
   TextEditingController dniController;
   TextEditingController correoController;
   TextEditingController edadController;
-  String foto;
+  String _foto;
 
   void initState(){
     super.initState();
@@ -44,7 +44,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     movilController.text = turista.movil.toString();
     dniController.text = turista.dni;
     correoController.text = turista.correo;
-    foto = turista.foto;
+    _foto = turista.foto;
     edadController.text = turista.edad.toString();
   }else{
     nombreController.text = "";
@@ -53,7 +53,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     dniController.text = "";
     correoController.text = "";
     edadController.text = "";
-    foto = "imagenes/personagenerica.png";
+    _foto = "imagenes/personagenerica.png";
     _editable = true;
     
   }
@@ -93,7 +93,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                                 decoration: new BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
-                                    image: new ExactAssetImage(foto),
+                                    image: new ExactAssetImage(_foto),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -186,7 +186,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            left: 25.0, right: 25.0, top: .0),
+                            left: 25.0, right: 25.0, top: 2.0),
                             child: new Row(
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
@@ -282,6 +282,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                                   decoration: const InputDecoration(
                                     hintText: "Introduzca su correo electrónico",
                                   ),
+                                  keyboardType: TextInputType.emailAddress,
                                   enabled: _editable,
                                   autocorrect: _editable,
                                 ),
@@ -403,7 +404,6 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                           indent: 24,
                           endIndent: 24,
                         ),
-                        //!_status ? _getActionButtons() : new Container(),
                         Container(
                           child: getSaveButton(),
                         )

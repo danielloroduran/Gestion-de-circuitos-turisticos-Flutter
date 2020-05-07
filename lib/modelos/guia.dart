@@ -5,7 +5,7 @@ class Guia{
   String _apellidos;
   int _movil;
   String _foto;
-  String _puntuacion;
+  int _puntuacion;
   String _idiomas;
   String _disponibilidad;
   String _precioHora;
@@ -16,7 +16,7 @@ class Guia{
   List<Ruta> _rutasHistorial;
   
 
-  Guia(String nombre, String apellidos, int movil, String foto, String puntuacion, String idiomas, String disponibilidad, String precioHora, String precioDia, String dni, String correo){
+  Guia(String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, String precioHora, String precioDia, String dni, String correo){
     this._nombre = nombre;
     this._apellidos = apellidos;
     this._movil = movil;
@@ -36,7 +36,7 @@ class Guia{
   String get apellidos => _apellidos;
   int get movil => _movil;
   String get foto => _foto;
-  String get puntuacion => _puntuacion;
+  int get puntuacion => _puntuacion;
   String get idiomas => _idiomas;
   String get disponibilidad => _disponibilidad;
   String get precioHora => _precioHora;
@@ -50,7 +50,7 @@ class Guia{
   set apellidos(String apellidos) => _apellidos = apellidos;
   set movil(int movil) => _movil = movil;
   set foto(String foto) => _foto = foto;
-  set puntuacion(String puntuacion) => _puntuacion = puntuacion;
+  set puntuacion(int puntuacion) => _puntuacion = puntuacion;
   set idiomas(String idiomas) => _idiomas = idiomas;
   set disponibilidad(String disponibilidad) => _disponibilidad = disponibilidad;
   set precioHora(String precioHora) => _precioHora = precioHora;
