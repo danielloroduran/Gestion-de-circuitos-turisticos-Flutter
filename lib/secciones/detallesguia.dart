@@ -167,7 +167,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Container(
-                                    child: getEditIcon()
+                                    child: getEditButtons()
                                   )
                                 ],
                               )
@@ -659,7 +659,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     );
   }
 
-  Widget getEditIcon(){
+  Widget getEditButtons(){
     return new Row(
       children: <Widget>[
         Tooltip(
@@ -719,7 +719,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
       estrellas.trim();
       return Text(estrellas);
     }else{
-      return Text('0');
+      return Text('');
     }
 
   }

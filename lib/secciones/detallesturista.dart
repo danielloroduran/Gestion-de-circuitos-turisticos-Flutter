@@ -152,7 +152,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Container(
-                                    child: getEditIcon()
+                                    child: getEditButtons()
                                   )
                                 ],
                               )
@@ -455,7 +455,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     );
   }
 
-  Widget getEditIcon(){
+  Widget getEditButtons(){
     return new Row(
       children: <Widget>[
         Tooltip(

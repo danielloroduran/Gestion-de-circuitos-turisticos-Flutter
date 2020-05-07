@@ -110,8 +110,8 @@ class DatosPrueba{
 
     promociones = new List<Promocion>();
 
-    Promocion promo1 = new Promocion("Promocion 1", "Mensaje a enviar de la promoción 1", 100);
-		Promocion promo2 = new Promocion("Promocion 2", "Mensaje a enviar de la promoción 2", 200);
+    Promocion promo1 = new Promocion("Promocion 1", "Mensaje a enviar de la promoción 1", 100, "30");
+		Promocion promo2 = new Promocion("Promocion 2", "Mensaje a enviar de la promoción 2", 200, "40");
 		
 		promociones.add(promo1);
 		promociones.add(promo2);

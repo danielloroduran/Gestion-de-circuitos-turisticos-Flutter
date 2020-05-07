@@ -133,9 +133,9 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                //  _status ? _getEditIcon() : new Container()
+                                //  _status ? _getEditButtons() : new Container()
                                   Container(
-                                    child: getEditIcon()
+                                    child: getEditButtons()
                                   )
                                 ],
                               )
@@ -374,7 +374,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
       )
     );
   }
-  Widget getEditIcon() {
+  Widget getEditButtons() {
     return new GestureDetector(
       child: new CircleAvatar(
         backgroundColor: Colors.red,

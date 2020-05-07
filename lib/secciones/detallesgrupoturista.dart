@@ -118,9 +118,9 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                //  _status ? _getEditIcon() : new Container()
+                                //  _status ? _getEditButtons() : new Container()
                                   Container(
-                                    child: getEditIcon()
+                                    child: getEditButtons()
                                   )
                                 ],
                               )
@@ -390,7 +390,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
   }
 
 
-  Widget getEditIcon(){
+  Widget getEditButtons(){
     return new Row(
       children: <Widget>[
         Tooltip(
@@ -512,14 +512,14 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
 
   void _esperarResultado(BuildContext context) async{
 
-    final listaTurista = await Navigator.push(
+    final listaTuristaActualizado = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ListadoTuristas(turistas: _turistas),)
     );
     setState((){
-      if(listaTurista != null){
-        grupo.turistas = listaTurista;
-        _turistas = listaTurista;
+      if(listaTuristaActualizado != null){
+        grupo.turistas = listaTuristaActualizado;
+        _turistas = listaTuristaActualizado;
       }
     });
   }  
