@@ -38,16 +38,8 @@ Widget build(BuildContext context){
     ),
     trailing: Column(
       children: <Widget>[
-        new Text(_promo.precio.toString()+"€", style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w500)),
-        Container(
-          width: 75,
-          height: 25,
-          child: new Text("-25%", style: TextStyle(color: Colors.black)),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-          )
-        )
+        new Text(_promo.precio.toString()+"€", style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w500, decoration: TextDecoration.lineThrough)),
+        new Text(_promo.precioFinal.toString()+"€", style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w500)),
       ],
     ),
     onTap: () {

@@ -38,7 +38,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
       body: _construirLista(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-//            _esperarResultado(context);
+            _esperarResultado(context);
         },
         child: new Icon(Icons.add),
       ),
@@ -63,14 +63,20 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
     ],);
   }
 
-/*  void _esperarResultado(BuildContext context) async{
+  void _esperarResultado(BuildContext context) async{
 
     final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesPromo(datos: datos),
       )
-    )
-  }*/
+    );
+  setState((){
+      if(nuevosDatos != null){
+        datos = nuevosDatos;
+      }
+    });
+
+  }
 
 }

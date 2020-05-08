@@ -110,9 +110,9 @@ class DatosPrueba{
 
     promociones = new List<Promocion>();
 
-    Promocion promo1 = new Promocion("Promocion 1", "Mensaje a enviar de la promoción 1", 100, "30");
-		Promocion promo2 = new Promocion("Promocion 2", "Mensaje a enviar de la promoción 2", 200, "40");
-		
+    Promocion promo1 = new Promocion("Promocion 1", "Para nuestros clientes mas veteranos llega una oferta del 30% en la ruta de Miguelturra", 100, 30,"imagenes/miguelturra.jpg", "Miguelturra");
+		Promocion promo2 = new Promocion("Promocion 2", "Para todos los turistas, esta semana se hará una oferta del 50% en el precio de la ruta de Ciudad Real", 50, 40,"imagenes/ciudadreal.jpg", "Ciudad Real");
+	
 		promociones.add(promo1);
 		promociones.add(promo2);
 
@@ -147,6 +147,7 @@ class DatosPrueba{
 		rutas.add(ruta4);
 		rutas.add(ruta5);
 		rutas.add(ruta6);
+    
     
   }
 
