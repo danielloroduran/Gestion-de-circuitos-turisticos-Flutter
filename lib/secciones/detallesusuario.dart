@@ -312,10 +312,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                             ],
                           )
                         ),
-                        //!_status ? _getActionButtons() : new Container(),
-                        Container(
-                          child: getActionButtons(),
-                        )
+                        _editable ? getSaveButton() : new Container(),
                       ],
                     )
                   )
@@ -339,7 +336,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
     
   }
 
-  Widget getActionButtons(){
+  Widget getSaveButton(){
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
       child: new Row(
@@ -357,8 +354,6 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-//                        _editable = true;
-                        //FocusScope.of(context).requestFocus((new FocusNode()));
                         Navigator.pop(context);
                       });
                     },
@@ -375,21 +370,24 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
     );
   }
   Widget getEditButtons() {
-    return new GestureDetector(
-      child: new CircleAvatar(
-        backgroundColor: Colors.red,
-        radius: 14.0,
-        child: new Icon(
-          Icons.edit,
-          color: Colors.white,
-          size: 16.0,
+    return new Tooltip(
+      message: "Editar información",
+      child: GestureDetector(
+        child: new CircleAvatar(
+          backgroundColor: Colors.yellow[600],
+          radius: 14.0,
+          child: new Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 16.0
+          ),
         ),
-      ),
-      onTap: () {
-        setState(() {
-          _editable = true;
-        });
-      },
+        onTap: () {
+          setState(() {
+            _editable = true;
+          });
+        },
+      )
     );
   }
 

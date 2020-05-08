@@ -368,15 +368,8 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                         Container(
                           child: getListIntegrantesButton(),
                         ),
-                        new Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                          indent: 24,
-                          endIndent: 24,
-                        ),
-                        Container(
-                          child: getSaveButton(),
-                        ),   
+                        _editable ? new Divider(color: Colors.grey, thickness: 1, indent: 24, endIndent: 24,) : new Container(),
+                        _editable ? getSaveButton() : new Container(),
                       ],
                     )
                   )

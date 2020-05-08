@@ -533,16 +533,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                         Container(
                           child: getRutaButtons(),
                         ),
-                        new Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                          indent: 24,
-                          endIndent: 24,
-                        ),
-                        //!_status ? _getActionButtons() : new Container(),
-                        Container(
-                          child: getSaveButton(),
-                        )
+                        _editable ? new Divider(color: Colors.grey, thickness: 1, indent: 24, endIndent: 24,) : new Container(),
+                        _editable ? getSaveButton() : new Container(),
                       ],
                     )
                   )

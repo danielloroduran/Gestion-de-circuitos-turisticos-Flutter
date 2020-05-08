@@ -398,15 +398,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                             ],
                           )
                         ),
-                        new Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                          indent: 24,
-                          endIndent: 24,
-                        ),
-                        Container(
-                          child: getSaveButton(),
-                        )
+                        _editable ? getSaveButton() : new Container(),
                       ],
                     )
                   )

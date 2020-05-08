@@ -403,9 +403,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                     )
                                   ],
                                 )),
-                            Container(
-                              child: getSaveButton(),
-                            )
+                            _editable ? getSaveButton() : new Container(),
                           ],
                         )))
               ],

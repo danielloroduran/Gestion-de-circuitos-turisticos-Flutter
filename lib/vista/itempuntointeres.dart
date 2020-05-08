@@ -12,10 +12,9 @@ class ItemPuntoInteres extends StatelessWidget{
   Widget build(BuildContext context){
     return ListTile(
       leading: new CircleAvatar(
-        child: new Image(
-          image: new ExactAssetImage(_puntoInteres.foto),
-          fit: BoxFit.cover,
-        ),
+        radius: 25.0,
+        backgroundImage: AssetImage(_puntoInteres.foto),
+        backgroundColor: Colors.transparent,
       ),
       title: new Text(_puntoInteres.nombre),
       onTap: () {

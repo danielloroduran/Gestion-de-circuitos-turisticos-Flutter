@@ -80,7 +80,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                     new Container(
                       height: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(30.0), bottomLeft: Radius.circular(30.0)),
+                        borderRadius: BorderRadius.circular(30.0),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
@@ -90,7 +90,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(30.0), bottomLeft: Radius.circular(30.0)),
                         child: Image(
                           image: AssetImage(_foto),
                           fit: BoxFit.cover,
@@ -474,15 +474,8 @@ class _DetallesRutaState extends State<DetallesRuta>
                             Container(
                               child: getListPuntoInteresButton(),
                             ),
-                            new Divider(
-                              color: Colors.grey,
-                              thickness: 1,
-                              indent: 24,
-                              endIndent: 24,
-                            ),
-                            Container(
-                              child: getSaveButton(),
-                            )
+                            _editable ? new Divider(color: Colors.grey, thickness: 1, indent: 24, endIndent: 24,) : new Container(),
+                            _editable ? getSaveButton() : new Container(),
                           ],
                         )))
               ],
