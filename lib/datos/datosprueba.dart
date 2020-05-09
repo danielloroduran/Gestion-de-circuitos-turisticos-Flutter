@@ -111,8 +111,7 @@ class DatosPrueba{
     promociones = new List<Promocion>();
 
     Promocion promo1 = new Promocion("Promocion 1", "Para nuestros clientes mas veteranos llega una oferta del 30% en la ruta de Miguelturra", 100, 30,"imagenes/miguelturra.jpg", "Miguelturra");
-		Promocion promo2 = new Promocion("Promocion 2", "Para todos los turistas, esta semana se hará una oferta del 50% en el precio de la ruta de Ciudad Real", 50, 40,"imagenes/ciudadreal.jpg", "Ciudad Real");
-	
+		Promocion promo2 = new Promocion("Promocion 2", "Para todos los turistas, esta semana se hará una oferta del 50% en el precio de la ruta de Ciudad Real", 50, 40,"imagenes/ciudadreal.jpg", "Ciudad Real");		
 		promociones.add(promo1);
 		promociones.add(promo2);
 
@@ -147,8 +146,22 @@ class DatosPrueba{
 		rutas.add(ruta4);
 		rutas.add(ruta5);
 		rutas.add(ruta6);
-    
-    
+
+    ayuda = new List<Ayuda>();
+
+    Ayuda ayuda1 = new Ayuda(Icons.home, "Reservas", "En esta pestaña se visualizan las reservas", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda2 = new Ayuda(Icons.build, "Gestión de rutas", "En esta pestaña se gestionan las rutas", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda3 = new Ayuda(Icons.person, "Turistas", "En esta pestaña se visualizan los turistas", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda4 = new Ayuda(Icons.people, "Guías", "En esta pestaña se visualizan los guías", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda5 = new Ayuda(Icons.message, "Reservas", "En esta pestaña se visualizan las promociones", "Esta pestaña se utiliza como se indicaría aquí.");
+
+    ayuda.add(ayuda1);
+    ayuda.add(ayuda2);
+    ayuda.add(ayuda3);
+    ayuda.add(ayuda4);
+    ayuda.add(ayuda5);
+
+
   }
 
 }

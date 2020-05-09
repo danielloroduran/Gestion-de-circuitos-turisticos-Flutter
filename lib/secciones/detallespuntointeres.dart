@@ -124,7 +124,12 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                               ),
                             ),
                           ],
-                        ))
+                        )),
+                    Positioned(
+                      right: 15.0,
+                      bottom: 20.0,
+                      child: _editable ? getFotoButton() : new Container(),
+                    )
                   ],
                 ),
                 new Container(
@@ -408,6 +413,31 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                         )))
               ],
             )));
+  }
+
+  Widget getFotoButton(){
+    return new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Tooltip(
+            message: "Editar foto",
+            child: GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.orange[700],
+                radius: 15.0,
+                child: new Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 20.0,
+                )
+              ),
+              onTap: () {
+                
+              }
+            ),
+          )
+        ],
+      );
   }
   
   Widget getEditButtons(){

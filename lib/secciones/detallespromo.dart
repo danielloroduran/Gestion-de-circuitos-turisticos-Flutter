@@ -118,7 +118,12 @@ class _DetallesPromoState extends State<DetallesPromo>
                               ],
                             )
                           ],
-                        ))
+                        )),
+                    Positioned(
+                      right: 15.0,
+                      bottom: 20.0,
+                      child: _editable ? getFotoButton() : new Container(),
+                    )
                   ],
                 ),
                 new Container(
@@ -407,8 +412,11 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     )
                                   ],
                                 )),
-                            
+                            Container(
+                              child: getListEnviarAButton(),
+                            ),
                             _editable ? new Divider(color: Colors.grey, thickness: 1, indent: 24, endIndent: 24,) : new Container(),
+                              
                             _editable ? getSaveButton() : new Container(),
                           ],
                         )))
@@ -446,6 +454,63 @@ class _DetallesPromoState extends State<DetallesPromo>
             )))),
           ],
         ));
+  }
+
+  Widget getListEnviarAButton(){
+    return Padding(
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+              child: Container(
+                child: Container(
+                  child: new RaisedButton(
+                    child: new Text("Enviar a..."),
+                    textColor: Colors.white,
+                    color: Colors.cyan,
+                    onPressed: () {
+
+                      setState(() {
+  //                      _esperarResultado(context);
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0)
+                    ),
+                  )
+                )
+              )
+          ),
+        ],
+      )
+    );
+  }
+
+  Widget getFotoButton(){
+    return new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Tooltip(
+            message: "Editar foto",
+            child: GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.orange[700],
+                radius: 15.0,
+                child: new Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 20.0,
+                )
+              ),
+              onTap: () {
+                
+              }
+            ),
+          )
+        ],
+      );
   }
 
   Widget getEditButtons() {

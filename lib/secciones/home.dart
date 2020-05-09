@@ -39,18 +39,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     );
   }
 
-  ListTile _construirItem(
-      BuildContext context, IconData iconData, String texto, String ruta) {
-    return new ListTile(
-        leading: new Icon(iconData),
-        title: new Text(texto),
-        onTap: () {
-          setState(() {
-            Navigator.pushNamed(context, ruta);
-          });
-        });
-  }
-
   ListView construirDrawer(BuildContext context){
     return new ListView(
       padding: EdgeInsets.zero,
@@ -63,8 +51,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             child: new Text(usuario.nombreUsuario[0]),
           ),
         ),
-        _construirItem(context, Icons.home, "Home", "/"),
-//        _construirItem(context, Icons.person, "Perfil", "/detallesusuario"),
+        new ListTile(
+          leading: new Icon(Icons.home),
+          title: new Text("Home"),
+          onTap: () {
+            setState((){
+
+            });
+          }
+        ),
         new ListTile(
           leading: new Icon(Icons.person),
           title: new Text("Perfil"),
@@ -81,13 +76,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             });
           }
         ),
-        _construirItem(context, Icons.settings, "Configuración", "/configuracion"),
+        new ListTile(
+          leading: new Icon(Icons.settings),
+          title: new Text("Configuración"),
+          onTap: (){
+            setState((){
+
+            });
+          }
+        ),
         new ListTile(
           leading: new Icon(Icons.help),
           title: new Text("Ayuda"),
           onTap: (){
             setState((){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ListadoAyuda()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => VentanaAyuda(datos: datos)));
             });
           }
         ),
@@ -98,7 +101,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           applicationName: "Gestión de circuitos",
           applicationVersion: "v1.0",
         ),
-//        _construirItem(context, Icons.close, "Cerrar Sesión", "/login"),
         new ListTile(
           leading: new Icon(Icons.close),
           title: new Text("Cerrar sesión"),

@@ -1,46 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:practica_ipo2/modelos/ayuda.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/vista/itemayuda.dart';
 
-class ListadoAyuda extends StatelessWidget {
+class VentanaAyuda extends StatefulWidget{
 
-  static const nombreRuta = "/ayuda";
+  DatosPrueba datos;
+
+  VentanaAyuda({Key key, @required this.datos}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _VentanaAyudaState createState() => _VentanaAyudaState(datos: datos);
+
+}
+
+class _VentanaAyudaState extends State<VentanaAyuda> with SingleTickerProviderStateMixin{
+
+  DatosPrueba datos;
+
+  _VentanaAyudaState({@required this.datos});
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Ayuda"),
-        backgroundColor: Colors.blueAccent,
       ),
-      body: ConstruirAyudas(),
+      body: _construirLista(),
     );
   }
-}
 
-class ConstruirAyudas extends StatelessWidget{
-
-  List<Ayuda> _construirAyuda(){
-
-    return <Ayuda>[
-      Ayuda(Icons.home, "Pestaña de Rutas", "Aquí aparecería la ayuda de la pestaña de Rutas"),
-      Ayuda(Icons.people, "Pestaña de turistas", "Aquí aparecería la ayuda de los turistas"),
-      Ayuda(Icons.message,"Pestaña de promociones", "Aquí aparecería la ayuda de la pestaña de promociones"),
-      Ayuda(Icons.person, "Pestaña de guías", "Aquí aparecería la ayuda de la pestaña de guías"),
-      Ayuda(Icons.people, "Pestaña de grupos", "Aquí aparecería la ayuda de la pestaña de grupos"),
-    ];
-  }
-
-  List<ItemAyuda> _construirLista(){
-    return _construirAyuda().map(
-      (ayuda) => new ItemAyuda(ayuda)
-    ).toList();
-  }
-
-  Widget build(BuildContext context){
-    return new ListView(
-      children: _construirLista(),
+  Widget _construirLista(){
+    return ListView.builder(
+      itemCount: datos.ayuda.length,
+      itemBuilder: (context, int index){
+        return new Container(
+          child: ItemAyuda(datos.ayuda[index]),
+        );
+      }
     );
   }
 
 }
+

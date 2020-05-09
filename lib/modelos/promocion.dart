@@ -1,5 +1,3 @@
-
-
 class Promocion{
 
   String _nombrePromo;

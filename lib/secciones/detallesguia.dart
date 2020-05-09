@@ -33,6 +33,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
   TextEditingController dniController;
   TextEditingController correoController;
   String _foto;
+  int _puntuacion;
 
   void initState(){
     super.initState();
@@ -58,6 +59,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     dniController.text = guia.dni;
     correoController.text = guia.correo;
     _foto = guia.foto;
+    _puntuacion = guia.puntuacion;
   }else{
     nombreController.text = "";
     apellidosController.text = "";
@@ -70,6 +72,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     correoController.text = "";
     _foto = "imagenes/personagenerica.png";
     _editable = true;
+    _puntuacion = 0;
     
   }
 
@@ -115,22 +118,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                               )
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 25.0,
-                                  child: new Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            )
-                          )
+                          _editable ? getFotoButton() : new Container(),
                         ])
                       )
                     ],
@@ -552,6 +540,33 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     super.dispose();
   }
 
+  Widget getFotoButton(){
+    return new Padding(
+      padding: EdgeInsets.only(top: 90.0, right: 100.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Tooltip(
+            message: "Editar foto",
+            child: GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 25.0,
+                child: new Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                )
+              ),
+              onTap: () {
+                
+              }
+            ),
+          )
+        ],
+      )
+    );
+  }
+
   Widget getRutaButtons(){
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0, bottom: 4),
@@ -704,15 +719,11 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
   Text _crearEstrellas(){
     String estrellas = '';
     
-    if(guia.puntuacion > 0){
-      for(int i = 0; i < guia.puntuacion; i++){
+      for(int i = 0; i < _puntuacion; i++){
         estrellas += '⭐ ';
       }
       estrellas.trim();
       return Text(estrellas);
-    }else{
-      return Text('');
-    }
 
   }
 }

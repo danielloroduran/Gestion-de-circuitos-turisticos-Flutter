@@ -118,7 +118,6 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                //  _status ? _getEditButtons() : new Container()
                                   Container(
                                     child: getEditButtons()
                                   )
@@ -155,7 +154,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            left: 25.0, right: 25.0, top: .0),
+                            left: 25.0, right: 25.0, top: 2.0),
                             child: new Row(
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[

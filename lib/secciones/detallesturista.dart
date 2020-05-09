@@ -100,22 +100,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                               )
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 25.0,
-                                  child: new Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            )
-                          )
+                          _editable ? getFotoButton() : new Container(),
                         ])
                       )
                     ],
@@ -414,6 +399,39 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
   @override
   void dispose(){
     super.dispose();
+    nombreController.dispose();
+    apellidosController.dispose();
+    movilController.dispose();
+    dniController.dispose();
+    correoController.dispose();
+    edadController.dispose();
+  }
+
+  Widget getFotoButton(){
+    return new Padding(
+      padding: EdgeInsets.only(top: 90.0, right: 100.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Tooltip(
+            message: "Editar foto",
+            child: GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 25.0,
+                child: new Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                )
+              ),
+              onTap: () {
+                
+              }
+            ),
+          )
+        ],
+      )
+    );
   }
 
   Widget getSaveButton(){

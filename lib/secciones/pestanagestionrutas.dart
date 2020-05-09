@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/vista/itemruta.dart';
+import 'package:practica_ipo2/secciones/detallesruta.dart';
 
 class ListadoRutas extends StatefulWidget{
 
@@ -34,7 +35,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
       body: _construirLista(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-//          _esperarResultado(context);
+          _esperarResultado(context);
         },
         child: new Icon(Icons.add),
       ),
@@ -52,7 +53,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
     );
   }
 
-/*  void _esperarResultado(BuildContext context) async{
+  void _esperarResultado(BuildContext context) async{
 
     final nuevosDatos = await Navigator.push(
       context,
@@ -66,28 +67,6 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
         datos = nuevosDatos;
       }
     });
-  }*/
-
-}
-
-class ConstruirRuta extends StatelessWidget{
-
-  final DatosPrueba datos;
-  ConstruirRuta({@required this.datos});
-
-  List<Ruta> _construirRutas(){
-    return datos.rutas;
   }
 
-  List<ItemRuta> _construirLista(){
-    return _construirRutas().map(
-      (ruta) => new ItemRuta(ruta)
-    ).toList();
-  }
-
-  Widget build(BuildContext context){
-    return new ListView(
-      children: _construirLista(),
-    );
-  }
 }
