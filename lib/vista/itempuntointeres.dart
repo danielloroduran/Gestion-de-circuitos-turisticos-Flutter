@@ -8,15 +8,26 @@ class ItemPuntoInteres extends StatelessWidget{
 
   ItemPuntoInteres(this._puntoInteres);
 
-  @override
   Widget build(BuildContext context){
     return ListTile(
       leading: new CircleAvatar(
         radius: 25.0,
         backgroundImage: AssetImage(_puntoInteres.foto),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent, 
       ),
-      title: new Text(_puntoInteres.nombre),
+      contentPadding: EdgeInsets.all(20),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text(_puntoInteres.nombre,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22.0,
+              fontWeight: FontWeight.w500),
+            ),
+        ],
+      ),
+
       onTap: () {
         _esperarResultado(context);
       },

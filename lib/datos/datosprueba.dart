@@ -15,8 +15,6 @@ class DatosPrueba{
   List<Guia> guias;
   List<PuntoInteres> puntoInteres;
   List<Turista> turistasGeneral;
-  List<Turista> turistasG1;
-  List<Turista> turistasG2;
   List<GrupoTurista> grupoTurista;
   List<Ruta> rutas;
   List<Promocion> promociones;
@@ -56,8 +54,6 @@ class DatosPrueba{
 		puntoInteres.add(pi3);
 		puntoInteres.add(pi4);
 
-    turistasG1 = new List<Turista>();
-    turistasG2 = new List<Turista>();
     turistasGeneral = new List<Turista>();
 
     
@@ -82,27 +78,26 @@ class DatosPrueba{
 		turistasGeneral.add(turista8);
 		turistasGeneral.add(turista9);
 		turistasGeneral.add(turista10);
-		
-		
-		turistasG1.add(turista1);
-		turistasG1.add(turista2);
-		turistasG1.add(turista3);
-		turistasG1.add(turista4);
-		turistasG1.add(turista5);
-		turistasG1.add(turista6);
-		
-		turistasG2.add(turista7);
-		turistasG2.add(turista8);
-		turistasG2.add(turista9);
-		turistasG2.add(turista10);
 
     grupoTurista = new List<GrupoTurista>();
 
     GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Tipo 1", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1");
 		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Tipo 2", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2");
+    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Tipo 3", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3");
+
+    gt1.turistas.add(turista1);
+		gt1.turistas.add(turista2);
+		gt1.turistas.add(turista3);
 		
-		gt1.turistas = turistasG1;
-		gt2.turistas = turistasG2;
+    gt2.turistas.add(turista4);
+		gt2.turistas.add(turista5);
+		gt2.turistas.add(turista6);
+
+    gt3.turistas.add(turista7);
+    gt3.turistas.add(turista8);
+    gt3.turistas.add(turista9);
+    gt3.turistas.add(turista10);
+
 		gt1.setNumIntegrantes();
 		gt2.setNumIntegrantes();
 		grupoTurista.add(gt1);
@@ -112,17 +107,18 @@ class DatosPrueba{
 
     Promocion promo1 = new Promocion("Promocion 1", "Para nuestros clientes mas veteranos llega una oferta del 30% en la ruta de Miguelturra", 100, 30,"imagenes/miguelturra.jpg", "Miguelturra");
 		Promocion promo2 = new Promocion("Promocion 2", "Para todos los turistas, esta semana se hará una oferta del 50% en el precio de la ruta de Ciudad Real", 50, 40,"imagenes/ciudadreal.jpg", "Ciudad Real");		
-		promociones.add(promo1);
+		
+    promociones.add(promo1);
 		promociones.add(promo2);
 
     rutas = new List<Ruta>();
 
-    Ruta ruta1 = new Ruta("Ruta1", "Pendiente", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "imagenes/ciudadreal.jpg", 5);
+    Ruta ruta1 = new Ruta("Ruta1", "Contratada", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "imagenes/ciudadreal.jpg", 5);
 		Ruta ruta2 = new Ruta("Ruta2", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón", "imagenes/malagon.jpg", 4);
-		Ruta ruta3 = new Ruta("Ruta3", "Pendiente", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "imagenes/miguelturra.jpg", 3);
-		Ruta ruta4 = new Ruta("Ruta4", "Realizada", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "imagenes/puertollano.jpg", 2);
-		Ruta ruta5 = new Ruta("Ruta5", "Pendiente", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "imagenes/fuenteelfresno.jpg", 1);
-		Ruta ruta6 = new Ruta("Ruta6", "Realizada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "imagenes/loscortijos.jpg", 0);
+		Ruta ruta3 = new Ruta("Ruta3", "Nueva", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "imagenes/miguelturra.jpg", 3);
+		Ruta ruta4 = new Ruta("Ruta4", "Nueva", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "imagenes/puertollano.jpg", 2);
+		Ruta ruta5 = new Ruta("Ruta5", "Nueva", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "imagenes/fuenteelfresno.jpg", 1);
+		Ruta ruta6 = new Ruta("Ruta6", "Contratada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "imagenes/loscortijos.jpg", 0);
 
     ruta1.grupoTurista.add(gt1);
     ruta1.setTuristasTotal();
@@ -140,6 +136,11 @@ class DatosPrueba{
     guia2.rutasAsignadas.add(ruta4);
     guia2.rutasHistorial.add(ruta1);
 
+    ruta6.grupoTurista.add(gt2);
+    ruta6.setTuristasTotal();
+    ruta6.puntoInteres.add(pi2);
+    guia2.rutasAsignadas.add(ruta6);
+
     rutas.add(ruta1);
 		rutas.add(ruta2);
 		rutas.add(ruta3);
@@ -149,7 +150,7 @@ class DatosPrueba{
 
     ayuda = new List<Ayuda>();
 
-    Ayuda ayuda1 = new Ayuda(Icons.home, "Reservas", "En esta pestaña se visualizan las reservas", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda1 = new Ayuda(Icons.home, "Historial y reservas", "En esta pestaña se visualiza el historial y las reservas", "Esta pestaña se utiliza como se indicaría aquí.");
     Ayuda ayuda2 = new Ayuda(Icons.build, "Gestión de rutas", "En esta pestaña se gestionan las rutas", "Esta pestaña se utiliza como se indicaría aquí.");
     Ayuda ayuda3 = new Ayuda(Icons.person, "Turistas", "En esta pestaña se visualizan los turistas", "Esta pestaña se utiliza como se indicaría aquí.");
     Ayuda ayuda4 = new Ayuda(Icons.people, "Guías", "En esta pestaña se visualizan los guías", "Esta pestaña se utiliza como se indicaría aquí.");

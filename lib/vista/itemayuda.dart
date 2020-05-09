@@ -8,20 +8,31 @@ class ItemAyuda extends StatelessWidget{
 
   ItemAyuda(this._ayuda);
 
-  @override
   Widget build(BuildContext context){
     return ListTile(
       leading: new CircleAvatar(
+        radius: 25.0,
         child: new Icon(_ayuda.icono),
       ),
-      title: new Text(_ayuda.nombreAyuda),
-      onTap: (){
-        enviarDatos(context);
-      }
+      contentPadding: EdgeInsets.all(20),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text(_ayuda.nombreAyuda,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22.0,
+              fontWeight: FontWeight.w500),
+            ),
+        ],
+      ),
+      onTap: () {
+        _enviarDatos(context);
+      },
     );
   }
 
-  void enviarDatos(BuildContext context){
+  void _enviarDatos(BuildContext context){
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetallesAyuda(ayuda: this._ayuda)));
   }
 }

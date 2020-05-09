@@ -9,23 +9,36 @@ class ItemGrupo extends StatelessWidget{
 
   ItemGrupo(this._grupoTurista);
 
-  @override
   Widget build(BuildContext context){
     return ListTile(
       leading: new CircleAvatar(
-        child: new Text(_grupoTurista.nombreGrupo[0]),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blueAccent,
+        radius: 25.0,
+        child: new Text(_grupoTurista.nombreGrupo[0], style: TextStyle(color: Colors.white)),
       ),
-      title: new Text(_grupoTurista.nombreGrupo),
-      subtitle: new Text(_grupoTurista.numIntegrantes.toString() + " integrantes"),
+      contentPadding: EdgeInsets.all(20),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text(_grupoTurista.nombreGrupo,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22.0,
+              fontWeight: FontWeight.w500),
+            ),
+          new Text(_grupoTurista.numIntegrantes.toString() + " integrantes",
+            style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 18),
+            ),
+        ],
+      ),
       onTap: () {
-        enviarDatos(context);
-      }
+        _enviarDatos(context);
+      },
     );
   }
 
-    void enviarDatos(BuildContext context){
+    void _enviarDatos(BuildContext context){
     Navigator.push(
       context,
       MaterialPageRoute(

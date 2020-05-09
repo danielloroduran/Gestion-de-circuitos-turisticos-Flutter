@@ -44,7 +44,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
 
   Widget _construirLista() {
     return ListView.builder(
-      itemCount: datos.guias.length,
+      itemCount: datos.rutas.length,
       itemBuilder: (context, int index){
         return new Container(
           child: ItemRuta(datos.rutas[index])

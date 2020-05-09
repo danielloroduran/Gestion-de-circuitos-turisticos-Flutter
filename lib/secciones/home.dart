@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/detallesusuario.dart';
-import 'package:practica_ipo2/secciones/pestanarutas.dart';
+import 'package:practica_ipo2/secciones/pestanareservas.dart';
 import 'package:practica_ipo2/secciones/pestanaguias.dart';
 import 'package:practica_ipo2/secciones/pestanapromocion.dart';
 import 'package:practica_ipo2/secciones/pestanagrupoturistas.dart';
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   TabController controlador;
   GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   bool enabled = true;
-  String titulo = "Listado Rutas";
+  String titulo = "Historial y reservas";
 
   @override
   void initState(){
@@ -56,7 +56,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           title: new Text("Home"),
           onTap: () {
             setState((){
-
+              Navigator.pop(context);
+              controlador.index = 0;
             });
           }
         ),
@@ -65,14 +66,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           title: new Text("Perfil"),
           onTap: () {
             setState(() {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetallesUsuario(datos: datos, usuario: usuario),
-                )
-              );
-        //      Navigator.pop(context);
+              _esperarResultadoPerfil(context);
             });
           }
         ),
@@ -148,7 +142,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           onTap: (indedx) {
             if(indedx == 0){
               setState((){
-                titulo = "Reservas";
+                titulo = "Historial y reservas";
               });
             }else if (indedx == 1){
               setState((){
@@ -180,5 +174,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         children: <Widget>[new ReservaRutas(datos: datos), new ListadoRutas(datos: datos), new ListadoGrupoTuristas(datos: datos), new ListadoGuias(datos: datos), new ListadoPromo(datos: datos)],
       ),
     );
+  }
+
+  void _esperarResultadoPerfil(context) async{
+
+    final perfilActualizado = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetallesUsuario(datos: datos, usuario: usuario),
+      )
+    );
+
   }
 }

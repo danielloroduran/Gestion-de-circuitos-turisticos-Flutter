@@ -1,68 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:practica_ipo2/modelos/promocion.dart';
+import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 
-class DetallesPromo extends StatefulWidget {
-  Promocion promo;
+class DetallesReserva extends StatefulWidget {
+  Ruta ruta;
   DatosPrueba datos;
 
-  DetallesPromo({Key key, this.datos, this.promo}) : super(key: key);
+  DetallesReserva({Key key, this.datos, this.ruta}) : super(key: key);
 
   @override
-  _DetallesPromoState createState() => _DetallesPromoState(promo: promo);
+  _DetallesReservaState createState() => _DetallesReservaState(ruta: ruta);
 }
 
-class _DetallesPromoState extends State<DetallesPromo>
+class _DetallesReservaState extends State<DetallesReserva>
     with SingleTickerProviderStateMixin {
   DatosPrueba datos;
-  Promocion promo;
+  Ruta ruta;
 
-  _DetallesPromoState({this.promo});
+  _DetallesReservaState({this.ruta});
 
   bool _editable = false;
   TextEditingController nombreController;
-  TextEditingController mensajeController;
-  TextEditingController precioController;
-  TextEditingController descuentoController;
-  TextEditingController precioFinalController;
+  TextEditingController estadoController;
+  TextEditingController costeController;
+  TextEditingController opinionesController;
+  TextEditingController incidenciasController;
+  TextEditingController sugerenciasController;
   TextEditingController localidadController;
+  int _puntuacion;
   String _foto;
 
   void initState() {
     super.initState();
 
     nombreController = new TextEditingController();
-    mensajeController = new TextEditingController();
-    precioController = new TextEditingController();
-    descuentoController = new TextEditingController();
-    precioFinalController = new TextEditingController();
+    estadoController = new TextEditingController();
+    costeController = new TextEditingController();
+    opinionesController = new TextEditingController();
+    incidenciasController = new TextEditingController();
+    sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
 
-    if (promo != null) {
-      nombreController.text = promo.nombrePromo;
-      mensajeController.text = promo.mensaje;
-      precioController.text = promo.precio.toString();
-      descuentoController.text = promo.descuento.toString();
-      precioFinalController.text = promo.precioFinal.toString();
-      localidadController.text = promo.localidad;
-      _foto = promo.foto;
+    if (ruta != null) {
+      nombreController.text = ruta.nombre;
+      estadoController.text = ruta.estado;
+      costeController.text = ruta.coste.toString();
+      opinionesController.text = ruta.opiniones;
+      incidenciasController.text = ruta.incidencias;
+      sugerenciasController.text = ruta.sugerencias;
+      localidadController.text = ruta.localidad;
+      _puntuacion = ruta.puntuacion;
+      _foto = ruta.foto;
     } else {
       nombreController.text = "";
-      mensajeController.text = "";
-      precioController.text = "";
-      descuentoController.text = "";
-      precioFinalController.text = "";
+      estadoController.text = "";
+      costeController.text = "";
+      opinionesController.text = "";
+      incidenciasController.text = "";
+      sugerenciasController.text = "";
       localidadController.text = "";
+      _puntuacion = 0;
       _foto = "imagenes/rutagenerica.jpg";
       _editable = true;
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: new Text("Promociones")),
+        appBar: new AppBar(title: new Text("Historial")),
         body: new Container(
             color: Colors.white,
             child: new ListView(
@@ -117,11 +123,6 @@ class _DetallesPromoState extends State<DetallesPromo>
                             )
                           ],
                         )),
-                    Positioned(
-                      right: 15.0,
-                      bottom: 20.0,
-                      child: _editable ? getFotoButton() : new Container(),
-                    )
                   ],
                 ),
                 new Container(
@@ -151,13 +152,6 @@ class _DetallesPromoState extends State<DetallesPromo>
                                                 fontWeight: FontWeight.w500)),
                                       ],
                                     ),
-                                    new Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Container(child: getEditButtons())
-                                      ],
-                                    )
                                   ],
                                 )),
                             Padding(
@@ -216,50 +210,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Mensaje",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: new TextField(
-                                          controller: mensajeController,
-                                          decoration: const InputDecoration(
-                                            hintText: "Introduzca el mensaje",
-                                          ),
-                                          enabled: _editable,
-                                          autocorrect: _editable,
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          "Precio(€)",
+                                          "Estado",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -270,7 +221,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Descuento(%)",
+                                          "Coste",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -291,10 +242,10 @@ class _DetallesPromoState extends State<DetallesPromo>
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextField(
-                                          controller: precioController,
+                                          controller: estadoController,
                                           decoration: const InputDecoration(
-                                              hintText:
-                                                  "Introduzca el precio inicial"),
+                                            hintText: "Introduzca el estado",
+                                          ),
                                           enabled: _editable,
                                           autocorrect: _editable,
                                         ),
@@ -302,17 +253,71 @@ class _DetallesPromoState extends State<DetallesPromo>
                                       flex: 2,
                                     ),
                                     new Flexible(
+                                      child: new TextField(
+                                        controller: costeController,
+                                        decoration: const InputDecoration(
+                                          hintText: "Introduzca el coste",
+                                        ),
+                                        enabled: _editable,
+                                      ),
+                                      flex: 2,
+                                    ),
+                                  ],
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 25.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Localidad",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Puntuación",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    )
+                                  ],
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 2.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Flexible(
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextField(
-                                          controller: descuentoController ,
+                                          controller: localidadController,
                                           decoration: const InputDecoration(
                                               hintText:
-                                                  "Introduzca el descuento"),
+                                                  "Introduzca la localidad"),
                                           enabled: _editable,
                                           autocorrect: _editable,
                                         ),
                                       ),
+                                      flex: 2,
+                                    ),
+                                    new Flexible(
+                                      child: _crearEstrellas(),
                                       flex: 2,
                                     ),
                                   ],
@@ -334,7 +339,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
                                             new Text(
-                                              "Precio final(€)",
+                                              "Opiniones",
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w500),
@@ -353,9 +358,9 @@ class _DetallesPromoState extends State<DetallesPromo>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextField(
-                                        controller: precioFinalController,
+                                        controller: opinionesController,
                                         decoration: const InputDecoration(
-                                          hintText: "Introduzca el precio final",
+                                          hintText: "Introduzca la opinión",
                                         ),
                                         enabled: false,
                                         autocorrect: _editable,
@@ -380,7 +385,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
                                             new Text(
-                                              "Localidad",
+                                              "Incidencias",
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w500),
@@ -399,163 +404,84 @@ class _DetallesPromoState extends State<DetallesPromo>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextField(
-                                        controller: localidadController,
+                                        controller: incidenciasController,
                                         decoration: const InputDecoration(
                                           hintText:
-                                              "Introduzca la localidad",
+                                              "Introduzca las incidencias",
                                         ),
-                                        enabled: _editable,
+                                        enabled: false,
                                         autocorrect: _editable,
                                       ),
                                     )
                                   ],
                                 )),
-                            Container(
-                              child: getListEnviarAButton(),
-                            ),
-                            _editable ? new Divider(color: Colors.grey, thickness: 1, indent: 24, endIndent: 24,) : new Container(),
-                              
-                            _editable ? getSaveButton() : new Container(),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 25.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    new Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Text(
+                                              "Sugerencias",
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 2.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    new Flexible(
+                                      child: new TextField(
+                                        controller: sugerenciasController,
+                                        decoration: const InputDecoration(
+                                          hintText:
+                                              "Introduzca las sugerencias",
+                                        ),
+                                        enabled: false,
+                                        autocorrect: _editable,
+                                      ),
+                                    )
+                                  ],
+                                )),
                           ],
                         )))
               ],
             )));
   }
 
+  Text _crearEstrellas() {
+    String estrellas = '';
+
+    for (int i = 0; i < _puntuacion; i++) {
+      estrellas += '⭐ ';
+    }
+    estrellas.trim();
+    return Text(estrellas);
+  }
 
   @override
   void dispose() {
     super.dispose();
   }
 
-  Widget getSaveButton() {
-    return Padding(
-        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-                child: Container(
-                    child: Container(
-                        child: new RaisedButton(
-              child: new Text("Guardar y salir"),
-              textColor: Colors.white,
-              color: Colors.green,
-              onPressed: () {
-                setState(() {
-                  Navigator.pop(context);
-                });
-              },
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0)),
-            )))),
-          ],
-        ));
-  }
-
-  Widget getListEnviarAButton(){
-    return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
-      child: new Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-              child: Container(
-                child: Container(
-                  child: new RaisedButton(
-                    child: new Text("Enviar a..."),
-                    textColor: Colors.white,
-                    color: Colors.cyan,
-                    onPressed: () {
-
-                      setState(() {
-  //                      _esperarResultado(context);
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20.0)
-                    ),
-                  )
-                )
-              )
-          ),
-        ],
-      )
-    );
-  }
-
-  Widget getFotoButton(){
-    return new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Tooltip(
-            message: "Editar foto",
-            child: GestureDetector(
-              child: new CircleAvatar(
-                backgroundColor: Colors.orange[700],
-                radius: 15.0,
-                child: new Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                  size: 20.0,
-                )
-              ),
-              onTap: () {
-                
-              }
-            ),
-          )
-        ],
-      );
-  }
-
-  Widget getEditButtons() {
-    return new Row(
-      children: <Widget>[
-        Tooltip(
-          message: "Editar información",
-          child: GestureDetector(
-            child: new CircleAvatar(
-              backgroundColor: Colors.yellow[600],
-              radius: 14.0,
-              child: new Icon(
-                Icons.edit,
-                color: Colors.white,
-                size: 16.0,
-              ),
-            ),
-            onTap: () {
-              setState(() {
-                _editable = true;
-              });
-            },
-          ),
-        ),
-        Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Tooltip(
-              message: "Eliminar ruta",
-              child: GestureDetector(
-                child: new CircleAvatar(
-                  backgroundColor: Colors.red,
-                  radius: 14.0,
-                  child: new Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                    size: 16.0,
-                  ),
-                ),
-                onTap: () {
-                  setState(() {
-                    //          _editable = true;
-                  });
-                },
-              ),
-            ))
-      ],
-    );
-  }
 
 }

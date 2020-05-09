@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:practica_ipo2/vista/itemruta.dart';
+import 'package:practica_ipo2/vista/itemreserva.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/ruta.dart';
 
 
 
 class ReservaRutas extends StatefulWidget{
-  final DatosPrueba datos;
+
+  DatosPrueba datos;
   ReservaRutas({Key key, @required this.datos}) : super(key: key);
   @override
   _ReservaRutasState createState() => _ReservaRutasState(datos: datos);
 }
 
 class _ReservaRutasState extends State<ReservaRutas> with SingleTickerProviderStateMixin{
-  final DatosPrueba datos;
+  
+  DatosPrueba datos;
   _ReservaRutasState({@required this.datos});
+  List<Ruta> rutasMostrar;
 
   @override
   void initState(){
     super.initState();
+
+    rutasMostrar = new List<Ruta>();
+
+    for(int i = 0; i < datos.rutas.length; i++){
+      if(datos.rutas.elementAt(i).estado == "Contratada" || datos.rutas.elementAt(i).estado == "Realizada"){
+        rutasMostrar.add(datos.rutas.elementAt(i));
+      }
+    }
 
   }
 
@@ -36,10 +48,10 @@ class _ReservaRutasState extends State<ReservaRutas> with SingleTickerProviderSt
 
   Widget _construirLista(){
     return ListView.builder(
-      itemCount: datos.rutas.length,
+      itemCount: rutasMostrar.length,
       itemBuilder: (context, int index){
         return new Container(
-          child: ItemRuta(datos.rutas[index])
+          child: ItemReserva(rutasMostrar[index])
         );
       }
     );

@@ -103,7 +103,7 @@ class _VentanaLogin extends State<VentanaLogin> {
                           DateTime ahora = DateTime.now();
                           String fecha = ahora.hour.toString()+":"+ahora.minute.toString()+", "+ahora.day.toString()+"/"+ahora.month.toString()+"/"+ahora.year.toString();
                           usuario.ultimaConexion = fecha;
-                          enviarDatos(context, usuario);
+                          _enviarDatos(context, usuario);
                         }
                       },
                     )),
@@ -127,7 +127,7 @@ class _VentanaLogin extends State<VentanaLogin> {
             )));
   }
 
-    void enviarDatos(BuildContext context, Usuario usuario){
+    void _enviarDatos(BuildContext context, Usuario usuario){
       usuarioController.text = "";
       passwordController.text = "";
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home(datos: datos, usuario: usuario)));

@@ -17,34 +17,34 @@ class ItemPromo extends StatelessWidget {
           new Text(_promo.nombrePromo,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500)),
           new Text(_promo.mensaje,
-              style: TextStyle(color: Colors.grey[500], fontSize: 20)),
+              style: TextStyle(color: Colors.grey[500], fontSize: 18)),
         ],
       ),
       trailing: Column(
         children: <Widget>[
           new Text(_promo.precio.toString() + "€",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
+                  color: Colors.grey,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.lineThrough)),
           new Text(_promo.precioFinal.toString() + "€",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500)),
         ],
       ),
       onTap: () {
-        enviarDatos(context);
+        _enviarDatos(context);
       },
     );
   }
 
-  void enviarDatos(BuildContext context) {
+  void _enviarDatos(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
