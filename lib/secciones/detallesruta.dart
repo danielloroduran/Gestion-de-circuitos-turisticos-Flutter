@@ -29,6 +29,7 @@ class _DetallesRutaState extends State<DetallesRuta>
   TextEditingController incidenciasController;
   TextEditingController sugerenciasController;
   TextEditingController localidadController;
+  int _puntuacion;
   String _foto;
   List<PuntoInteres> _puntoInteres;
 
@@ -52,6 +53,7 @@ class _DetallesRutaState extends State<DetallesRuta>
       sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
       _puntoInteres = ruta.puntoInteres;
+      _puntuacion = ruta.puntuacion;
       _foto = ruta.foto;
     } else {
       nombreController.text = "";
@@ -61,6 +63,7 @@ class _DetallesRutaState extends State<DetallesRuta>
       incidenciasController.text = "";
       sugerenciasController.text = "";
       localidadController.text = "";
+      _puntuacion = 0;
       _foto = "imagenes/rutagenerica.jpg";
       _editable = true;
       _puntoInteres = new List<PuntoInteres>();
@@ -490,15 +493,11 @@ class _DetallesRutaState extends State<DetallesRuta>
   Text _crearEstrellas() {
     String estrellas = '';
 
-    if (ruta.puntuacion > 0) {
-      for (int i = 0; i < ruta.puntuacion; i++) {
-        estrellas += '⭐ ';
-      }
-      estrellas.trim();
-      return Text(estrellas);
-    } else {
-      return Text('');
+    for (int i = 0; i < _puntuacion; i++) {
+      estrellas += '⭐ ';
     }
+    estrellas.trim();
+    return Text(estrellas);
   }
 
   @override
