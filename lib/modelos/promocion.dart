@@ -2,12 +2,12 @@ class Promocion{
 
   String _nombrePromo;
   String _mensaje;
-  int _precio;
+  double _precio;
   int _descuento;
   double _precioFinal;
   String _foto;
   String _localidad;
-  Promocion(String nombrePromo, String mensaje, int precio, int descuento, String foto, String localidad){
+  Promocion(String nombrePromo, String mensaje, double precio, int descuento, String foto, String localidad){
     this._nombrePromo = nombrePromo;
     this._mensaje = mensaje;
     this._precio = precio;
@@ -20,7 +20,7 @@ class Promocion{
 
   String get nombrePromo => _nombrePromo;
   String get mensaje => _mensaje;
-  int get precio => _precio;
+  double get precio => _precio;
   int get descuento => _descuento;
   double get precioFinal =>_precioFinal;
   String get foto => _foto;
@@ -28,7 +28,7 @@ class Promocion{
 
   set nombrePromo(String nombrePromo) => _nombrePromo = nombrePromo;
   set mensaje(String mensaje) => _mensaje = mensaje;
-  set precio(int precio) => _precio = precio;
+  set precio(double precio) => _precio = precio;
   set descuento(int descuento) => _descuento = descuento;
   set foto(String foto) => _foto = foto;
   set localidad(String localidad) => _localidad = localidad;
