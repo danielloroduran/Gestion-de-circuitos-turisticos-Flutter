@@ -4,17 +4,17 @@ import 'package:practica_ipo2/secciones/home.dart';
 import 'package:practica_ipo2/modelos/usuario.dart';
 
 class VentanaLogin extends StatefulWidget {
-  static const nombreRuta = "/login";
+
   final DatosPrueba datos;
   VentanaLogin({Key key, @required this.datos}) : super(key: key);
   @override
-  _VentanaLogin createState() => _VentanaLogin(datos: datos);
+  _VentanaLoginState createState() => _VentanaLoginState(datos: datos);
 }
 
-class _VentanaLogin extends State<VentanaLogin> {
+class _VentanaLoginState extends State<VentanaLogin> {
 
   final DatosPrueba datos;
-  _VentanaLogin({@required this.datos});
+  _VentanaLoginState({@required this.datos});
 
   TextEditingController usuarioController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -22,41 +22,51 @@ class _VentanaLogin extends State<VentanaLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Gestión de circuitos turísticos'),
-        ),
-        body: Padding(
+      body: new Container(
+        child: new Stack(
+          children: <Widget>[
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.blue[300],
+                    Colors.blue[100],
+                    Colors.white,
+                  ],
+                  stops: [0.1, 0.2, 0.9]
+                )
+              ),
+            ),
+            Padding(
             padding: EdgeInsets.all(10),
             child: ListView(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
-                  child: Image.asset('imagenes/logoinicio.png', height: 150, width: 150),
-                ),
-/*                Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'TutorialKart',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 30),
+                  padding: EdgeInsets.only(left: 19, top: 30, bottom: 30),
+                  child: new Text(
+                    "Gestión de rutas turísticas",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'OpenSans',
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
                     )
-                    ),*/
-/*                Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 40, bottom: 10),
-                    child: Text(
-                      'Inicio de sesión',
-                      style: TextStyle(fontSize: 20),
-                    )),*/
+                  ),
+                ),
                 Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+                  padding: EdgeInsets.only(top: 10, bottom: 20),
+                  child: Image.asset('imagenes/logoinicio.png', height: 120, width: 120),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 25, bottom: 10, left: 10, right: 10),
                   child: TextField(
                     controller: usuarioController,
                     decoration: InputDecoration(
-                      icon: new Icon(Icons.person),
+                      icon: new Icon(Icons.person, color: Colors.black),
                       border: OutlineInputBorder(),
                       labelText: 'Usuario',
                     ),
@@ -68,7 +78,7 @@ class _VentanaLogin extends State<VentanaLogin> {
                     obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
-                      icon: new Icon(Icons.vpn_key),
+                      icon: new Icon(Icons.vpn_key, color: Colors.black),
                       border: OutlineInputBorder(),
                       labelText: 'Contraseña',
                     ),
@@ -108,6 +118,60 @@ class _VentanaLogin extends State<VentanaLogin> {
                       },
                     )),
                 Container(
+                  padding: EdgeInsets.only(left: 135, top: 20, right: 20),
+                  child: new Text("O inicie sesión con:",
+                    style: TextStyle(
+                      
+                    )),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 60.0,
+                          width: 60.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                offset: Offset(0, 2),
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                            image: DecorationImage(image: new AssetImage('imagenes/facebook.jpg')),
+                          )
+                        )
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 60.0,
+                          width: 60.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                offset: Offset(0, 2),
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                            image: DecorationImage(image: new AssetImage('imagenes/google.jpg')),
+                          )
+                        )
+                      )
+                    ],
+                  )
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 20),
                     child: Row(
                   children: <Widget>[
                     Text('¿No tiene cuenta?'),
@@ -124,7 +188,12 @@ class _VentanaLogin extends State<VentanaLogin> {
                   mainAxisAlignment: MainAxisAlignment.center,
                 ))
               ],
-            )));
+            )
+          )
+          ],
+        )
+      )
+    );
   }
 
     void _enviarDatos(BuildContext context, Usuario usuario){

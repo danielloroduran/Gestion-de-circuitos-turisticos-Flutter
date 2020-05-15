@@ -12,6 +12,9 @@ class Ruta{
   String _incidencias;
   String _sugerencias;
   String _localidad;
+  String _horaInicio;
+  String _horaFin;
+  String _fecha;
   int _puntuacion;
   String _foto;
   List<PuntoInteres> _puntoInteres;
@@ -19,7 +22,7 @@ class Ruta{
 
   int _turistasTotal = 0;
 
-  Ruta(String nombre, String estado, String coste, String opiniones, String incidencias, String sugerencias, String localidad, String foto, int puntuacion) {
+  Ruta(String nombre, String estado, String coste, String opiniones, String incidencias, String sugerencias, String localidad, String horaInicio, String horaFin, String foto, String fecha, int puntuacion) {
     this._nombre = nombre;
     this._estado = estado;
     this._coste = coste;
@@ -27,6 +30,9 @@ class Ruta{
     this._incidencias = incidencias;
     this._sugerencias = sugerencias;
     this._localidad = localidad;
+    this._horaInicio = horaInicio;
+    this._horaFin = horaFin;
+    this._fecha = fecha;
     this._foto = foto;
     this._puntuacion = puntuacion;
     this._puntoInteres = new List<PuntoInteres>();
@@ -41,6 +47,9 @@ class Ruta{
   String get incidencias => _incidencias;
   String get sugerencias => _sugerencias;
   String get localidad => _localidad;
+  String get horaInicio => _horaInicio;
+  String get horaFin => _horaFin;
+  String get fecha => _fecha;
   String get foto => _foto;
   int get puntuacion => _puntuacion;
   List get puntoInteres => _puntoInteres;
@@ -54,6 +63,8 @@ class Ruta{
   set incidencias(String incidencias) => _incidencias = incidencias;
   set sugerencias(String sugerencias) => _sugerencias = sugerencias;
   set localidad(String localidad) => _localidad = localidad;
+  set horaInicio(String horaInicio) => _horaInicio = horaInicio;
+  set horaFin(String horaFin) => _horaFin = horaFin;
   set foto(String foto) => _foto = foto;
   set puntuacion(int puntuacion) => _puntuacion = puntuacion;
   set puntoInteres(List<PuntoInteres> puntoInteres) => _puntoInteres = puntoInteres;
