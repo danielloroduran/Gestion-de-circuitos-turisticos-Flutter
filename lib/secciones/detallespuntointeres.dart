@@ -479,7 +479,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
             ),
             onTap: () {
               setState(() {
-      //          _editable = true;
+                _mostrarDialogo();
               });
             },
           ),
@@ -541,4 +541,34 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
     });
   }  
 
+  void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Eliminar guía?"),
+          content: new Text("Estás a punto de eliminar " + nombreController.text+ ". ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
 }

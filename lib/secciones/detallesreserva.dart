@@ -12,8 +12,7 @@ class DetallesReserva extends StatefulWidget {
   _DetallesReservaState createState() => _DetallesReservaState(ruta: ruta);
 }
 
-class _DetallesReservaState extends State<DetallesReserva>
-    with SingleTickerProviderStateMixin {
+class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProviderStateMixin {
   DatosPrueba datos;
   Ruta ruta;
 
@@ -359,9 +358,6 @@ class _DetallesReservaState extends State<DetallesReserva>
                                     new Flexible(
                                       child: new TextField(
                                         controller: opinionesController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca la opinión",
-                                        ),
                                         enabled: false,
                                         autocorrect: _editable,
                                       ),
@@ -405,10 +401,6 @@ class _DetallesReservaState extends State<DetallesReserva>
                                     new Flexible(
                                       child: new TextField(
                                         controller: incidenciasController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Introduzca las incidencias",
-                                        ),
                                         enabled: false,
                                         autocorrect: _editable,
                                       ),
@@ -452,10 +444,6 @@ class _DetallesReservaState extends State<DetallesReserva>
                                     new Flexible(
                                       child: new TextField(
                                         controller: sugerenciasController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Introduzca las sugerencias",
-                                        ),
                                         enabled: false,
                                         autocorrect: _editable,
                                       ),

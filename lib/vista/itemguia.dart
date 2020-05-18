@@ -7,34 +7,40 @@ class ItemGuia extends StatelessWidget{
   Guia _guia;
 
   ItemGuia(this._guia);
-
+  
+  @override
   Widget build(BuildContext context){
-    return ListTile(
-      leading: new CircleAvatar(
-        radius: 25.0,
-        backgroundImage: AssetImage(_guia.foto),
-        backgroundColor: Colors.transparent, 
+    return new Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
       ),
-      contentPadding: EdgeInsets.all(20),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(_guia.nombre,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500),
-            ),
-          new Text(_guia.apellidos,
-            style: TextStyle(
-              color: Colors.grey[500],
-              fontSize: 18),
-            ),
-        ],
-      ),
-      onTap: () {
-        _esperarResultado(context);
-      },
+      child: new ListTile(
+        leading: new CircleAvatar(
+          radius: 25.0,
+          backgroundImage: AssetImage(_guia.foto),
+          backgroundColor: Colors.transparent,
+        ),
+        contentPadding: EdgeInsets.all(20),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Text(_guia.nombre,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500),
+              ),
+              new Text(_guia.apellidos,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 16.0),
+                ),
+          ],
+        ),
+        onTap: () {
+          _esperarResultado(context);
+        },
+      )
     );
   }
 

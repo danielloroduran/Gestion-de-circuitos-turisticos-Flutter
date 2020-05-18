@@ -8,33 +8,39 @@ class ItemTurista extends StatelessWidget{
 
   ItemTurista(this._turista);
 
+  @override
   Widget build(BuildContext context){
-    return ListTile(
-      leading: new CircleAvatar(
-        radius: 25.0,
-        backgroundImage: AssetImage(_turista.foto),
-        backgroundColor: Colors.transparent, 
+    return new Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
       ),
-      contentPadding: EdgeInsets.all(20),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(_turista.nombre,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500),
-            ),
-          new Text(_turista.apellidos,
-            style: TextStyle(
-              color: Colors.grey[500],
-              fontSize: 18),
-            ),
-        ],
-      ),
-      onTap: () {
-        _enviarDatos(context);
-      },
+      child: new ListTile(
+        leading: new CircleAvatar(
+          radius: 25.0,
+          backgroundImage: AssetImage(_turista.foto),
+          backgroundColor: Colors.transparent,
+        ),
+        contentPadding: EdgeInsets.all(20),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Text(_turista.nombre,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500),
+              ),
+              new Text(_turista.apellidos,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 16.0),
+                ),
+          ],
+        ),
+        onTap: () {
+          _enviarDatos(context);
+        },
+      )
     );
   }
 

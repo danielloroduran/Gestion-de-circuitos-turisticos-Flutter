@@ -421,7 +421,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
             ),
             onTap: () {
               setState(() {
-      //          _editable = true;
+                _mostrarDialogo();
               });
             },
           ),
@@ -514,6 +514,37 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
         _turistas = listaTuristaActualizado;
       }
     });
+  }
+
+    void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Eliminar grupo?"),
+          content: new Text("Estás a punto de eliminar el grupo " + nombreController.text+ "y todos sus integrantes. ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
   }  
 
 }

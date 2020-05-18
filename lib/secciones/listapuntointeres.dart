@@ -54,10 +54,33 @@ class _ConstruirPuntoInteresState extends State<ListadoPuntoInteres> with Single
     return ListView.builder(
       itemCount: puntoInteres.length,
       itemBuilder: (context, int index){
-        return new Container(
-          child: ItemPuntoInteres(puntoInteres[index])
-        );
-      }
+        final item = puntoInteres[index];
+
+        return Dismissible(
+          key: Key(item.nombre),
+
+          onDismissed: (direction){
+            setState(() {
+              puntoInteres.removeAt(index);
+            });
+
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombre + " eliminado")));
+          },
+          background: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          secondaryBackground: Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          child: ItemPuntoInteres(puntoInteres[index]),
+          );
+      },
     );
   }
 

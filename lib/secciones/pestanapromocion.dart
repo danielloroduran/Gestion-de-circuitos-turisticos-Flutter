@@ -46,21 +46,37 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
   }
 
   Widget _construirLista(){
-    return Stack(children: <Widget>[
-      new Container(
-        padding: EdgeInsets.all(10),
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: ListView.builder(
-          itemCount: datos.promociones.length,
-          itemBuilder: (context, int index){
-            return new Container(
-              child: ItemPromo(datos.promociones[index])
-            );
-          }
-        )
-      )
-    ],);
+    return ListView.builder(
+      itemCount: datos.promociones.length,
+      itemBuilder: (context, int index){
+        final item = datos.promociones[index];
+
+        return Dismissible(
+          key: Key(item.nombrePromo),
+
+          onDismissed: (direction){
+            setState(() {
+              datos.promociones.removeAt(index);
+            });
+
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombrePromo + " eliminada")));
+          },
+          background: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          secondaryBackground: Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          child: ItemPromo(datos.promociones[index]),
+          );
+      },
+    );
   }
 
   void _esperarResultado(BuildContext context) async{

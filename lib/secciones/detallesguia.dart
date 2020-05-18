@@ -705,7 +705,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
             ),
             onTap: () {
               setState(() {
-      //          _editable = true;
+                _mostrarDialogo();
               });
             },
           ),
@@ -713,6 +713,37 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
 
         )
       ],
+    );
+  }
+
+  void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Eliminar guía?"),
+          content: new Text("Estás a punto de eliminar a " + nombreController.text+ ". ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
     );
   }
 

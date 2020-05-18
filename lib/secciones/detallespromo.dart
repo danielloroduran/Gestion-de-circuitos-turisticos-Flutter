@@ -536,7 +536,7 @@ class _DetallesPromoState extends State<DetallesPromo>
         Padding(
             padding: EdgeInsets.only(left: 20),
             child: Tooltip(
-              message: "Eliminar ruta",
+              message: "Eliminar promoción",
               child: GestureDetector(
                 child: new CircleAvatar(
                   backgroundColor: Colors.red,
@@ -549,12 +549,43 @@ class _DetallesPromoState extends State<DetallesPromo>
                 ),
                 onTap: () {
                   setState(() {
-                    //          _editable = true;
+                    _mostrarDialogo();
                   });
                 },
               ),
             ))
       ],
+    );
+  }
+
+    void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Eliminar promoción?"),
+          content: new Text("Estás a punto de eliminar la promoción " + nombreController.text+ ". ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
     );
   }
 

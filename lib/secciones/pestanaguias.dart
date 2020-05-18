@@ -48,10 +48,33 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
     return ListView.builder(
       itemCount: datos.guias.length,
       itemBuilder: (context, int index){
-        return new Container(
-          child: ItemGuia(datos.guias[index])
-        );
-      }
+        final item = datos.guias[index];
+
+        return Dismissible(
+          key: Key(item.nombre),
+
+          onDismissed: (direction){
+            setState(() {
+              datos.guias.removeAt(index);
+            });
+
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombre + " eliminado")));
+          },
+          background: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          secondaryBackground: Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          child: ItemGuia(datos.guias[index]),
+          );
+      },
     );
   }
 
@@ -71,6 +94,7 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
     });
 
   }
+
 
 }
 

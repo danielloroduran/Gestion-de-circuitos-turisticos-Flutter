@@ -42,14 +42,37 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
     );
   }
 
-  Widget _construirLista() {
+  Widget _construirLista(){
     return ListView.builder(
       itemCount: datos.rutas.length,
       itemBuilder: (context, int index){
-        return new Container(
-          child: ItemRuta(datos.rutas[index])
-        );
-      }
+        final item = datos.rutas[index];
+
+        return Dismissible(
+          key: Key(item.nombre),
+
+          onDismissed: (direction){
+            setState(() {
+              datos.rutas.removeAt(index);
+            });
+
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombre + " eliminada")));
+          },
+          background: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          secondaryBackground: Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20.0),
+            color: Colors.redAccent,
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          child: ItemRuta(datos.rutas[index]),
+          );
+      },
     );
   }
 

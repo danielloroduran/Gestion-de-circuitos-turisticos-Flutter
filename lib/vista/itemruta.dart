@@ -8,38 +8,44 @@ class ItemRuta extends StatelessWidget{
 
   ItemRuta(this._ruta);
 
+  @override
   Widget build(BuildContext context){
-    return ListTile(
-      leading: new CircleAvatar(
-        radius: 25.0,
-        backgroundImage: AssetImage(_ruta.foto),
-        backgroundColor: Colors.transparent, 
+    return new Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
       ),
-      contentPadding: EdgeInsets.all(20),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(_ruta.nombre,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500),
-            ),
-          new Text(_ruta.localidad,
-            style: TextStyle(
-              color: Colors.grey[500],
-              fontSize: 18),
-            ),
-        ],
-      ),
-      onTap: () {
-        _enviarDatos(context);
-      },
+      child: new ListTile(
+        leading: new CircleAvatar(
+          radius: 25.0,
+          backgroundImage: AssetImage(_ruta.foto),
+          backgroundColor: Colors.transparent,
+        ),
+        contentPadding: EdgeInsets.all(20),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Text(_ruta.nombre,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500),
+              ),
+              new Text(_ruta.localidad,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 16.0),
+                ),
+          ],
+        ),
+        onTap: () {
+          _esperarResultado(context);
+        },
+      )
     );
   }
 
-  void _enviarDatos(BuildContext context){
-    Navigator.push(
+  void _esperarResultado(BuildContext context) async{
+    final rutaActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesRuta(ruta: this._ruta),

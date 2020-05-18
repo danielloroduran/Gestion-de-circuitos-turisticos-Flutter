@@ -620,12 +620,43 @@ class _DetallesRutaState extends State<DetallesRuta>
                 ),
                 onTap: () {
                   setState(() {
-                    //          _editable = true;
+                    _mostrarDialogo();
                   });
                 },
               ),
             ))
       ],
+    );
+  }
+
+    void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Eliminar ruta?"),
+          content: new Text("Estás a punto de eliminar " + nombreController.text+ ". ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
     );
   }
 
@@ -642,4 +673,6 @@ class _DetallesRutaState extends State<DetallesRuta>
       }
     });
   }
+
+
 }
