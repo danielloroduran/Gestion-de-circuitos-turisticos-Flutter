@@ -4,7 +4,6 @@ import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 
 
-
 class ReservaRutas extends StatefulWidget{
 
   DatosPrueba datos;
@@ -42,6 +41,9 @@ class _ReservaRutasState extends State<ReservaRutas> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context){
     return new Scaffold(
+      appBar: AppBar(
+        title: new Text("Historial y reservas"),
+      ),
       body: _construirLista(),
     );
   }

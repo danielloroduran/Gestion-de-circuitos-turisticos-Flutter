@@ -39,7 +39,7 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
         onPressed: () {
           _esperarResultado(context);
         },
-      child: new Icon(Icons.add),
+      child: new Icon(Icons.person_add),
       ),
     );
   }

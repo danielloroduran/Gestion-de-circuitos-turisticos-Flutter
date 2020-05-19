@@ -48,7 +48,7 @@ class _ConstruirTuristasState extends State<ListadoTuristas> with SingleTickerPr
         onPressed: (){
           _esperarResultado(context);
         },
-        child: new Icon(Icons.add),
+        child: new Icon(Icons.person_add),
       )
     );
   }

@@ -38,7 +38,7 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
         onPressed: () {
           _esperarResultado(context);
         },
-      child: new Icon(Icons.add),
+      child: new Icon(Icons.group_add),
       ),
     );
   }

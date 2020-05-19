@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/detallesusuario.dart';
-import 'package:practica_ipo2/secciones/pestanareservas.dart';
 import 'package:practica_ipo2/secciones/pestanaguias.dart';
 import 'package:practica_ipo2/secciones/pestanapromocion.dart';
 import 'package:practica_ipo2/secciones/pestanagrupoturistas.dart';
 import 'package:practica_ipo2/secciones/pestanagestionrutas.dart';
 import 'package:practica_ipo2/secciones/ventanaAyuda.dart';
 import 'package:practica_ipo2/modelos/usuario.dart';
+import 'package:practica_ipo2/secciones/inicio.dart';
 
 
 class Home extends StatefulWidget{
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   TabController controlador;
   GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   bool enabled = true;
-  String titulo = "Historial y reservas";
+  String titulo = "Inicio";
 
   @override
   void initState(){
@@ -48,12 +48,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           accountEmail: new Text(usuario.correo),
           currentAccountPicture: new CircleAvatar(
             backgroundImage: new ExactAssetImage(usuario.foto),
-            child: new Text(usuario.nombreUsuario[0]),
+            backgroundColor: Colors.white,
+          ),
+          decoration: BoxDecoration(
+            image: new DecorationImage(
+              image: new ExactAssetImage("imagenes/fondodrawer.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         new ListTile(
           leading: new Icon(Icons.home),
-          title: new Text("Home"),
+          title: new Text("Inicio"),
           onTap: () {
             setState((){
               Navigator.pop(context);
@@ -127,13 +133,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               icon: Icon(Icons.home),
             ),
             new Tab(
-              icon: Icon(Icons.build),
-            ),
-            new Tab(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.directions_walk),
             ),
             new Tab(
               icon: Icon(Icons.people),
+            ),
+            new Tab(
+              icon: Icon(Icons.person),
             ),
             new Tab(
               icon: Icon(Icons.message),
@@ -142,11 +148,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           onTap: (indedx) {
             if(indedx == 0){
               setState((){
-                titulo = "Historial y reservas";
+                titulo = "Inicio";
               });
             }else if (indedx == 1){
               setState((){
-                titulo = "Gestión de Rutas";
+                titulo = "Gestión de rutas";
               });
             }else if(indedx == 2){
               setState((){
@@ -171,7 +177,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       ),
       body: new TabBarView(
         controller: controlador,
-        children: <Widget>[new ReservaRutas(datos: datos), new ListadoRutas(datos: datos), new ListadoGrupoTuristas(datos: datos), new ListadoGuias(datos: datos), new ListadoPromo(datos: datos)],
+        children: <Widget>[new Inicio(datos: datos), new ListadoRutas(datos: datos), new ListadoGrupoTuristas(datos: datos), new ListadoGuias(datos: datos), new ListadoPromo(datos: datos)],
       ),
     );
   }
