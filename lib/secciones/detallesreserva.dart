@@ -23,7 +23,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
   TextEditingController estadoController;
   TextEditingController costeController;
   TextEditingController opinionesController;
-  TextEditingController incidenciasController;
   TextEditingController sugerenciasController;
   TextEditingController localidadController;
   int _puntuacion;
@@ -36,7 +35,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
     estadoController = new TextEditingController();
     costeController = new TextEditingController();
     opinionesController = new TextEditingController();
-    incidenciasController = new TextEditingController();
     sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
 
@@ -45,7 +43,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
       estadoController.text = ruta.estado;
       costeController.text = ruta.coste.toString();
       opinionesController.text = ruta.opiniones;
-      incidenciasController.text = ruta.incidencias;
       sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
       _puntuacion = ruta.puntuacion;
@@ -55,7 +52,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
       estadoController.text = "";
       costeController.text = "";
       opinionesController.text = "";
-      incidenciasController.text = "";
       sugerenciasController.text = "";
       localidadController.text = "";
       _puntuacion = 0;
@@ -358,49 +354,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                     new Flexible(
                                       child: new TextField(
                                         controller: opinionesController,
-                                        enabled: false,
-                                        autocorrect: _editable,
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Incidencias",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextField(
-                                        controller: incidenciasController,
                                         enabled: false,
                                         autocorrect: _editable,
                                       ),

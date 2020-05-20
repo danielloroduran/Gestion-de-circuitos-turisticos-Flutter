@@ -73,7 +73,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
             color: Colors.redAccent,
             child: Icon(Icons.delete, color: Colors.white),
           ),
-          child: ItemPromo(datos.promociones[index]),
+          child: ItemPromo(datos, datos.promociones[index]),
           );
       },
     );

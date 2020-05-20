@@ -118,7 +118,6 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                //  _status ? _getEditButtons() : new Container()
                                   Container(
                                     child: getEditButtons()
                                   )

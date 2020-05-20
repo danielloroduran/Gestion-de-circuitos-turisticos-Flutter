@@ -113,12 +113,12 @@ class DatosPrueba{
 
     rutas = new List<Ruta>();
 
-    Ruta ruta1 = new Ruta("Ruta turística", "Contratada", "50€", "Opiniones de ruta 1", "Incidencias de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 0);
-		Ruta ruta2 = new Ruta("Ruta grastronómica", "Realizada", "100€", "Opiniones de ruta 2", "Incidencias de ruta 2", "Sugerencias de ruta 2", "Malagón", "9:00", "15:00", "imagenes/malagon.jpg", "20/05/2020", 4);
-		Ruta ruta3 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 3", "Incidencias de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "8:00", "12:00", "imagenes/miguelturra.jpg", "19/05/2020", 3);
-		Ruta ruta4 = new Ruta("Ruta relajada", "Nueva", "100€", "Opiniones de ruta 4", "Incidencias de ruta 4", "Sugerencias de ruta 4", "Puertollano", "16:00", "20:00", "imagenes/puertollano.jpg", "18/05/2020", 2);
-		Ruta ruta5 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 5", "Incidencias de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "15:00", "21:00", "imagenes/fuenteelfresno.jpg", "17/05/2020", 1);
-		Ruta ruta6 = new Ruta("Ruta cultural", "Contratada", "100€", "Opiniones de ruta 6", "Incidencias de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "8:30", "12:30", "imagenes/loscortijos.jpg", "16/05/2020", 0);
+    Ruta ruta1 = new Ruta("Ruta turística", "Contratada", "50€", "Opiniones de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 0);
+		Ruta ruta2 = new Ruta("Ruta grastronómica", "Realizada", "100€", "Opiniones de ruta 2", "Sugerencias de ruta 2", "Malagón", "9:00", "15:00", "imagenes/malagon.jpg", "20/05/2020", 4);
+		Ruta ruta3 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "8:00", "12:00", "imagenes/miguelturra.jpg", "19/05/2020", 3);
+		Ruta ruta4 = new Ruta("Ruta relajada", "Nueva", "100€", "Opiniones de ruta 4", "Sugerencias de ruta 4", "Puertollano", "16:00", "20:00", "imagenes/puertollano.jpg", "18/05/2020", 2);
+		Ruta ruta5 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "15:00", "21:00", "imagenes/fuenteelfresno.jpg", "17/05/2020", 1);
+		Ruta ruta6 = new Ruta("Ruta cultural", "Contratada", "100€", "Opiniones de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "8:30", "12:30", "imagenes/loscortijos.jpg", "16/05/2020", 0);
 
     ruta1.grupoTurista.add(gt1);
     ruta1.setTuristasTotal();
@@ -150,11 +150,11 @@ class DatosPrueba{
 
     ayuda = new List<Ayuda>();
 
-    Ayuda ayuda1 = new Ayuda(Icons.home, "Historial y reservas", "En esta pestaña se visualiza el historial y las reservas", "Esta pestaña se utiliza como se indicaría aquí.");
-    Ayuda ayuda2 = new Ayuda(Icons.build, "Gestión de rutas", "En esta pestaña se gestionan las rutas", "Esta pestaña se utiliza como se indicaría aquí.");
-    Ayuda ayuda3 = new Ayuda(Icons.person, "Turistas", "En esta pestaña se visualizan los turistas", "Esta pestaña se utiliza como se indicaría aquí.");
-    Ayuda ayuda4 = new Ayuda(Icons.people, "Guías", "En esta pestaña se visualizan los guías", "Esta pestaña se utiliza como se indicaría aquí.");
-    Ayuda ayuda5 = new Ayuda(Icons.message, "Reservas", "En esta pestaña se visualizan las promociones", "Esta pestaña se utiliza como se indicaría aquí.");
+    Ayuda ayuda1 = new Ayuda(Icons.home, "Historial y reservas", "En esta pestaña se visualiza el historial y las reservas", "En esta pestaña el usuario podrá visualizar las estadísticas como el número de usuarios, número de rutas realizadas, la valoración media de las rutas, guías y opiniones, los lugares de España donde se utiliza la aplicación.");
+    Ayuda ayuda2 = new Ayuda(Icons.directions_walk, "Gestión de rutas", "En esta pestaña se gestionan las rutas", "En esta pestaña el usuario podrá visualizar las rutas existentes, crear una nueva ruta, modificar y eliminar una ruta ya existente.");
+    Ayuda ayuda3 = new Ayuda(Icons.people, "Turistas", "En esta pestaña se visualizan los turistas", "En esta pestaña el usuario podrá visualizar los turistas existentes, añadir un nuevo turista, modificar y eliminar un turista ya existente.");
+    Ayuda ayuda4 = new Ayuda(Icons.person, "Guías", "En esta pestaña se visualizan los guías", "En esta pestaña el usuario podrá visualizar los guías existentes, añadir un nuevo guía, modificar y eliminar un guía ya existente.");
+    Ayuda ayuda5 = new Ayuda(Icons.message, "Promociones", "En esta pestaña se visualizan las promociones", "En esta pestaña el usuario podrá visualizar las promociones existentes, crear una nueva promoción, modificar y eliminar una promoción ya existente.");
 
     ayuda.add(ayuda1);
     ayuda.add(ayuda2);

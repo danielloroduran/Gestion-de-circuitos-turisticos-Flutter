@@ -285,7 +285,13 @@ class _InicioState extends State<Inicio> with SingleTickerProviderStateMixin{
                   )
                 ]
               ),
-              child: new Image.asset("imagenes/mapa.png", fit: BoxFit.contain),
+              child: Tooltip(
+                message: "Acceso a detalles de uso",
+                child: InkWell(
+                  onTap: () {},
+                  child: Image.asset("imagenes/mapa.png", fit: BoxFit.contain),
+                )
+              )
             ),
           ),
         ],

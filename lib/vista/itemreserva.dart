@@ -45,35 +45,6 @@ class ItemReserva extends StatelessWidget{
           },
         )
       );
-
-/*    return ListTile(
-      leading: new CircleAvatar(
-        radius: 25.0,
-        backgroundImage: AssetImage(_ruta.foto),
-        backgroundColor: Colors.transparent, 
-      ),
-      contentPadding: EdgeInsets.all(20),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(_ruta.nombre,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500),
-            ),
-          new Text(_ruta.localidad,
-            style: TextStyle(
-              color: Colors.grey[500],
-              fontSize: 18),
-            ),
-        ],
-      ),
-      trailing: new Text(_ruta.estado, style: TextStyle(color: Colors.black, fontSize: 22)),
-      onTap: () {
-        _enviarDatos(context);
-      },
-    );*/
   }
 
     Text _crearEstrellas() {

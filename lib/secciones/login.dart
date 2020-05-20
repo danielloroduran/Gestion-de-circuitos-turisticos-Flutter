@@ -114,6 +114,8 @@ class _VentanaLoginState extends State<VentanaLogin> {
                           String fecha = ahora.hour.toString()+":"+ahora.minute.toString()+", "+ahora.day.toString()+"/"+ahora.month.toString()+"/"+ahora.year.toString();
                           usuario.ultimaConexion = fecha;
                           _enviarDatos(context, usuario);
+                        }else{
+                          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Usuario o contraseña no válido")));
                         }
                       },
                     )),
@@ -129,7 +131,7 @@ class _VentanaLoginState extends State<VentanaLogin> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      GestureDetector(
+                      InkWell(
                         onTap: () {},
                         child: Container(
                           height: 60.0,
@@ -148,7 +150,7 @@ class _VentanaLoginState extends State<VentanaLogin> {
                           )
                         )
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {},
                         child: Container(
                           height: 60.0,

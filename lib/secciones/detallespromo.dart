@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/turista.dart';
+
+import 'listaturistas.dart';
 
 class DetallesPromo extends StatefulWidget {
   Promocion promo;
@@ -9,7 +12,7 @@ class DetallesPromo extends StatefulWidget {
   DetallesPromo({Key key, this.datos, this.promo}) : super(key: key);
 
   @override
-  _DetallesPromoState createState() => _DetallesPromoState(promo: promo);
+  _DetallesPromoState createState() => _DetallesPromoState(datos: datos, promo: promo);
 }
 
 class _DetallesPromoState extends State<DetallesPromo>
@@ -17,7 +20,7 @@ class _DetallesPromoState extends State<DetallesPromo>
   DatosPrueba datos;
   Promocion promo;
 
-  _DetallesPromoState({this.promo});
+  _DetallesPromoState({this.datos, this.promo});
 
   bool _editable = false;
   TextEditingController nombreController;
@@ -26,6 +29,7 @@ class _DetallesPromoState extends State<DetallesPromo>
   TextEditingController descuentoController;
   TextEditingController precioFinalController;
   TextEditingController localidadController;
+  List<Turista> _turistas;
   String _foto;
 
   void initState() {
@@ -37,6 +41,7 @@ class _DetallesPromoState extends State<DetallesPromo>
     descuentoController = new TextEditingController();
     precioFinalController = new TextEditingController();
     localidadController = new TextEditingController();
+    _turistas = datos.turistasGeneral;
 
     if (promo != null) {
       nombreController.text = promo.nombrePromo;
@@ -55,7 +60,6 @@ class _DetallesPromoState extends State<DetallesPromo>
       localidadController.text = "";
       _foto = "imagenes/rutagenerica.jpg";
       _editable = true;
-
     }
   }
 
@@ -471,7 +475,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                     onPressed: () {
 
                       setState(() {
-  //                      _esperarResultado(context);
+                        _esperarResultado(context);
                       });
                     },
                     shape: new RoundedRectangleBorder(
@@ -558,7 +562,15 @@ class _DetallesPromoState extends State<DetallesPromo>
     );
   }
 
-    void _mostrarDialogo(){
+  void _esperarResultado(BuildContext context) {
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ListadoTuristas(turistas: _turistas)),
+    );
+  }
+
+  void _mostrarDialogo(){
     showDialog(
       context: context,
       builder: (BuildContext context){
