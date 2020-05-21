@@ -75,7 +75,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
             Column(
               children: <Widget>[
                 new Container(
-                  height: 250.0,
+                  height: 200.0,
                   color: Colors.white,
                   child: new Column(
                     children: <Widget>[

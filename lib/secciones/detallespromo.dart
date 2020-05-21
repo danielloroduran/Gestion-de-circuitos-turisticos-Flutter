@@ -74,7 +74,8 @@ class _DetallesPromoState extends State<DetallesPromo>
                 Stack(
                   children: <Widget>[
                     new Container(
-                      height: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.30,
+                      width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         boxShadow: [
@@ -106,6 +107,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 1.2,
+                                backgroundColor: Colors.black45
                               ),
                             ),
                             Row(
@@ -115,6 +117,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 20.0,
+                                    backgroundColor: Colors.black
                                   )
                                 )
                               ],
@@ -301,6 +304,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                                   "Introduzca el precio inicial"),
                                           enabled: _editable,
                                           autocorrect: _editable,
+                                          keyboardType: TextInputType.number,
                                         ),
                                       ),
                                       flex: 2,
@@ -315,6 +319,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                                   "Introduzca el descuento"),
                                           enabled: _editable,
                                           autocorrect: _editable,
+                                          keyboardType: TextInputType.number,
                                         ),
                                       ),
                                       flex: 2,
@@ -358,9 +363,6 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     new Flexible(
                                       child: new TextField(
                                         controller: precioFinalController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca el precio final",
-                                        ),
                                         enabled: false,
                                         autocorrect: _editable,
                                       ),

@@ -113,12 +113,12 @@ class DatosPrueba{
 
     rutas = new List<Ruta>();
 
-    Ruta ruta1 = new Ruta("Ruta turística", "Contratada", "50€", "Opiniones de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 0);
-		Ruta ruta2 = new Ruta("Ruta grastronómica", "Realizada", "100€", "Opiniones de ruta 2", "Sugerencias de ruta 2", "Malagón", "9:00", "15:00", "imagenes/malagon.jpg", "20/05/2020", 4);
-		Ruta ruta3 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "8:00", "12:00", "imagenes/miguelturra.jpg", "19/05/2020", 3);
-		Ruta ruta4 = new Ruta("Ruta relajada", "Nueva", "100€", "Opiniones de ruta 4", "Sugerencias de ruta 4", "Puertollano", "16:00", "20:00", "imagenes/puertollano.jpg", "18/05/2020", 2);
-		Ruta ruta5 = new Ruta("Ruta cultural", "Nueva", "50€", "Opiniones de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "15:00", "21:00", "imagenes/fuenteelfresno.jpg", "17/05/2020", 1);
-		Ruta ruta6 = new Ruta("Ruta cultural", "Contratada", "100€", "Opiniones de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "8:30", "12:30", "imagenes/loscortijos.jpg", "16/05/2020", 0);
+    Ruta ruta1 = new Ruta("Ruta turística", "Contratada", 50, "Opiniones de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 25554, 0);
+		Ruta ruta2 = new Ruta("Ruta grastronómica", "Realizada", 100, "Opiniones de ruta 2", "Sugerencias de ruta 2", "Malagón", "9:00", "15:00", "imagenes/malagon.jpg", "20/05/2020", 34111, 4);
+		Ruta ruta3 = new Ruta("Ruta cultural", "Nueva", 50, "Opiniones de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "8:00", "12:00", "imagenes/miguelturra.jpg", "19/05/2020", null, 3);
+		Ruta ruta4 = new Ruta("Ruta relajada", "Nueva", 100, "Opiniones de ruta 4", "Sugerencias de ruta 4", "Puertollano", "16:00", "20:00", "imagenes/puertollano.jpg", "18/05/2020", null, 2);
+		Ruta ruta5 = new Ruta("Ruta cultural", "Nueva", 50, "Opiniones de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "15:00", "21:00", "imagenes/fuenteelfresno.jpg", "17/05/2020", null, 1);
+		Ruta ruta6 = new Ruta("Ruta cultural", "Contratada", 100, "Opiniones de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "8:30", "12:30", "imagenes/loscortijos.jpg", "16/05/2020", 35412, 0);
 
     ruta1.grupoTurista.add(gt1);
     ruta1.setTuristasTotal();

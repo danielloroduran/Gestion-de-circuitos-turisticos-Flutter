@@ -89,7 +89,8 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                 Stack(
                   children: <Widget>[
                     new Container(
-                      height: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.30,
+                      width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         boxShadow: [

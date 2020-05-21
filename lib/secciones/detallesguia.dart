@@ -93,7 +93,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
             Column(
               children: <Widget>[
                 new Container(
-                  height: 250.0,
+                  height: 200.0,
                   color: Colors.white,
                   child: new Column(
                     children: <Widget>[
@@ -189,7 +189,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            left: 25.0, right: 25.0, top: .0),
+                            left: 25.0, right: 25.0, top: 2.0),
                             child: new Row(
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[

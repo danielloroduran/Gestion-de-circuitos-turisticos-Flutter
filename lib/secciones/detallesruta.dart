@@ -77,7 +77,8 @@ class _DetallesRutaState extends State<DetallesRuta>
                 Stack(
                   children: <Widget>[
                     new Container(
-                      height: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.30,
+                      width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         boxShadow: [
@@ -109,6 +110,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 1.2,
+                                backgroundColor: Colors.black45
                               ),
                             ),
                             Row(
@@ -118,6 +120,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 20.0,
+                                    backgroundColor: Colors.black
                                   )
                                 )
                               ],
@@ -234,7 +237,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Coste",
+                                          "Coste(€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -272,6 +275,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                           hintText: "Introduzca el coste",
                                         ),
                                         enabled: _editable,
+                                        keyboardType: TextInputType.number,
                                       ),
                                       flex: 2,
                                     ),

@@ -18,13 +18,13 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
 
   _DetallesReservaState({this.ruta});
 
-  bool _editable = false;
   TextEditingController nombreController;
   TextEditingController estadoController;
   TextEditingController costeController;
   TextEditingController opinionesController;
   TextEditingController sugerenciasController;
   TextEditingController localidadController;
+  TextEditingController identificadorController;
   int _puntuacion;
   String _foto;
 
@@ -37,6 +37,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
     opinionesController = new TextEditingController();
     sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
+    identificadorController = new TextEditingController();
 
     if (ruta != null) {
       nombreController.text = ruta.nombre;
@@ -45,25 +46,16 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
       opinionesController.text = ruta.opiniones;
       sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
+      identificadorController.text = ruta.reserva.toString();
       _puntuacion = ruta.puntuacion;
       _foto = ruta.foto;
-    } else {
-      nombreController.text = "";
-      estadoController.text = "";
-      costeController.text = "";
-      opinionesController.text = "";
-      sugerenciasController.text = "";
-      localidadController.text = "";
-      _puntuacion = 0;
-      _foto = "imagenes/rutagenerica.jpg";
-      _editable = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: new Text("Historial")),
+        appBar: new AppBar(title: new Text("Detalles de la reserva")),
         body: new Container(
             color: Colors.white,
             child: new ListView(
@@ -71,7 +63,8 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                 Stack(
                   children: <Widget>[
                     new Container(
-                      height: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.45,
+                      width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         boxShadow: [
@@ -154,27 +147,30 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                     left: 25.0, right: 25.0, top: 25.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Nombre",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Nombre",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      ],
+                                      ),
+                                      flex: 2,
                                     ),
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Identificador de reserva",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    )
                                   ],
                                 )),
                             Padding(
@@ -182,17 +178,25 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                     left: 25.0, right: 25.0, top: 2.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        controller: nombreController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca el nombre",
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextField(
+                                          controller: nombreController,
+                                          enabled: false,
                                         ),
-                                        enabled: _editable,
-                                        autocorrect: _editable,
                                       ),
-                                    )
+                                      flex: 2,
+                                    ),
+                                    new Flexible(
+                                      child: new TextField(
+                                        controller: identificadorController,
+                                        enabled: false,
+                                      ),
+                                      flex: 2,
+                                    ),
                                   ],
                                 )),
                             Padding(
@@ -238,11 +242,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextField(
                                           controller: estadoController,
-                                          decoration: const InputDecoration(
-                                            hintText: "Introduzca el estado",
-                                          ),
-                                          enabled: _editable,
-                                          autocorrect: _editable,
+                                          enabled: false,
                                         ),
                                       ),
                                       flex: 2,
@@ -250,10 +250,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                     new Flexible(
                                       child: new TextField(
                                         controller: costeController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca el coste",
-                                        ),
-                                        enabled: _editable,
+                                        enabled: false,
                                       ),
                                       flex: 2,
                                     ),
@@ -302,19 +299,12 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextField(
                                           controller: localidadController,
-                                          decoration: const InputDecoration(
-                                              hintText:
-                                                  "Introduzca la localidad"),
-                                          enabled: _editable,
-                                          autocorrect: _editable,
+                                          enabled: false,
                                         ),
                                       ),
                                       flex: 2,
                                     ),
-                                    new Flexible(
-                                      child: _crearEstrellas(),
-                                      flex: 2,
-                                    ),
+                                    _puntuacion == 0 ? new Flexible(child: Text("No disponible"), flex: 2) : new Flexible(child: _crearEstrellas(), flex: 2)
                                   ],
                                 )),
                             Padding(
@@ -355,7 +345,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                       child: new TextField(
                                         controller: opinionesController,
                                         enabled: false,
-                                        autocorrect: _editable,
                                       ),
                                     )
                                   ],
@@ -398,7 +387,6 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                       child: new TextField(
                                         controller: sugerenciasController,
                                         enabled: false,
-                                        autocorrect: _editable,
                                       ),
                                     )
                                   ],
