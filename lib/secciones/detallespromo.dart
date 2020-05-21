@@ -3,6 +3,7 @@ import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
 
+import 'listadoturistaspromo.dart';
 import 'listaturistas.dart';
 
 class DetallesPromo extends StatefulWidget {
@@ -568,7 +569,7 @@ class _DetallesPromoState extends State<DetallesPromo>
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListadoTuristas(turistas: _turistas)),
+      MaterialPageRoute(builder: (context) => ListadoTuristasPromo(turistas: _turistas)),
     );
   }
 

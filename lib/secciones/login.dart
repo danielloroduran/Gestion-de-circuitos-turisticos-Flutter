@@ -114,8 +114,6 @@ class _VentanaLoginState extends State<VentanaLogin> {
                           String fecha = ahora.hour.toString()+":"+ahora.minute.toString()+", "+ahora.day.toString()+"/"+ahora.month.toString()+"/"+ahora.year.toString();
                           usuario.ultimaConexion = fecha;
                           _enviarDatos(context, usuario);
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Usuario o contraseña no válido")));
                         }
                       },
                     )),

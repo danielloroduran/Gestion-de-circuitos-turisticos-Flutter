@@ -6,6 +6,7 @@ class Turista{
   String _dni;
   String _correo;
   String _foto;
+  bool _seleccionado = false;
   int _edad; 
 
   Turista(String nombre, String apellidos, int movil, String dni, String correo, String foto, int edad){
@@ -26,7 +27,8 @@ class Turista{
   String get dni => _dni;
   String get correo => _correo;
   String get foto => _foto;
-  int get edad => _edad; 
+  int get edad => _edad;
+  bool get seleccionado => _seleccionado; 
 
 
 
@@ -37,6 +39,7 @@ class Turista{
   set correo(String correo) => _correo = correo;
   set foto(String foto) => _foto = foto;
   set edad(int edad) => _edad = edad;
+  set seleccionado(bool seleccionado) => _seleccionado = seleccionado;
 
 
 }
