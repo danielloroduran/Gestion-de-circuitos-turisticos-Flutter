@@ -99,7 +99,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           applicationIcon: new Icon(Icons.info),
           icon: new Icon(Icons.info),
           applicationName: "Gestión de circuitos",
-          applicationVersion: "v1.0",
+          applicationVersion: "v1.0    04/06/2020",
+          applicationLegalese: "Daniel, Sergio, Juan Antonio",
+          
         ),
         new ListTile(
           leading: new Icon(Icons.close),

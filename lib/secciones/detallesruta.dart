@@ -28,9 +28,14 @@ class _DetallesRutaState extends State<DetallesRuta>
   TextEditingController opinionesController;
   TextEditingController sugerenciasController;
   TextEditingController localidadController;
-  int _puntuacion;
+  TextEditingController fechaController;
+  TextEditingController horaInicioController;
+  TextEditingController horaFinController;
   String _foto;
   List<PuntoInteres> _puntoInteres;
+  TimeOfDay _horaInicio;
+  TimeOfDay _horaFin;
+  DateTime _fecha;
 
   void initState() {
     super.initState();
@@ -41,6 +46,12 @@ class _DetallesRutaState extends State<DetallesRuta>
     opinionesController = new TextEditingController();
     sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
+    fechaController = new TextEditingController();
+    horaInicioController = new TextEditingController();
+    horaFinController = new TextEditingController();
+    _horaInicio = TimeOfDay.now();
+    _horaFin = TimeOfDay.now();
+    _fecha = DateTime.now();
 
     if (ruta != null) {
       nombreController.text = ruta.nombre;
@@ -49,8 +60,10 @@ class _DetallesRutaState extends State<DetallesRuta>
       opinionesController.text = ruta.opiniones;
       sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
+      fechaController.text = ruta.fecha;
+      horaInicioController.text = ruta.horaInicio;
+      horaFinController.text = ruta.horaFin;
       _puntoInteres = ruta.puntoInteres;
-      _puntuacion = ruta.puntuacion;
       _foto = ruta.foto;
     } else {
       nombreController.text = "";
@@ -59,7 +72,9 @@ class _DetallesRutaState extends State<DetallesRuta>
       opinionesController.text = "";
       sugerenciasController.text = "";
       localidadController.text = "";
-      _puntuacion = 0;
+      fechaController.text = "";
+      horaInicioController.text = "";
+      horaFinController.text = "";
       _foto = "imagenes/rutagenerica.jpg";
       _editable = true;
       _puntoInteres = new List<PuntoInteres>();
@@ -300,16 +315,22 @@ class _DetallesRutaState extends State<DetallesRuta>
                                       flex: 2,
                                     ),
                                     Expanded(
+                                      child: _editable ? new Container(width: 20) : new Container(),
+                                    ),
+                                    Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Puntuación",
+                                          "Fecha",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                       flex: 2,
-                                    )
+                                    ),
+                                    Expanded(
+                                      child: _editable ? getFechaButton() : new Container(),
+                                    ),
                                   ],
                                 )),
                             Padding(
@@ -334,37 +355,53 @@ class _DetallesRutaState extends State<DetallesRuta>
                                       flex: 2,
                                     ),
                                     new Flexible(
-                                      child: _crearEstrellas(),
+                                      child: new TextField(
+                                        controller: fechaController,
+                                        decoration: const InputDecoration(
+                                          hintText: "Introduzca una fecha para esta ruta"
+                                        ),
+                                        keyboardType: TextInputType.datetime,
+                                      ),
                                       flex: 2,
                                     ),
                                   ],
-                                )),
+                                )
+                              ),
                             Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 25.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Opiniones",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Hora de inicio",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      ],
+                                      ),
+                                      flex: 2,
                                     ),
+                                    Expanded(
+                                      child: _editable ? getHoraInicioButton() : new Container(),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Hora de fin",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    ),
+                                    Expanded(
+                                      child: _editable ? getHoraFinButton() : new Container(),
+                                    ),                                    
                                   ],
                                 )),
                             Padding(
@@ -372,66 +409,38 @@ class _DetallesRutaState extends State<DetallesRuta>
                                     left: 25.0, right: 25.0, top: 2.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        controller: opinionesController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca la opinión",
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextField(
+                                          controller: horaInicioController,
+                                          decoration: const InputDecoration(
+                                              hintText:
+                                                  "Introduzca la hora de inicio"),
+                                          enabled: _editable,
+                                          autocorrect: _editable,
+                                          keyboardType: TextInputType.datetime,
                                         ),
-                                        enabled: false,
-                                        autocorrect: _editable,
                                       ),
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Sugerencias",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                      flex: 2,
+                                    ),
+                                    new Flexible(
+                                      child: new TextField(
+                                        controller: horaFinController,
+                                        decoration: const InputDecoration(
+                                          hintText: "Introduzca la hora de fin"
                                         ),
-                                      ],
+                                        enabled: _editable,
+                                        autocorrect: _editable,
+                                        keyboardType: TextInputType.datetime,
+                                      ),
+                                      flex: 2,
                                     ),
                                   ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextField(
-                                        controller: sugerenciasController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Introduzca las sugerencias",
-                                        ),
-                                        enabled: false,
-                                        autocorrect: _editable,
-                                      ),
-                                    )
-                                  ],
-                                )),
+                                )
+                              ),
                             Container(
                               child: getListPuntoInteresButton(),
                             ),
@@ -441,16 +450,6 @@ class _DetallesRutaState extends State<DetallesRuta>
                         )))
               ],
             )));
-  }
-
-  Text _crearEstrellas() {
-    String estrellas = '';
-
-    for (int i = 0; i < _puntuacion; i++) {
-      estrellas += '⭐ ';
-    }
-    estrellas.trim();
-    return Text(estrellas);
   }
 
   @override
@@ -482,6 +481,69 @@ class _DetallesRutaState extends State<DetallesRuta>
             )))),
           ],
         ));
+  }
+
+  Widget getHoraInicioButton() {
+      return Tooltip(
+          message: "Editar hora de inicio",
+          child: GestureDetector(
+            child: new CircleAvatar(
+              backgroundColor: Colors.yellow[300],
+              radius: 13.0,
+              child: new Icon(
+                Icons.alarm,
+                color: Colors.black,
+                size: 15.0,
+              ),
+            ),
+            onTap: () {
+              seleccionarHoraInicio(context);
+            },
+          ),
+        );
+
+  }
+
+  Widget getHoraFinButton() {
+      return Tooltip(
+          message: "Editar hora de fin",
+          child: GestureDetector(
+            child: new CircleAvatar(
+              backgroundColor: Colors.yellow[300],
+              radius: 13.0,
+              child: new Icon(
+                Icons.alarm,
+                color: Colors.black,
+                size: 15.0,
+              ),
+            ),
+            onTap: () {
+              seleccionarHoraFin(context);
+            },
+          ),
+        );
+
+  }
+
+  Widget getFechaButton() {
+      return Tooltip(
+          message: "Editar fecha",
+          child: GestureDetector(
+            child: new CircleAvatar(
+              backgroundColor: Colors.yellow[300],
+              radius: 13.0,
+              child: new Icon(
+                Icons.calendar_today,
+                color: Colors.black,
+                size: 15.0,
+              ),
+            ),
+            onTap: () {
+              seleccionarFecha(context);
+            },
+          ),
+        );
+
   }
 
   Widget getSaveButton() {
@@ -582,7 +644,47 @@ class _DetallesRutaState extends State<DetallesRuta>
     );
   }
 
-    void _mostrarDialogo(){
+  Future<Null> seleccionarHoraInicio(BuildContext context) async{
+
+    _horaInicio = await showTimePicker(
+      context: context,
+      initialTime: _horaInicio,
+    );
+
+    setState(() {
+      horaInicioController.text = _horaInicio.hour.toString() + ":" + _horaInicio.minute.toString();
+    });
+
+  }
+
+  Future<Null> seleccionarHoraFin(BuildContext context) async{
+
+    _horaFin = await showTimePicker(
+      context: context,
+      initialTime: _horaFin,
+    );
+
+    setState(() {
+      horaFinController.text = _horaFin.hour.toString() + ":" + _horaFin.minute.toString();
+    });
+
+  }
+
+  Future<Null> seleccionarFecha(BuildContext context) async {
+
+    _fecha = await showDatePicker(
+      context: context,
+      initialDate: _fecha,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2200),
+    );
+
+    setState(() {
+      fechaController.text = _fecha.day.toString() + "/" + _fecha.month.toString() + "/" + _fecha.year.toString();
+    });
+  } 
+
+  void _mostrarDialogo(){
     showDialog(
       context: context,
       builder: (BuildContext context){

@@ -332,89 +332,68 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     left: 25.0, right: 25.0, top: 25.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Precio final(€)",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Precio Final(€)",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      ],
+                                      ),
+                                      flex: 2,
                                     ),
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Localidad",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    )
                                   ],
                                 )),
-                            Padding(
+                                Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 2.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        controller: precioFinalController,
-                                        enabled: false,
-                                        autocorrect: _editable,
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Localidad",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextField(
+                                          controller: precioFinalController,
+                                          decoration: const InputDecoration(
+                                              hintText:
+                                                  "Introduzca el precio inicial"),
+                                          enabled: _editable,
+                                          autocorrect: _editable,
+                                          keyboardType: TextInputType.number,
                                         ),
-                                      ],
+                                      ),
+                                      flex: 2,
                                     ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        controller: localidadController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Introduzca la localidad",
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextField(
+                                          controller: localidadController ,
+                                          decoration: const InputDecoration(
+                                              hintText:
+                                                  "Introduzca la localidad"),
+                                          enabled: _editable,
+                                          autocorrect: _editable,
                                         ),
-                                        enabled: _editable,
-                                        autocorrect: _editable,
                                       ),
-                                    )
+                                      flex: 2,
+                                    ),
                                   ],
                                 )),
                             Container(
@@ -463,7 +442,7 @@ class _DetallesPromoState extends State<DetallesPromo>
 
   Widget getListEnviarAButton(){
     return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
