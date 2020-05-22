@@ -30,6 +30,11 @@ class ItemPuntoInteres extends StatelessWidget{
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500),
               ),
+            new Text("Horario: "+_puntoInteres.horario,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16.0,
+              ))
           ],
         ),
         onTap: () {

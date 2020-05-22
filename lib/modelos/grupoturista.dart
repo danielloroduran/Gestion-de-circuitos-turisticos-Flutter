@@ -9,13 +9,15 @@ class GrupoTurista{
   String _descripcion;
   String _intereses;
   String _restricciones;
+  String _foto;
 
-  GrupoTurista(String nombreGrupo, String tipo, String descripcion, String intereses, String restricciones){
+  GrupoTurista(String nombreGrupo, String tipo, String descripcion, String intereses, String restricciones, String foto){
     this._nombreGrupo = nombreGrupo;
     this._tipo = tipo;
     this._descripcion = descripcion;
     this._intereses = intereses;
     this._restricciones = restricciones;
+    this._foto = foto;
     this._turistas = new List<Turista>();
     this._numIntegrantes = this._turistas.length;
   }
@@ -25,6 +27,7 @@ class GrupoTurista{
   String get descripcion => _descripcion;
   String get intereses => _intereses;
   String get restricciones => _restricciones;
+  String get foto => _foto;
   int get numIntegrantes => _numIntegrantes;
   List get turistas => _turistas;
 
@@ -33,6 +36,7 @@ class GrupoTurista{
   set descripcion(String descripcion) => _descripcion = descripcion;
   set intereses(String intereses) => _intereses = intereses;
   set restricciones(String restricciones) => _restricciones = restricciones;
+  set foto(String foto) => _foto = foto;
   set turistas(List<Turista> turistas) => _turistas = turistas;
 
   void setNumIntegrantes() => this._numIntegrantes = this._turistas.length;

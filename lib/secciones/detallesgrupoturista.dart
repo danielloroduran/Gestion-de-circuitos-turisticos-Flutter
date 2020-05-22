@@ -30,6 +30,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
   TextEditingController integrantesController;
   List<Turista> _turistas;
   String _tipoGrupo;
+  String _foto;
 
   List<String> _tipos = ["Tipo 1", "Tipo 2", "Tipo 3"];
   List<DropdownMenuItem<String>> _tiposDropdown;
@@ -52,6 +53,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
       integrantesController.text = grupo.numIntegrantes.toString();
       _tipoGrupo = grupo.tipo;
       _turistas = grupo.turistas;
+      _foto = grupo.foto;
     }else{
       nombreController.text = "";
       descripcionController.text = "";
@@ -59,6 +61,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
       restriccionesController.text = "";
       integrantesController.text = "0";
       _tipoGrupo = _tiposDropdown[0].value;
+      _foto = "imagenes/grupo.jpg";
       _editable = true;
       _turistas = new List<Turista>();
     }
@@ -88,6 +91,38 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
           children: <Widget>[
             Column(
               children: <Widget>[
+                new Container(
+                  height: 180.0,
+                  color: Colors.white,
+                  child: new Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 25.0),
+                        child: new Stack(fit: StackFit.loose,
+                        children: <Widget>[
+                          new Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Container(
+                                width: 140.0,
+                                height: 140.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                    image: new ExactAssetImage(_foto),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          _editable ? getFotoButton() : new Container(),
+                        ])
+                      )
+                    ],
+                  )
+                ),
                 new Container(
                   color: Colors.white,
                   child: Padding(
@@ -377,6 +412,33 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
             )
           ],
         )
+      )
+    );
+  }
+
+  Widget getFotoButton(){
+    return new Padding(
+      padding: EdgeInsets.only(top: 90.0, right: 100.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Tooltip(
+            message: "Editar foto",
+            child: GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 25.0,
+                child: new Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                )
+              ),
+              onTap: () {
+                
+              }
+            ),
+          )
+        ],
       )
     );
   }

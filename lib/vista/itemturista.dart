@@ -24,17 +24,23 @@ class ItemTurista extends StatelessWidget{
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(_turista.nombre,
+            new Text(_turista.nombre + " " + _turista.apellidos,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500),
               ),
-              new Text(_turista.apellidos,
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontSize: 16.0),
-                ),
+            new Row(
+              children: <Widget>[
+                new Icon(Icons.phone, color: Colors.grey[500]),
+                new Text(" "+_turista.movil.toString(), 
+                  style: TextStyle(
+                      color: Colors.grey[500], 
+                      fontSize: 16.0
+                    ),
+                )
+              ],
+            )
           ],
         ),
         onTap: () {

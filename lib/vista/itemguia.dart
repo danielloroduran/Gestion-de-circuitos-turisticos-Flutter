@@ -24,17 +24,23 @@ class ItemGuia extends StatelessWidget{
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(_guia.nombre,
+            new Text(_guia.nombre +" "+ _guia.apellidos,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500),
               ),
-              new Text(_guia.apellidos,
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontSize: 16.0),
-                ),
+              new Row(
+                children: <Widget>[
+                  new Icon(Icons.phone, color: Colors.grey[500]),
+                  new Text(" "+_guia.movil.toString(),
+                    style: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 16.0),
+                  ),
+                ],
+              )
+
           ],
         ),
         onTap: () {

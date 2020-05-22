@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
-import 'package:practica_ipo2/vista/itemturista.dart';
 
 class ListadoTuristasPromo extends StatefulWidget{
 
@@ -38,6 +37,18 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
     return new Scaffold(
       appBar: new AppBar(
           title: Text ("Turistas"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Seleccionar todos", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                setState(() {
+                  for(int i = 0; i < turistas.length; i++){
+                    turistas[i].seleccionado = true;
+                  }
+                });
+              },
+            )
+          ],
         ),
         body: ListView (
           children: List.generate (turistas.length, (index) {
@@ -61,8 +72,7 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
                   )
                 ),
               ),
-              title: Text (turistas[index].nombre.toString(), style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-              subtitle: Text (turistas[index].apellidos, style: TextStyle(fontSize: 16.0)),
+              title: Text (turistas[index].nombre + " " + turistas[index].apellidos, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
               trailing: (turistas[index].seleccionado)
                   ? Icon(Icons.check_box)
                   : Icon(Icons.check_box_outline_blank),
@@ -77,6 +87,7 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
           onPressed: () {
             _mostrarDialogo();
           },
+          tooltip: "Enviar promoción",
         )
     );
   }

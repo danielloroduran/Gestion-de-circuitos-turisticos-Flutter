@@ -81,9 +81,9 @@ class DatosPrueba{
 
     grupoTurista = new List<GrupoTurista>();
 
-    GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Tipo 1", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1");
-		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Tipo 2", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2");
-    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Tipo 3", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3");
+    GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Tipo 1", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1", "imagenes/grupo.jpg");
+		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Tipo 2", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2", "imagenes/grupo.jpg");
+    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Tipo 3", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3", "imagenes/grupo.jpg");
 
     gt1.turistas.add(turista1);
 		gt1.turistas.add(turista2);

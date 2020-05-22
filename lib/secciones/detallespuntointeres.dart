@@ -122,6 +122,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 1.2,
+                                backgroundColor: Colors.black45,
                               ),
                             ),
                           ],

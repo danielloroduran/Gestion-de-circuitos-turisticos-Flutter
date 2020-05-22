@@ -18,7 +18,8 @@ class ItemGrupo extends StatelessWidget{
       child: new ListTile(
         leading: new CircleAvatar(
           radius: 25.0,
-          child: new Text(_grupoTurista.nombreGrupo[0], style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.transparent,
+          backgroundImage: AssetImage(_grupoTurista.foto),
         ),
         contentPadding: EdgeInsets.all(20),
         title: Column(
