@@ -249,6 +249,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                           decoration: const InputDecoration(
                                             hintText: "Introduzca el mensaje",
                                           ),
+                                          maxLines: 2,
                                           enabled: _editable,
                                           autocorrect: _editable,
                                         ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/guia.dart';
 import 'package:practica_ipo2/secciones/detallesguia.dart';
 
 class ItemGuia extends StatelessWidget{
 
+  DatosPrueba _datos;
   Guia _guia;
 
-  ItemGuia(this._guia);
+  ItemGuia(this._datos,this._guia);
   
   @override
   Widget build(BuildContext context){
@@ -55,7 +57,7 @@ class ItemGuia extends StatelessWidget{
     final guiaActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesGuia(guia: _guia),
+        builder: (context) => DetallesGuia(datos: _datos, guia: _guia),
       )
     );
 

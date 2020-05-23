@@ -17,6 +17,7 @@ class Ruta{
   int _reserva;
   int _puntuacion;
   String _foto;
+  bool _seleccionado = false;
   List<PuntoInteres> _puntoInteres;
   List<GrupoTurista> _grupoTurista;
 
@@ -52,6 +53,7 @@ class Ruta{
   int get reserva => _reserva;
   String get foto => _foto;
   int get puntuacion => _puntuacion;
+  bool get seleccionado => _seleccionado;
   List get puntoInteres => _puntoInteres;
   List get grupoTurista => _grupoTurista;
 
@@ -67,6 +69,7 @@ class Ruta{
   set fecha(String fecha) => _fecha = fecha;
   set reserva(int reserva) => _reserva = reserva;
   set foto(String foto) => _foto = foto;
+  set seleccionado(bool seleccionado) => _seleccionado = seleccionado;
   set puntuacion(int puntuacion) => _puntuacion = puntuacion;
   set puntoInteres(List<PuntoInteres> puntoInteres) => _puntoInteres = puntoInteres;
   set grupoTurista(List<GrupoTurista> grupoTurista) => _grupoTurista = grupoTurista;

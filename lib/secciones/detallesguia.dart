@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:practica_ipo2/modelos/guia.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 
+import 'listarutasguia.dart';
+
 
 class DetallesGuia extends StatefulWidget{
 
@@ -579,13 +581,11 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
               padding: EdgeInsets.only(right: 10.0),
               child: Container(
                 child: new RaisedButton(
-                  child: new Text("Rutas realizadas"),
+                  child: new Text("Rutas asignadas"),
                   textColor: Colors.white,
                   color: Colors.cyan,
                   onPressed: () {
-                    setState((){
-
-                    });
+                    _esperarResultado(context, 1);
                   },
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)
@@ -600,12 +600,12 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
               padding: EdgeInsets.only(left: 10.0),
               child: Container(
                 child: new RaisedButton(
-                  child: new Text("Rutas asignadas"),
+                  child: new Text("Rutas realizadas"),
                   textColor: Colors.white,
                   color: Colors.cyan,
                   onPressed: () {
                     setState((){
-
+                      _esperarResultado(context, 2);
                     });
                   },
                   shape: new RoundedRectangleBorder(
@@ -637,7 +637,6 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-//                        Navigator.pop(context);
                         if(this.guia == null){
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
                             Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
@@ -647,10 +646,10 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                         }else{
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
                             this.guia.nombre = nombreController.text;
+                            Navigator.pop(context, datos);
                           }
 //                            this.guias.
                         }
-
                         
                       });
                     },
@@ -714,6 +713,27 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
         )
       ],
     );
+  }
+
+  void _esperarResultado(BuildContext context, int num) async{
+
+    if(num == 1){
+      final nuevasRutas = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ListaRutasAsignadas(datos: datos, guia: guia)),
+      );
+
+      if(nuevasRutas != null){
+        guia.rutasAsignadas = nuevasRutas;
+      }      
+    }else{
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ListaRutasHistorial(guia)),
+      );         
+    }
+
+
   }
 
   void _mostrarDialogo(){

@@ -15,6 +15,21 @@ class Guia{
   List<Ruta> _rutasAsignadas;
   List<Ruta> _rutasHistorial;
   
+  Guia.enBlanco(){
+    this._nombre = "";
+    this._apellidos = "";
+    this._movil = 0;
+    this._foto = "";
+    this._puntuacion = 0;
+    this._idiomas = "";
+    this._disponibilidad = "";
+    this._precioHora = "";
+    this._precioDia = "";
+    this._dni = "";
+    this._correo = "";
+    this._rutasAsignadas = new List<Ruta>();
+    this._rutasHistorial = new List<Ruta>();
+  }
 
   Guia(String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, String precioHora, String precioDia, String dni, String correo){
     this._nombre = nombre;

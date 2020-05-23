@@ -10,18 +10,18 @@ class ListadoTuristasPromo extends StatefulWidget{
   ListadoTuristasPromo({Key key, this.datos, this.turistas}) : super(key: key);
 
   @override
-  _ConstruirTuristasState createState() => _ConstruirTuristasState(datos: datos, turistas: turistas);
+  _ListadoTuristasState createState() => _ListadoTuristasState(datos: datos, turistas: turistas);
 
 
 }
 
-class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTickerProviderStateMixin{
+class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTickerProviderStateMixin{
 
   DatosPrueba datos;
   List<Turista> turistas;
 
-  _ConstruirTuristasState({this.datos, this.turistas});
-  Widget listaTuristas;
+  _ListadoTuristasState({this.datos, this.turistas});
+  
 
   void initState(){
     super.initState();
@@ -52,7 +52,11 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
         ),
         body: ListView (
           children: List.generate (turistas.length, (index) {
-            return ListTile (
+            return new Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: new ListTile (
               onTap: () {
                 setState (() {
                   turistas[index].seleccionado =! turistas[index].seleccionado;
@@ -69,6 +73,7 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
                   alignment: Alignment.center,
                   child: CircleAvatar(
                     backgroundImage: AssetImage(turistas[index].foto),
+                    radius: 25.0,
                   )
                 ),
               ),
@@ -76,8 +81,10 @@ class _ConstruirTuristasState extends State<ListadoTuristasPromo> with SingleTic
               trailing: (turistas[index].seleccionado)
                   ? Icon(Icons.check_box)
                   : Icon(Icons.check_box_outline_blank),
-                  
+              contentPadding: EdgeInsets.all(13),  
+            )
             );
+
           }),
           
         ),
