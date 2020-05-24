@@ -11,28 +11,25 @@ class DetallesRuta extends StatefulWidget {
   DetallesRuta({Key key, this.datos, this.ruta}) : super(key: key);
 
   @override
-  _DetallesRutaState createState() => _DetallesRutaState(ruta: ruta);
+  _DetallesRutaState createState() => _DetallesRutaState(datos: datos, ruta: ruta);
 }
 
-class _DetallesRutaState extends State<DetallesRuta>
-    with SingleTickerProviderStateMixin {
+class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderStateMixin {
+  
   DatosPrueba datos;
   Ruta ruta;
 
-  _DetallesRutaState({this.ruta});
+  _DetallesRutaState({this.datos, this.ruta});
 
   bool _editable = false;
   TextEditingController nombreController;
   TextEditingController estadoController;
   TextEditingController precioController;
-  TextEditingController opinionesController;
-  TextEditingController sugerenciasController;
   TextEditingController localidadController;
   TextEditingController fechaController;
   TextEditingController horaInicioController;
   TextEditingController horaFinController;
   String _foto;
-  List<PuntoInteres> _puntoInteres;
   TimeOfDay _horaInicio;
   TimeOfDay _horaFin;
   DateTime _fecha;
@@ -43,8 +40,6 @@ class _DetallesRutaState extends State<DetallesRuta>
     nombreController = new TextEditingController();
     estadoController = new TextEditingController();
     precioController = new TextEditingController();
-    opinionesController = new TextEditingController();
-    sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
     fechaController = new TextEditingController();
     horaInicioController = new TextEditingController();
@@ -57,27 +52,21 @@ class _DetallesRutaState extends State<DetallesRuta>
       nombreController.text = ruta.nombre;
       estadoController.text = ruta.estado;
       precioController.text = ruta.coste.toString();
-      opinionesController.text = ruta.opiniones;
-      sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
       fechaController.text = ruta.fecha;
       horaInicioController.text = ruta.horaInicio;
       horaFinController.text = ruta.horaFin;
-      _puntoInteres = ruta.puntoInteres;
       _foto = ruta.foto;
     } else {
       nombreController.text = "";
       estadoController.text = "";
       precioController.text = "";
-      opinionesController.text = "";
-      sugerenciasController.text = "";
       localidadController.text = "";
       fechaController.text = "";
       horaInicioController.text = "";
       horaFinController.text = "";
       _foto = "imagenes/rutagenerica.jpg";
       _editable = true;
-      _puntoInteres = new List<PuntoInteres>();
     }
   }
 
@@ -459,7 +448,7 @@ class _DetallesRutaState extends State<DetallesRuta>
 
   Widget getListPuntoInteresButton() {
     return Padding(
-        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
         child: new Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -472,9 +461,11 @@ class _DetallesRutaState extends State<DetallesRuta>
               textColor: Colors.white,
               color: Colors.cyan,
               onPressed: () {
-                setState(() {
+                if(ruta == null){
+                  _mostrarConfirmacion();
+                }else{
                   _esperarResultado(context);
-                });
+                }
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(20.0)),
@@ -562,7 +553,31 @@ class _DetallesRutaState extends State<DetallesRuta>
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  Navigator.pop(context);
+                  if(ruta == null){
+                    if(nombreController.text != "" && estadoController.text != "" && precioController.text != "" && localidadController.text != "" && horaInicioController.text != "" && horaFinController.text != "" && fechaController.text != "" && _foto != ""){
+                      Ruta nuevaRuta = new Ruta(nombreController.text, estadoController.text, double.parse(precioController.text), "", "", localidadController.text, horaInicioController.text, horaFinController.text, _foto, fechaController.text, null, 0);
+                      datos.rutas.add(nuevaRuta);
+                      Navigator.pop(context, datos);
+                    }
+                  }else{
+                    if(nombreController.text != "" && estadoController.text != "" && precioController.text != "" && localidadController.text != "" && horaInicioController.text != "" && horaFinController.text != "" && fechaController.text != "" && _foto != ""){
+                      if(datos.rutas.contains(ruta)){
+                        int index = datos.rutas.indexOf(ruta);
+                        ruta.nombre = nombreController.text;
+                        ruta.estado = estadoController.text;
+                        ruta.coste = double.parse(precioController.text);
+                        ruta.localidad = localidadController.text;
+                        ruta.horaInicio = horaInicioController.text;
+                        ruta.horaFin = horaFinController.text;
+                        ruta.fecha = fechaController.text;
+                        ruta.foto = _foto;
+
+                        datos.rutas.removeAt(index);
+                        datos.rutas.insert(index, ruta);
+                        Navigator.pop(context, datos);
+                      }
+                    }
+                  }
                 });
               },
               shape: new RoundedRectangleBorder(
@@ -703,8 +718,54 @@ class _DetallesRutaState extends State<DetallesRuta>
                 new FlatButton(
                   child: new Text("Continuar"),
                   onPressed: (){
+                    if(datos.rutas.contains(ruta)){
+                      datos.rutas.remove(ruta);
+                    }
                     Navigator.pop(context);
+                    Navigator.pop(context, datos);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarConfirmacion(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¿Salir y guardar?"),
+          content: new Text("Esta ruta no ha sido guardado aún. ¿Guardar y continuar con sus puntos?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
                     Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Continuar"),
+                  onPressed: () async{
+                    Navigator.pop(context);
+                    ruta = new Ruta(nombreController.text, estadoController.text, double.parse(precioController.text), "", "", localidadController.text, horaInicioController.text, horaFinController.text, _foto, fechaController.text, null, 0);
+                    datos.rutas.add(ruta);
+
+                    final nuevosDatos = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListadoPuntoInteresRuta(datos: datos, ruta: ruta))
+                    );
+
+                    setState(() {
+                      if(nuevosDatos != null){
+                        datos = nuevosDatos;
+                      }
+                    });
                   }
                 )
               ],
@@ -724,7 +785,6 @@ class _DetallesRutaState extends State<DetallesRuta>
     setState((){
       if(listaPuntoInteresActualizado != null){
         ruta.puntoInteres = listaPuntoInteresActualizado;
-        _puntoInteres = listaPuntoInteresActualizado;
       }
     });
   }

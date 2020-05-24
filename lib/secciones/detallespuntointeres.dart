@@ -9,10 +9,10 @@ class DetallesPuntoInteres extends StatefulWidget{
   DatosPrueba datos;
   Ruta ruta;
 
-  DetallesPuntoInteres({Key key, this.datos, this.puntoInteres}) : super(key: key);
+  DetallesPuntoInteres({Key key, this.datos, this.puntoInteres, this.ruta}) : super(key: key);
 
   @override
-  _DetallesPuntoInteresState createState() => _DetallesPuntoInteresState(puntoInteres: puntoInteres);
+  _DetallesPuntoInteresState createState() => _DetallesPuntoInteresState(datos, puntoInteres, ruta);
 
 }
 
@@ -22,7 +22,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
   DatosPrueba datos;
   Ruta ruta;
 
-  _DetallesPuntoInteresState({this.datos, this.puntoInteres});
+  _DetallesPuntoInteresState(this.datos, this.puntoInteres, this.ruta);
 
   bool _editable = false;
   TextEditingController nombreController;
@@ -422,77 +422,11 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                           hintText: "Introduzca el horario",
                                         ),
                                         enabled: _editable,
-                                        keyboardType: TextInputType.number,
                                       ),
                                       flex: 2,
                                     ),
                                   ],
                                 )),
-/*                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextField(
-                                        controller: horarioController,
-                                        decoration: const InputDecoration(
-                                          hintText: "Introduzca el horario",
-                                        ),
-                                        enabled: _editable,
-                                        autocorrect: _editable,
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Duración de la visita",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextField(
-                                        controller: duracionVisitaController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Introduzca la duración de la visita",
-                                        ),
-                                        enabled: _editable,
-                                        autocorrect: _editable,
-                                      ),
-                                    )
-                                  ],
-                                )),*/
                             _editable ? getSaveButton() : new Container(),
                           ],
                         )))
@@ -575,7 +509,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
     );
   }
 
-    Widget getSaveButton(){
+Widget getSaveButton(){
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
       child: new Row(
@@ -594,8 +528,41 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                         if(puntoInteres == null){
                           if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
                             PuntoInteres nuevoPunto = new PuntoInteres(nombreController.text, _tipoPuntoInteres, _foto, entradaController.text, descripcionController.text, direccionController.text, horarioController.text, duracionVisitaController.text);
-                            
+                            datos.puntoInteres.add(nuevoPunto);
+                            if(datos.rutas.contains(ruta)){
+                              int index = datos.rutas.indexOf(ruta);
+                              datos.rutas.elementAt(index).puntoInteres.add(nuevoPunto);
+                            }else{
+                              ruta.puntoInteres.add(nuevoPunto);
+                            }
+                            Navigator.pop(context, datos);
                           } 
+                        }else{
+                          if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
+                            if(datos.puntoInteres.contains(puntoInteres)){
+                              int index = datos.puntoInteres.indexOf(puntoInteres);
+                              puntoInteres.nombre = nombreController.text;
+                              puntoInteres.tipo = _tipoPuntoInteres;
+                              puntoInteres.foto = _foto;
+                              puntoInteres.entrada = entradaController.text;
+                              puntoInteres.descripcion = descripcionController.text;
+                              puntoInteres.direccion = direccionController.text;
+                              puntoInteres.horario = horarioController.text;
+                              puntoInteres.duracionVisita = duracionVisitaController.text;
+
+                              datos.puntoInteres.removeAt(index);
+                              datos.puntoInteres.insert(index, puntoInteres);
+
+                              if(datos.rutas.contains(ruta)){
+                                int index = datos.rutas.indexOf(ruta);
+                                int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
+                                datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
+                                datos.rutas.elementAt(index).puntoInteres.insert(indexP, puntoInteres);
+                                Navigator.pop(context, datos);
+                              }
+
+                            }
+                          }                           
                         }
                       });
                     },
@@ -622,8 +589,8 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar guía?"),
-          content: new Text("Estás a punto de eliminar " + nombreController.text+ ". ¿Continuar?"),
+          title: new Text("¿Eliminar punto de interés?"),
+          content: new Text("Estás a punto de eliminar " + nombreController.text+ " del sistema. ¿Continuar?"),
           actions: <Widget>[
             new Row(
               children: <Widget>[
@@ -636,8 +603,14 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                 new FlatButton(
                   child: new Text("Continuar"),
                   onPressed: (){
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    if(datos.rutas.contains(ruta)){
+                      int index = datos.rutas.indexOf(ruta);
+                      int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
+                      datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
+                      datos.rutas.elementAt(index).puntoInteres.insert(indexP, puntoInteres);
+                      Navigator.pop(context);
+                      Navigator.pop(context, datos);
+                    }
                   }
                 )
               ],

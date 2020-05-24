@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/secciones/detallespuntointeres.dart';
 import 'package:practica_ipo2/modelos/puntointeres.dart';
 
-class ItemPuntoInteres extends StatelessWidget{
+class ItemPuntoInteres extends StatefulWidget{
 
+  DatosPrueba datos;
+  PuntoInteres puntoInteres;
+  Ruta ruta;
+
+  ItemPuntoInteres({Key key, this.datos, this.puntoInteres, this.ruta}) : super(key: key);
+
+  _ItemPuntoInteresState createState() => _ItemPuntoInteresState(datos, puntoInteres, ruta);
+
+}
+
+class _ItemPuntoInteresState extends State<ItemPuntoInteres> with SingleTickerProviderStateMixin{
+
+  DatosPrueba _datos;
   PuntoInteres _puntoInteres;
+  Ruta _ruta;
 
-  ItemPuntoInteres(this._puntoInteres);
+  _ItemPuntoInteresState(this._datos, this._puntoInteres, this._ruta);
 
   @override
   Widget build(BuildContext context){
@@ -49,7 +65,7 @@ class ItemPuntoInteres extends StatelessWidget{
     final puntoActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesPuntoInteres(puntoInteres: _puntoInteres),
+        builder: (context) => DetallesPuntoInteres(datos: _datos, puntoInteres: _puntoInteres, ruta: _ruta),
       )
     );
   }

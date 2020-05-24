@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/puntointeres.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
+import 'package:practica_ipo2/vista/itempuntointeres.dart';
 import 'package:practica_ipo2/secciones/detallespuntointeres.dart';
 
 class ListadoPuntoInteresRuta extends StatefulWidget{
@@ -21,7 +22,6 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
   Ruta ruta;
 
   _ListadoPuntoInteresRutaState({this.datos, this.ruta});
-  Widget listapuntoInteres;
 
   void initState(){
     super.initState();
@@ -34,7 +34,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: new Text("Rutas asignadas"),
+        title: new Text("Puntos de interés"),
       ),
       body: ListView.builder(
           itemCount: ruta.puntoInteres.length,
@@ -63,24 +63,9 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                   color: Colors.redAccent,
                   child: Icon(Icons.delete, color: Colors.white),
                 ),
-                child: Card(
-                    child: ListTile(
-                      title: Text(ruta.puntoInteres[index].nombre,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 20.0)),
-                      subtitle: Text("Horario: " + ruta.puntoInteres[index].horario,
-                          style: TextStyle(
-                              color: Colors.grey[500], fontSize: 16.0)),
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage(ruta.puntoInteres[index].foto),
-                        radius: 25.0,
-                      ),
-                      contentPadding: EdgeInsets.all(20),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )));
+                child: ItemPuntoInteres(datos: datos, puntoInteres: ruta.puntoInteres[index], ruta: ruta),
+              
+              );
           }),
       
       floatingActionButton: FloatingActionButton(
@@ -94,17 +79,16 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
   }
   void _esperarResultado(BuildContext context) async{
 
-    final nuevopuntoInteres = await Navigator.push(
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesPuntoInteres(datos: datos),
+        builder: (context) => DetallesPuntoInteres(datos: datos, ruta: ruta),
       )
     );
 
     setState(() {
-      if(nuevopuntoInteres != null){
-        ruta.puntoInteres.add(nuevopuntoInteres);
-        datos.puntoInteres.add(nuevopuntoInteres);
+      if(nuevosDatos != null){
+        datos = nuevosDatos;
       }
     });
   }
@@ -123,6 +107,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                   child: new Text("Nuevo punto"),
                   onPressed: () {
                     _esperarResultado(context);
+                    Navigator.pop(context);
                   },
                 ),
                 new FlatButton(
@@ -133,7 +118,14 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                       MaterialPageRoute(builder: (context) => ListadoPuntoInteres(datos: datos, puntoInteres: ruta.puntoInteres))
                     );
                     Navigator.pop(context);
-                    Navigator.pop(context, datos);
+                    
+                    setState(() {
+                      if(datos.rutas.contains(ruta)){
+                        int index = datos.rutas.indexOf(ruta);
+                        datos.rutas.elementAt(index).puntoInteres = nuevosPuntos;
+                      }
+                    });
+
                   }
                 )
               ],
@@ -153,7 +145,7 @@ class ListadoPuntoInteres extends StatefulWidget{
   ListadoPuntoInteres({Key key, this.datos, this.puntoInteres}) : super(key: key);
 
   @override
-  _ListadoPuntoInteresState createState() => _ListadoPuntoInteresState(datos: datos, puntoInteres: puntoInteres);
+  _ListadoPuntoInteresState createState() => _ListadoPuntoInteresState(datos: this.datos, puntoInteres: puntoInteres);
 
 }
 

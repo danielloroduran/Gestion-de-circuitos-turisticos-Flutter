@@ -70,7 +70,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
             color: Colors.redAccent,
             child: Icon(Icons.delete, color: Colors.white),
           ),
-          child: ItemRuta(datos.rutas[index]),
+          child: ItemRuta(datos: datos, ruta: datos.rutas[index]),
           );
       },
     );

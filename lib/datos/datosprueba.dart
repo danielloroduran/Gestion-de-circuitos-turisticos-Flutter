@@ -47,7 +47,7 @@ class DatosPrueba{
     PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita",  "Descripción de la iglesia", "Calle Nueva, 5", "Sábados, de 8:00 a 22:00", "30 minutos");
 		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Calle Vieja, 7", "Sin horario", "5 minutos");
 		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Calle Doctora, 55", "Todos los días de 8:00 a 22:00", "2 horas");
-		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galería.jpg", "Gratuita", "Descripción de la exposición", "Calle Licenciada", "Martes y Domingo, de 9:00 a 14:00", "3 horas");
+		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galeria.jpg", "Gratuita", "Descripción de la exposición", "Calle Licenciada", "Martes y Domingo, de 9:00 a 14:00", "3 horas");
 
     puntoInteres.add(pi1);
 		puntoInteres.add(pi2);

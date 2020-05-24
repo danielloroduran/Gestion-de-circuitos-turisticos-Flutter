@@ -307,7 +307,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                             children: <Widget>[
                               new Flexible(
                                 child: new TextField(
-                                  controller: correoController,
+                                  controller: dniController,
                                   decoration: const InputDecoration(
                                     hintText: "Introduzca su DNI",
                                   ),

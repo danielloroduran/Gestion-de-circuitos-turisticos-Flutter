@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/secciones/detallesruta.dart';
 
-class ItemRuta extends StatelessWidget{
+class ItemRuta extends StatefulWidget{
 
-  final Ruta _ruta;
+  DatosPrueba datos;
+  Ruta ruta;
 
-  ItemRuta(this._ruta);
+  ItemRuta({Key key, this.datos, this.ruta}) : super(key: key);
+
+  @override
+  _ItemRutaState createState() => _ItemRutaState(datos, ruta);
+
+}
+
+class _ItemRutaState extends State<ItemRuta> with SingleTickerProviderStateMixin{
+
+  DatosPrueba _datos;
+  Ruta _ruta;
+
+  _ItemRutaState(this._datos, this._ruta);
 
   @override
   Widget build(BuildContext context){
@@ -48,7 +62,7 @@ class ItemRuta extends StatelessWidget{
     final rutaActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesRuta(ruta: this._ruta),
+        builder: (context) => DetallesRuta(datos: _datos, ruta: _ruta),
       )
     );
   }

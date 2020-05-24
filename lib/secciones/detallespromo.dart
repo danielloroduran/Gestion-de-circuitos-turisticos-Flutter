@@ -443,7 +443,7 @@ class _DetallesPromoState extends State<DetallesPromo>
 
   Widget getListEnviarAButton(){
     return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
