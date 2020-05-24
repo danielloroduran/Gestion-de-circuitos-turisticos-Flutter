@@ -72,7 +72,7 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
             color: Colors.redAccent,
             child: Icon(Icons.delete, color: Colors.white),
           ),
-          child: ItemGuia(datos, datos.guias[index]),
+          child: ItemGuia(datos: datos, guia: datos.guias[index]),
           );
       },
     );

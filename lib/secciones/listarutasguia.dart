@@ -12,8 +12,7 @@ class ListaRutasAsignadas extends StatefulWidget {
   _ListaRutasAsignadasState createState() => _ListaRutasAsignadasState(datos: datos, guia: guia);
 }
 
-class _ListaRutasAsignadasState extends State<ListaRutasAsignadas>
-    with SingleTickerProviderStateMixin {
+class _ListaRutasAsignadasState extends State<ListaRutasAsignadas> with SingleTickerProviderStateMixin {
   DatosPrueba datos;
   Guia guia;
 
@@ -93,7 +92,7 @@ class _ListaRutasAsignadasState extends State<ListaRutasAsignadas>
 
     final nuevasRutas = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListadoRutas(datos: datos, rutas: guia.rutasAsignadas,))
+      MaterialPageRoute(builder: (context) => ListadoRutas(datos: datos, rutas: guia.rutasAsignadas))
     );
 
     setState(() {

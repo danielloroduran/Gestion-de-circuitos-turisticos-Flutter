@@ -24,7 +24,7 @@ class _DetallesRutaState extends State<DetallesRuta>
   bool _editable = false;
   TextEditingController nombreController;
   TextEditingController estadoController;
-  TextEditingController costeController;
+  TextEditingController precioController;
   TextEditingController opinionesController;
   TextEditingController sugerenciasController;
   TextEditingController localidadController;
@@ -42,7 +42,7 @@ class _DetallesRutaState extends State<DetallesRuta>
 
     nombreController = new TextEditingController();
     estadoController = new TextEditingController();
-    costeController = new TextEditingController();
+    precioController = new TextEditingController();
     opinionesController = new TextEditingController();
     sugerenciasController = new TextEditingController();
     localidadController = new TextEditingController();
@@ -56,7 +56,7 @@ class _DetallesRutaState extends State<DetallesRuta>
     if (ruta != null) {
       nombreController.text = ruta.nombre;
       estadoController.text = ruta.estado;
-      costeController.text = ruta.coste.toString();
+      precioController.text = ruta.coste.toString();
       opinionesController.text = ruta.opiniones;
       sugerenciasController.text = ruta.sugerencias;
       localidadController.text = ruta.localidad;
@@ -68,7 +68,7 @@ class _DetallesRutaState extends State<DetallesRuta>
     } else {
       nombreController.text = "";
       estadoController.text = "";
-      costeController.text = "";
+      precioController.text = "";
       opinionesController.text = "";
       sugerenciasController.text = "";
       localidadController.text = "";
@@ -252,7 +252,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Coste(€)",
+                                          "Precio/persona (€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -285,9 +285,9 @@ class _DetallesRutaState extends State<DetallesRuta>
                                     ),
                                     new Flexible(
                                       child: new TextField(
-                                        controller: costeController,
+                                        controller: precioController,
                                         decoration: const InputDecoration(
-                                          hintText: "Introduzca el coste",
+                                          hintText: "Introduzca el precio",
                                         ),
                                         enabled: _editable,
                                         keyboardType: TextInputType.number,
@@ -401,7 +401,7 @@ class _DetallesRutaState extends State<DetallesRuta>
                                     ),
                                     Expanded(
                                       child: _editable ? getHoraFinButton() : new Container(),
-                                    ),                                    
+                                    ),
                                   ],
                                 )),
                             Padding(
@@ -459,7 +459,7 @@ class _DetallesRutaState extends State<DetallesRuta>
 
   Widget getListPuntoInteresButton() {
     return Padding(
-        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
+        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
         child: new Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -719,7 +719,7 @@ class _DetallesRutaState extends State<DetallesRuta>
 
     final listaPuntoInteresActualizado = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListadoPuntoInteres(puntoInteres: _puntoInteres),)
+      MaterialPageRoute(builder: (context) => ListadoPuntoInteresRuta(datos: datos, ruta: ruta))
     );
     setState((){
       if(listaPuntoInteresActualizado != null){

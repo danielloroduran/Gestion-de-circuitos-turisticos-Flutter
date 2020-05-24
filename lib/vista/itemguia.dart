@@ -3,12 +3,24 @@ import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/guia.dart';
 import 'package:practica_ipo2/secciones/detallesguia.dart';
 
-class ItemGuia extends StatelessWidget{
+class ItemGuia extends StatefulWidget{
+
+  DatosPrueba datos;
+  Guia guia;
+
+  ItemGuia({Key key, this.datos, this.guia}) : super(key: key);
+
+  _ItemGuiaState createState() => _ItemGuiaState(datos, guia);
+
+}
+
+
+class _ItemGuiaState extends State<ItemGuia> with SingleTickerProviderStateMixin{
 
   DatosPrueba _datos;
   Guia _guia;
 
-  ItemGuia(this._datos,this._guia);
+  _ItemGuiaState(this._datos,this._guia);
   
   @override
   Widget build(BuildContext context){
@@ -54,12 +66,16 @@ class ItemGuia extends StatelessWidget{
 
   void _esperarResultado(BuildContext context) async{
 
-    final guiaActualizado = await Navigator.push(
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesGuia(datos: _datos, guia: _guia),
       )
     );
+
+    setState(() {
+      _datos = nuevosDatos;
+    });
 
   }
 }

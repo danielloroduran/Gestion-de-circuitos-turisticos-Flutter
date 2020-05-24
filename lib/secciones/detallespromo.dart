@@ -268,7 +268,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Precio(€)",
+                                          "Precio/persona(€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -338,7 +338,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Precio Final(€)",
+                                          "Precio Final/persona(€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),

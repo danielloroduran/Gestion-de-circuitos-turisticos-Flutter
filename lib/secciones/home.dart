@@ -11,8 +11,8 @@ import 'package:practica_ipo2/secciones/inicio.dart';
 
 
 class Home extends StatefulWidget{
-  final DatosPrueba datos;
-  final Usuario usuario;
+   DatosPrueba datos;
+   Usuario usuario;
   Home({Key key, @required this.datos, @required this.usuario}) : super(key: key);
 
   @override

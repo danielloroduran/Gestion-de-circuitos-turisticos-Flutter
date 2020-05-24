@@ -8,8 +8,8 @@ class Guia{
   int _puntuacion;
   String _idiomas;
   String _disponibilidad;
-  String _precioHora;
-  String _precioDia;
+  double _precioHora;
+  double _precioDia;
   String _dni;
   String _correo;
   List<Ruta> _rutasAsignadas;
@@ -23,15 +23,15 @@ class Guia{
     this._puntuacion = 0;
     this._idiomas = "";
     this._disponibilidad = "";
-    this._precioHora = "";
-    this._precioDia = "";
+    this._precioHora = 0.0;
+    this._precioDia = 0.0;
     this._dni = "";
     this._correo = "";
     this._rutasAsignadas = new List<Ruta>();
     this._rutasHistorial = new List<Ruta>();
   }
 
-  Guia(String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, String precioHora, String precioDia, String dni, String correo){
+  Guia(String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, double precioHora, double precioDia, String dni, String correo){
     this._nombre = nombre;
     this._apellidos = apellidos;
     this._movil = movil;
@@ -54,8 +54,8 @@ class Guia{
   int get puntuacion => _puntuacion;
   String get idiomas => _idiomas;
   String get disponibilidad => _disponibilidad;
-  String get precioHora => _precioHora;
-  String get precioDia => _precioDia;
+  double get precioHora => _precioHora;
+  double get precioDia => _precioDia;
   String get dni => _dni;
   String get correo => _correo;
   List get rutasAsignadas => _rutasAsignadas;
@@ -68,7 +68,8 @@ class Guia{
   set puntuacion(int puntuacion) => _puntuacion = puntuacion;
   set idiomas(String idiomas) => _idiomas = idiomas;
   set disponibilidad(String disponibilidad) => _disponibilidad = disponibilidad;
-  set precioHora(String precioHora) => _precioHora = precioHora;
+  set precioHora(double precioHora) => _precioHora = precioHora;
+  set precioDia(double precioDia) => _precioDia = precioDia;
   set dni(String dni) => _dni = dni;
   set correo(String correo) => _correo = correo;
   set rutasAsignadas(List<Ruta> rutasAsignadas) => _rutasAsignadas = rutasAsignadas;

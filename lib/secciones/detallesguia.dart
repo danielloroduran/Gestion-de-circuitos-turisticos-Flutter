@@ -56,8 +56,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
     movilController.text = guia.movil.toString();
     idiomasController.text = guia.idiomas;
     disponibilidadController.text = guia.disponibilidad;
-    precioHoraController.text = guia.precioHora;
-    precioDiaController.text = guia.precioDia;
+    precioHoraController.text = guia.precioHora.toString();
+    precioDiaController.text = guia.precioDia.toString();
     dniController.text = guia.dni;
     correoController.text = guia.correo;
     _foto = guia.foto;
@@ -367,7 +367,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                             children: <Widget>[
                               Expanded(
                                 child: Container(
-                                  child: new Text("Precio por hora",
+                                  child: new Text("Precio por hora(€)",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500),
@@ -377,7 +377,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                               ),
                               Expanded(
                                 child: Container(
-                                  child: new Text("Precio por día",
+                                  child: new Text("Precio por día(€)",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500),
@@ -402,8 +402,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                     decoration: const InputDecoration(
                                       hintText: "Introduzca el precio por hora"
                                     ),
+                                    keyboardType: TextInputType.number,
                                     enabled: _editable,
-                                    autocorrect: _editable,
                                   ),
                                 ),
                                 flex: 2,
@@ -415,6 +415,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                     hintText: "Introduzca el precio por dia"
                                   ),
                                   enabled: _editable,
+                                  keyboardType: TextInputType.number,
                                 ),
                                 flex: 2,
                               ),
@@ -637,18 +638,31 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        if(this.guia == null){
+                        if(guia == null){
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
+                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, double.parse(precioHoraController.text), double.parse(precioDiaController.text), dniController.text, correoController.text);
                             datos.guias.add(nuevoGuia);
                             Navigator.pop(context, datos);
                           }
                         }else{
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            this.guia.nombre = nombreController.text;
-                            Navigator.pop(context, datos);
+                            if(datos.guias.contains(guia)){
+                              int index = datos.guias.indexOf(guia);
+                              guia.nombre = nombreController.text;
+                              guia.apellidos = apellidosController.text;
+                              guia.movil = int.parse(movilController.text);
+                              guia.idiomas = idiomasController.text;
+                              guia.disponibilidad = disponibilidadController.text;
+                              guia.precioDia = double.parse(precioDiaController.text);
+                              guia.precioHora = double.parse(precioHoraController.text);
+                              guia.dni = dniController.text;
+                              guia.correo = correoController.text;
+
+                              datos.guias.removeAt(index);
+                              datos.guias.insert(index, guia);
+                              Navigator.pop(context, datos);
+                            }
                           }
-//                            this.guias.
                         }
                         
                       });
@@ -755,8 +769,11 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                 new FlatButton(
                   child: new Text("Continuar"),
                   onPressed: (){
+                    if(datos.guias.contains(guia)){
+                      datos.guias.remove(guia);
+                    }
                     Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.pop(context, datos);
                   }
                 )
               ],

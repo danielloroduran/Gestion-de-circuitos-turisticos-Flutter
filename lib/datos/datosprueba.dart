@@ -36,18 +36,18 @@ class DatosPrueba{
 
     guias = new List<Guia>();
 
-    Guia guia1 = new Guia("Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", "3€", "20€", "11111111-H", "antonio@correo.es");
-    Guia guia2 = new Guia("Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", "4€", "30€", "22222222-J", "laura@correo.es");
+    Guia guia1 = new Guia("Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", 3, 20, "11111111-H", "antonio@correo.es");
+    Guia guia2 = new Guia("Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", 4, 30, "22222222-J", "laura@correo.es");
 
     guias.add(guia1);
     guias.add(guia2);
 
     puntoInteres = new List<PuntoInteres>();
 
-    PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita", "Descripción de la iglesia", "Todos días de 8:00h a 22:00h", "30 minutos");
-		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Cuando se quiera", "5 minutos");
-		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Todos días de 8:00h a 22:00h", "2 horas");
-		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galería.jpg", "Gratuita", "Descripción de la exposición", "Martes y Domingo, de 9:00h a 14:00h", "3 horas");
+    PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita",  "Descripción de la iglesia", "Calle Nueva, 5", "Sábados, de 8:00 a 22:00", "30 minutos");
+		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Calle Vieja, 7", "Sin horario", "5 minutos");
+		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Calle Doctora, 55", "Todos los días de 8:00 a 22:00", "2 horas");
+		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galería.jpg", "Gratuita", "Descripción de la exposición", "Calle Licenciada", "Martes y Domingo, de 9:00 a 14:00", "3 horas");
 
     puntoInteres.add(pi1);
 		puntoInteres.add(pi2);
@@ -81,9 +81,9 @@ class DatosPrueba{
 
     grupoTurista = new List<GrupoTurista>();
 
-    GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Tipo 1", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1", "imagenes/grupo.jpg");
-		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Tipo 2", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2", "imagenes/grupo.jpg");
-    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Tipo 3", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3", "imagenes/grupo.jpg");
+    GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Estudiantes", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1", "imagenes/grupo.jpg");
+		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Jubilados", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2", "imagenes/grupo.jpg");
+    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Familiar", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3", "imagenes/grupo.jpg");
 
     gt1.turistas.add(turista1);
 		gt1.turistas.add(turista2);

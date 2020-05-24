@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/puntointeres.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/ruta.dart';
 
 class DetallesPuntoInteres extends StatefulWidget{
 
   PuntoInteres puntoInteres;
+  DatosPrueba datos;
+  Ruta ruta;
 
-  DetallesPuntoInteres({Key key, this.puntoInteres}) : super(key: key);
+  DetallesPuntoInteres({Key key, this.datos, this.puntoInteres}) : super(key: key);
 
   @override
   _DetallesPuntoInteresState createState() => _DetallesPuntoInteresState(puntoInteres: puntoInteres);
@@ -16,14 +19,16 @@ class DetallesPuntoInteres extends StatefulWidget{
 class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with SingleTickerProviderStateMixin{
 
   PuntoInteres puntoInteres;
+  DatosPrueba datos;
+  Ruta ruta;
 
-  _DetallesPuntoInteresState({this.puntoInteres});
+  _DetallesPuntoInteresState({this.datos, this.puntoInteres});
 
   bool _editable = false;
   TextEditingController nombreController;
-  TextEditingController tipoController;
   TextEditingController entradaController;
   TextEditingController descripcionController;
+  TextEditingController direccionController;
   TextEditingController horarioController;
   TextEditingController duracionVisitaController;
   String _foto;
@@ -36,19 +41,19 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
     super.initState();
 
     nombreController = new TextEditingController();
-    tipoController = new TextEditingController();
     entradaController = new TextEditingController();
     descripcionController = new TextEditingController();
+    direccionController = new TextEditingController();
     horarioController = new TextEditingController();
     duracionVisitaController = new TextEditingController();
     _tiposDropdown = getDropdownItems();
 
     if(puntoInteres != null){
       nombreController.text = puntoInteres.nombre;
-      tipoController.text = puntoInteres.tipo;
       entradaController.text = puntoInteres.entrada;
       descripcionController.text = puntoInteres.descripcion;
       horarioController.text = puntoInteres.horario;
+      direccionController.text = puntoInteres.direccion;
       duracionVisitaController.text = puntoInteres.duracionVisita;
       _foto = puntoInteres.foto;
       _tipoPuntoInteres = puntoInteres.tipo;
@@ -57,6 +62,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
       entradaController.text = "";
       descripcionController.text = "";
       horarioController.text = "";
+      direccionController.text = "";
       duracionVisitaController.text = "";
       _foto = "imagenes/puntoInteresgenerico.jpg";
       _tipoPuntoInteres = _tiposDropdown[0].value;
@@ -278,6 +284,45 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                     ),
                                   ],
                                 )),
+	                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 25.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Text("Dirección",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    new Flexible(
+                                      child: new TextField(
+                                        controller: direccionController,
+                                        decoration: const InputDecoration(
+                                          hintText: "Introduzca la dirección",
+                                        ),
+                                        enabled: _editable,
+                                        autocorrect: _editable,
+                                      )
+                                    )
+                                  ],
+                                )
+                              ),
                             Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 25.0),
@@ -310,6 +355,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                         decoration: const InputDecoration(
                                           hintText: "Introduzca la descripción",
                                         ),
+                                        maxLines: 2,
                                         enabled: _editable,
                                         autocorrect: _editable,
                                       )
@@ -317,35 +363,72 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                   ],
                                 )
                               ),
-                              Padding(
+	                            Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 25.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Text(
-                                              "Horario",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Duración",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      ],
+                                      ),
+                                      flex: 2,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: new Text(
+                                          "Horario",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    )
+                                  ],
+                                )),
+                                Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 2.0),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Flexible(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextField(
+                                          controller: duracionVisitaController,
+                                          decoration: const InputDecoration(
+                                            hintText: "Introduzca la duración",
+                                          ),
+                                          enabled: _editable,
+                                          autocorrect: _editable,
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    ),
+                                    new Flexible(
+                                      child: new TextField(
+                                        controller: horarioController,
+                                        decoration: const InputDecoration(
+                                          hintText: "Introduzca el horario",
+                                        ),
+                                        enabled: _editable,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      flex: 2,
                                     ),
                                   ],
                                 )),
-                            Padding(
+/*                            Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 2.0),
                                 child: new Row(
@@ -409,7 +492,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                                       ),
                                     )
                                   ],
-                                )),
+                                )),*/
                             _editable ? getSaveButton() : new Container(),
                           ],
                         )))
@@ -508,21 +591,12 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-//                        Navigator.pop(context);
-/*                        if(this.guia == null){
-                          if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, precioHoraController.text, precioDiaController.text, dniController.text, correoController.text);
-                            datos.guias.add(nuevoGuia);
-                            Navigator.pop(context, datos);
-                          }
-                        }else{
-                          if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            this.guia.nombre = nombreController.text;
-                          }
-//                            this.guias.
-                        }*/
-
-                        
+                        if(puntoInteres == null){
+                          if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
+                            PuntoInteres nuevoPunto = new PuntoInteres(nombreController.text, _tipoPuntoInteres, _foto, entradaController.text, descripcionController.text, direccionController.text, horarioController.text, duracionVisitaController.text);
+                            
+                          } 
+                        }
                       });
                     },
                     shape: new RoundedRectangleBorder(

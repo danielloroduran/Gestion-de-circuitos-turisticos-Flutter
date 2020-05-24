@@ -32,7 +32,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
   String _tipoGrupo;
   String _foto;
 
-  List<String> _tipos = ["Tipo 1", "Tipo 2", "Tipo 3"];
+  List<String> _tipos = ["Estudiantes", "Jubilados", "Familiar"];
   List<DropdownMenuItem<String>> _tiposDropdown;
 
   void initState(){
@@ -97,7 +97,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                   child: new Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top: 25.0),
+                        padding: EdgeInsets.only(top: 15.0),
                         child: new Stack(fit: StackFit.loose,
                         children: <Widget>[
                           new Row(
@@ -132,7 +132,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
@@ -220,51 +220,6 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      new Text("Descripción",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500
-                                        ),
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ],
-                          )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 25.0, right: 25.0),
-                            child: new Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                new Flexible(
-                                  child: new TextField(
-                                    controller: descripcionController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Introduzca la descripción del grupo",
-                                    ),
-                                    enabled: _editable,
-                                    autocorrect: _editable,
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              new Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
                                       new Text("Intereses",
                                         style: TextStyle(
                                           fontSize: 16.0,
@@ -290,6 +245,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                                     decoration: const InputDecoration(
                                       hintText: "Introduzca los intereses del grupo",
                                     ),
+                                    maxLines: 3,
                                     enabled: _editable,
                                     autocorrect: _editable,
                                   ),
@@ -335,6 +291,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                                     decoration: const InputDecoration(
                                       hintText: "Introduzca las restricciones del grupo",
                                     ),
+                                    maxLines: 2,
                                     enabled: _editable,
                                     autocorrect: _editable,
                                   ),
@@ -497,7 +454,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
 
   Widget getListIntegrantesButton(){
     return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
