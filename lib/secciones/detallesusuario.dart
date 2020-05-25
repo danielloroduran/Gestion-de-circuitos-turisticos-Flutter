@@ -19,12 +19,16 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
 
   DatosPrueba datos;
   Usuario usuario;
+
   _DetallesUsuarioState({@required this.datos, @required this.usuario});
-  bool _editable = false;
+
+  bool _editable;
+  bool _passwordVisible;
   TextEditingController nombreController;
   TextEditingController correoController;
   TextEditingController movilController;
   TextEditingController conexionController;
+  TextEditingController passwordController;
   String _foto;
 
   void initState(){
@@ -41,7 +45,12 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
     conexionController = new TextEditingController();
     conexionController.text = usuario.ultimaConexion;
 
+    passwordController = new TextEditingController();
+    passwordController.text = usuario.contrasena;
+
     _foto = usuario.foto;
+    _editable = false;
+    _passwordVisible = false;
 
   }
 
@@ -184,6 +193,59 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
+                                      new Text("Contraseña",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 25.0, right: 25.0, top: 2.0),
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Flexible(
+                                  child: new TextFormField(
+                                    controller: passwordController,
+                                    obscureText: !_passwordVisible,
+                                    decoration: InputDecoration(
+                                      hintText: "Introduzca su nombre",
+                                      suffixIcon: IconButton(
+                                        icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
+                                        onPressed: (){
+                                          setState(() {
+                                            _passwordVisible = !_passwordVisible;
+                                          });
+                                        },
+                                      )
+                                    ),
+                                    enabled: _editable,
+                                    autocorrect: _editable,
+                                  ),
+                                )
+                              ],
+                            )
+                          ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                          child: new Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              new Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
                                       new Text("Correo electrónico",
                                         style: TextStyle(
                                           fontSize: 16.0,
@@ -216,6 +278,68 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                           )
                         ),
                         Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  child: new Text("Teléfono",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500
+                                    )
+                                  ),
+                                ),
+                                flex: 2,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  child: new Text("Última conexión",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500
+                                    )
+                                  ),
+                                ),
+                                flex: 2,
+                              )
+                            ],
+                          )
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+                          child: new Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Flexible(
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 10.0),
+                                  child: new TextField(
+                                    controller: movilController,
+                                    decoration: const InputDecoration(
+                                      hintText: "Introduzca su móvil"
+                                    ),
+                                    enabled: _editable,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                                  )
+                                ),
+                                flex: 2,
+                              ),
+                              new Flexible(
+                                child: new TextField(
+                                  controller: conexionController,
+                                  enabled: false,
+                                ),
+                                flex: 2,
+                              )
+                            ],
+                          ),
+                        ),
+/*                        Padding(
                           padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
                           child: new Row(
                             mainAxisSize: MainAxisSize.max,
@@ -299,7 +423,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                               )
                             ],
                           )
-                        ),
+                        ),*/
                         _editable ? getSaveButton() : new Container(),
                       ],
                     )
