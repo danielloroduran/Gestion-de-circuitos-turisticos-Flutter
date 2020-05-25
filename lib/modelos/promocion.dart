@@ -33,4 +33,8 @@ class Promocion{
   set foto(String foto) => _foto = foto;
   set localidad(String localidad) => _localidad = localidad;
 
+  void setPrecioFinal(){
+    this._precioFinal = precio-((descuento/100)*precio);
+  }
+
 }

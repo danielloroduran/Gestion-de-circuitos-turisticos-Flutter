@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
 
 
 class DetallesTurista extends StatefulWidget{
 
+  DatosPrueba datos;
   Turista turista;
+  GrupoTurista grupo;
 
-  DetallesTurista({Key key, this.turista}) : super(key: key);
+  DetallesTurista({Key key, this.datos, this.turista, this.grupo}) : super(key: key);
 
   @override
-  _DetallesGuiaState createState() => _DetallesGuiaState(turista: turista);
+  _DetallesGuiaState createState() => _DetallesGuiaState(datos, turista, grupo);
 
 }
 
 class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProviderStateMixin{
 
+  DatosPrueba datos;
   Turista turista;
+  GrupoTurista grupo;
 
-  _DetallesGuiaState({this.turista});
+  _DetallesGuiaState(this.datos, this.turista, this.grupo);
+
   bool _editable = false;
   TextEditingController nombreController;
   TextEditingController apellidosController;
@@ -57,8 +64,6 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     _editable = true;
     
   }
-
-
     
   }
 
@@ -383,7 +388,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                             ],
                           )
                         ),
-                        _editable ? getSaveButton() : new Container(),
+                        _editable ? getSaveButton(context) : new Container(),
                       ],
                     )
                   )
@@ -399,12 +404,6 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
   @override
   void dispose(){
     super.dispose();
-    nombreController.dispose();
-    apellidosController.dispose();
-    movilController.dispose();
-    dniController.dispose();
-    correoController.dispose();
-    edadController.dispose();
   }
 
   Widget getFotoButton(){
@@ -434,7 +433,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     );
   }
 
-  Widget getSaveButton(){
+  Widget getSaveButton(context){
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
       child: new Row(
@@ -450,7 +449,46 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        Navigator.pop(context);
+                        if(turista == null){
+                          if(nombreController.text != "" && apellidosController.text != "" && movilController.text != "" && dniController.text != "" && correoController.text != "" && edadController.text != "") {
+                            Turista nuevoTurista = new Turista(nombreController.text, apellidosController.text, int.parse(movilController.text), dniController.text, correoController.text, _foto, int.parse(edadController.text));
+                            datos.turistasGeneral.add(nuevoTurista);
+                            if(datos.grupoTurista.contains(grupo)){
+                              int index = datos.grupoTurista.indexOf(grupo);
+                              datos.grupoTurista.elementAt(index).turistas.add(nuevoTurista);
+                            }else{
+                              grupo.turistas.add(nuevoTurista);
+                            }
+                            Navigator.pop(context, datos);
+                          }else{
+                            _mostrarError();
+                          }
+                        }else{
+                          if(nombreController.text != "" && apellidosController.text != "" && movilController.text != "" && dniController.text != "" && correoController.text != "" && edadController.text != "") {
+                            if(datos.turistasGeneral.contains(turista)){
+                              int index = datos.turistasGeneral.indexOf(turista);
+                              turista.nombre = nombreController.text;
+                              turista.apellidos = apellidosController.text;
+                              turista.movil = int.parse(movilController.text);
+                              turista.dni = dniController.text;
+                              turista.foto = _foto;
+                              turista.edad = int.parse(edadController.text);
+
+                              datos.turistasGeneral.removeAt(index);
+                              datos.turistasGeneral.insert(index, turista);
+
+                              if(datos.grupoTurista.contains(grupo)){
+                                int index = datos.grupoTurista.indexOf(grupo);
+                                int indexT = datos.grupoTurista.elementAt(index).turistas.indexOf(turista);
+                                datos.grupoTurista.elementAt(index).turistas.removeAt(indexT);
+                                datos.grupoTurista.elementAt(index).turistas.insert(indexT, turista);
+                                Navigator.pop(context, datos);
+                              }
+                            }
+                          }else{
+                            _mostrarError();
+                          }
+                        }
                       });
                     },
                     shape: new RoundedRectangleBorder(
@@ -515,13 +553,37 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
     );
   }
 
-    void _mostrarDialogo(){
+  void _mostrarError(){
     showDialog(
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar guía?"),
-          content: new Text("Estás a punto de eliminar a " + nombreController.text+ ". ¿Continuar?"),
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("Eliminar turista"),
+          content: new Text("Estás a punto de eliminar a " + nombreController.text+ ", tanto del grupo como del sistema. ¿Continuar?"),
           actions: <Widget>[
             new Row(
               children: <Widget>[
@@ -532,10 +594,19 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                   },
                 ),
                 new FlatButton(
-                  child: new Text("Continuar"),
+                  child: new Text("Eliminar"),
                   onPressed: (){
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    if(datos.grupoTurista.contains(grupo)){
+                      int index = datos.grupoTurista.indexOf(grupo);
+                      int indexT = datos.grupoTurista.elementAt(index).turistas.indexOf(turista);
+                      datos.grupoTurista.elementAt(index).turistas.removeAt(indexT);
+
+                      if(datos.turistasGeneral.contains(turista)){
+                        datos.turistasGeneral.removeAt(index);
+                      }
+                      Navigator.pop(context);
+                      Navigator.pop(context, datos);
+                    }
                   }
                 )
               ],

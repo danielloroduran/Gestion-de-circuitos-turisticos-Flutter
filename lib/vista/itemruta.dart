@@ -59,12 +59,19 @@ class _ItemRutaState extends State<ItemRuta> with SingleTickerProviderStateMixin
   }
 
   void _esperarResultado(BuildContext context) async{
-    final rutaActualizado = await Navigator.push(
+    
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesRuta(datos: _datos, ruta: _ruta),
       )
     );
+
+    setState(() {
+      if(nuevosDatos != null) {
+        _datos = nuevosDatos;
+      }
+    });
   }
 
 }

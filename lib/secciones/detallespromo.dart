@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
-
-import 'listadoturistaspromo.dart';
-import 'listaturistas.dart';
+import 'package:practica_ipo2/secciones/listadoturistaspromo.dart';
 
 class DetallesPromo extends StatefulWidget {
   Promocion promo;
@@ -30,7 +29,6 @@ class _DetallesPromoState extends State<DetallesPromo>
   TextEditingController descuentoController;
   TextEditingController precioFinalController;
   TextEditingController localidadController;
-  List<Turista> _turistas;
   String _foto;
 
   void initState() {
@@ -42,7 +40,6 @@ class _DetallesPromoState extends State<DetallesPromo>
     descuentoController = new TextEditingController();
     precioFinalController = new TextEditingController();
     localidadController = new TextEditingController();
-    _turistas = datos.turistasGeneral;
 
     if (promo != null) {
       nombreController.text = promo.nombrePromo;
@@ -268,7 +265,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Precio/persona(€)",
+                                          "Precio/persona (€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -279,7 +276,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Descuento(%)",
+                                          "Descuento (%)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -322,6 +319,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                           enabled: _editable,
                                           autocorrect: _editable,
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                                         ),
                                       ),
                                       flex: 2,
@@ -338,7 +336,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Precio Final/persona(€)",
+                                          "Precio final/persona (€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -373,10 +371,8 @@ class _DetallesPromoState extends State<DetallesPromo>
                                           controller: precioFinalController,
                                           decoration: const InputDecoration(
                                               hintText:
-                                                  "Introduzca el precio inicial"),
-                                          enabled: _editable,
-                                          autocorrect: _editable,
-                                          keyboardType: TextInputType.number,
+                                                  "Cálculo automático"),
+                                          enabled: false,
                                         ),
                                       ),
                                       flex: 2,
@@ -423,22 +419,54 @@ class _DetallesPromoState extends State<DetallesPromo>
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
+              child: Container(
                 child: Container(
-                    child: Container(
-                        child: new RaisedButton(
-              child: new Text("Guardar y salir"),
-              textColor: Colors.white,
-              color: Colors.green,
-              onPressed: () {
-                setState(() {
-                  Navigator.pop(context);
-                });
-              },
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0)),
-            )))),
+                  child: new RaisedButton(
+                    child: new Text("Guardar y salir"),
+                    textColor: Colors.white,
+                    color: Colors.green,
+                    onPressed: () {
+                      setState(() {
+                        if(promo == null){
+                          if(nombreController.text != "" && mensajeController.text != "" && precioController.text != "" && descuentoController.text != "" && localidadController.text != ""){
+                            Promocion nuevaPromo = new Promocion(nombreController.text, mensajeController.text, double.parse(precioController.text), int.parse(descuentoController.text), _foto, localidadController.text);
+                            datos.promociones.add(nuevaPromo);
+                            Navigator.pop(context, datos);
+                          }else{
+                            _mostrarError();
+                          }
+                        }else{
+                          if(nombreController.text != "" && mensajeController.text != "" && precioController.text != "" && descuentoController.text != "" && localidadController.text != ""){
+                            if(datos.promociones.contains(promo)){
+                              int index = datos.promociones.indexOf(promo);
+                              promo.nombrePromo = nombreController.text;
+                              promo.mensaje = mensajeController.text;
+                              promo.precio = double.parse(precioController.text);
+                              promo.descuento = int.parse(descuentoController.text);
+                              promo.foto = _foto;
+                              promo.localidad = localidadController.text;
+                              promo.setPrecioFinal();
+
+                              datos.promociones.removeAt(index);
+                              datos.promociones.insert(index, promo);
+                              Navigator.pop(context, datos);
+
+                            }
+                          }else{
+                            _mostrarError();
+                          }                          
+                        }
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0)),
+                  )
+                )
+              )
+            ),
           ],
-        ));
+        )
+      );
   }
 
   Widget getListEnviarAButton(){
@@ -549,7 +577,7 @@ class _DetallesPromoState extends State<DetallesPromo>
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListadoTuristasPromo(turistas: _turistas)),
+      MaterialPageRoute(builder: (context) => ListadoTuristasPromo(datos: datos)),
     );
   }
 
@@ -558,7 +586,7 @@ class _DetallesPromoState extends State<DetallesPromo>
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar promoción?"),
+          title: new Text("Eliminar promoción"),
           content: new Text("Estás a punto de eliminar la promoción " + nombreController.text+ ". ¿Continuar?"),
           actions: <Widget>[
             new Row(
@@ -570,9 +598,36 @@ class _DetallesPromoState extends State<DetallesPromo>
                   },
                 ),
                 new FlatButton(
-                  child: new Text("Continuar"),
+                  child: new Text("Eliminar"),
                   onPressed: (){
+                    if(datos.promociones.contains(promo)){
+                      datos.promociones.remove(promo);
+                    }
                     Navigator.pop(context);
+                    Navigator.pop(context, datos);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
                     Navigator.pop(context);
                   }
                 )

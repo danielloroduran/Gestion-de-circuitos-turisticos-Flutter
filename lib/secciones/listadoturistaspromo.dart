@@ -5,12 +5,11 @@ import 'package:practica_ipo2/modelos/turista.dart';
 class ListadoTuristasPromo extends StatefulWidget{
 
   DatosPrueba datos;
-  List<Turista> turistas;
 
-  ListadoTuristasPromo({Key key, this.datos, this.turistas}) : super(key: key);
+  ListadoTuristasPromo({Key key, this.datos}) : super(key: key);
 
   @override
-  _ListadoTuristasState createState() => _ListadoTuristasState(datos: datos, turistas: turistas);
+  _ListadoTuristasState createState() => _ListadoTuristasState(datos: datos);
 
 
 }
@@ -18,17 +17,12 @@ class ListadoTuristasPromo extends StatefulWidget{
 class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTickerProviderStateMixin{
 
   DatosPrueba datos;
-  List<Turista> turistas;
 
-  _ListadoTuristasState({this.datos, this.turistas});
+  _ListadoTuristasState({this.datos});
   
 
   void initState(){
     super.initState();
-
-    if(turistas == null){
-      turistas = new List<Turista>();
-    }
 
   }
 
@@ -42,8 +36,8 @@ class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTicke
               child: new Text("Seleccionar todos", style: TextStyle(color: Colors.white)),
               onPressed: () {
                 setState(() {
-                  for(int i = 0; i < turistas.length; i++){
-                    turistas[i].seleccionado = true;
+                  for(int i = 0; i < datos.turistasGeneral.length; i++){
+                    datos.turistasGeneral[i].seleccionado = true;
                   }
                 });
               },
@@ -51,7 +45,7 @@ class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTicke
           ],
         ),
         body: ListView (
-          children: List.generate (turistas.length, (index) {
+          children: List.generate (datos.turistasGeneral.length, (index) {
             return new Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -59,10 +53,10 @@ class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTicke
               child: new ListTile (
               onTap: () {
                 setState (() {
-                  turistas[index].seleccionado =! turistas[index].seleccionado;
+                  datos.turistasGeneral[index].seleccionado =! datos.turistasGeneral[index].seleccionado;
                 });
               },
-              selected: turistas[index].seleccionado,
+              selected: datos.turistasGeneral[index].seleccionado,
               leading: GestureDetector (
                 behavior: HitTestBehavior.opaque,
                 onTap: () {},
@@ -72,13 +66,13 @@ class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTicke
                   padding: EdgeInsets.symmetric (vertical: 4.0),
                   alignment: Alignment.center,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(turistas[index].foto),
+                    backgroundImage: AssetImage(datos.turistasGeneral[index].foto),
                     radius: 25.0,
                   )
                 ),
               ),
-              title: Text (turistas[index].nombre + " " + turistas[index].apellidos, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-              trailing: (turistas[index].seleccionado)
+              title: Text (datos.turistasGeneral[index].nombre + " " + datos.turistasGeneral[index].apellidos, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+              trailing: (datos.turistasGeneral[index].seleccionado)
                   ? Icon(Icons.check_box)
                   : Icon(Icons.check_box_outline_blank),
               contentPadding: EdgeInsets.all(13),  
@@ -113,9 +107,9 @@ class _ListadoTuristasState extends State<ListadoTuristasPromo> with SingleTicke
                   child: new Text("Aceptar"),
                   onPressed: (){
                     setState(() {
-                      for(int i = 0; i < turistas.length; i++){
-                        if(turistas[i].seleccionado){
-                          turistas[i].seleccionado = false;
+                      for(int i = 0; i < datos.turistasGeneral.length; i++){
+                        if(datos.turistasGeneral[i].seleccionado){
+                          datos.turistasGeneral[i].seleccionado = false;
                         }
                       }
                     });

@@ -62,11 +62,17 @@ class _ItemPuntoInteresState extends State<ItemPuntoInteres> with SingleTickerPr
 
   void _esperarResultado(BuildContext context) async{
 
-    final puntoActualizado = await Navigator.push(
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesPuntoInteres(datos: _datos, puntoInteres: _puntoInteres, ruta: _ruta),
       )
     );
+
+    setState(() {
+      if(nuevosDatos != null){
+        _datos = nuevosDatos;
+      }
+    });
   }
 }

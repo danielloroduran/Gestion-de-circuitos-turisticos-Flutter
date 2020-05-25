@@ -3,10 +3,25 @@ import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/secciones/detallespromo.dart';
 
-class ItemPromo extends StatelessWidget {
-  final Promocion _promo;
+class ItemPromo extends StatefulWidget{
+
   DatosPrueba datos;
-  ItemPromo(this.datos, this._promo);
+  Promocion promo;
+
+  ItemPromo({Key key, this.datos, this.promo}) : super(key: key);
+
+  _ItemPromoState createState() => _ItemPromoState(datos, promo);
+
+}
+
+
+
+class _ItemPromoState extends State<ItemPromo> with SingleTickerProviderStateMixin {
+
+  DatosPrueba _datos;
+  Promocion _promo;
+
+  _ItemPromoState(this._datos, this._promo);
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +63,25 @@ class ItemPromo extends StatelessWidget {
             ],
           ),
           onTap: () {
-            _enviarDatos(context);
+            _esperarResultado(context);
           },
         ));
   }
 
-  void _enviarDatos(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetallesPromo(datos: datos, promo: this._promo),
-        ));
+  void _esperarResultado(BuildContext context) async{
+
+    final nuevosDatos = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetallesPromo(datos: _datos, promo: _promo),
+      )
+    );
+
+    setState(() {
+      if(nuevosDatos != null){
+        _datos = nuevosDatos;
+      }
+    });
+
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practica_ipo2/modelos/guia.dart';
 import 'package:practica_ipo2/vista/itemguia.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/detallesguia.dart';
@@ -58,7 +57,19 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
               datos.guias.removeAt(index);
             });
 
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombre + " eliminado")));
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(item.nombre + " eliminado"),
+                action: SnackBarAction(
+                  label: "Deshacer",
+                  onPressed: () {
+                    setState(() {
+                      datos.guias.insert(index, item);
+                    });
+                  },
+                ),
+              )
+            );
           },
           background: Container(
             alignment: Alignment.centerLeft,

@@ -4,9 +4,9 @@ import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 
 class DetallesPuntoInteres extends StatefulWidget{
-
-  PuntoInteres puntoInteres;
+  
   DatosPrueba datos;
+  PuntoInteres puntoInteres;
   Ruta ruta;
 
   DetallesPuntoInteres({Key key, this.datos, this.puntoInteres, this.ruta}) : super(key: key);
@@ -18,8 +18,8 @@ class DetallesPuntoInteres extends StatefulWidget{
 
 class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with SingleTickerProviderStateMixin{
 
-  PuntoInteres puntoInteres;
   DatosPrueba datos;
+  PuntoInteres puntoInteres;
   Ruta ruta;
 
   _DetallesPuntoInteresState(this.datos, this.puntoInteres, this.ruta);
@@ -434,6 +434,11 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
             )));
   }
 
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
   Widget getFotoButton(){
     return new Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -536,6 +541,8 @@ Widget getSaveButton(){
                               ruta.puntoInteres.add(nuevoPunto);
                             }
                             Navigator.pop(context, datos);
+                          }else{
+                            _mostrarError();
                           } 
                         }else{
                           if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
@@ -562,6 +569,8 @@ Widget getSaveButton(){
                               }
 
                             }
+                          }else{
+                            _mostrarError();
                           }                           
                         }
                       });
@@ -589,8 +598,8 @@ Widget getSaveButton(){
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar punto de interés?"),
-          content: new Text("Estás a punto de eliminar " + nombreController.text+ " del sistema. ¿Continuar?"),
+          title: new Text("Eliminar punto de interés"),
+          content: new Text("Estás a punto de eliminar " + nombreController.text+ ". ¿Continuar?"),          
           actions: <Widget>[
             new Row(
               children: <Widget>[
@@ -601,16 +610,56 @@ Widget getSaveButton(){
                   },
                 ),
                 new FlatButton(
-                  child: new Text("Continuar"),
+                  child: new Text("Eliminar solo en ruta"),
                   onPressed: (){
                     if(datos.rutas.contains(ruta)){
                       int index = datos.rutas.indexOf(ruta);
                       int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
                       datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
-                      datos.rutas.elementAt(index).puntoInteres.insert(indexP, puntoInteres);
+
                       Navigator.pop(context);
                       Navigator.pop(context, datos);
                     }
+                  }
+                ),
+                new FlatButton(
+                  child: new Text("Eliminar"),
+                  onPressed: (){
+                    if(datos.rutas.contains(ruta)){
+                      int index = datos.rutas.indexOf(ruta);
+                      int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
+                      datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
+                      if(datos.puntoInteres.contains(puntoInteres)){
+                        datos.puntoInteres.removeAt(index);
+                      }
+                      Navigator.pop(context);
+                      Navigator.pop(context, datos);
+                    }
+                  },
+                )
+              ],
+            )
+          ],
+          
+        );
+      }
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
+                    Navigator.pop(context);
                   }
                 )
               ],

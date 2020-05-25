@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
-import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/secciones/detallespromo.dart';
 import 'package:practica_ipo2/vista/itempromo.dart';
 
@@ -59,7 +58,19 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
               datos.promociones.removeAt(index);
             });
 
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombrePromo + " eliminada")));
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(item.nombrePromo + " eliminada"),
+                action: SnackBarAction(
+                  label: "Deshacer",
+                  onPressed: () {
+                    setState(() {
+                      datos.promociones.insert(index, item);
+                    });
+                  },
+                )
+              )
+            );
           },
           background: Container(
             alignment: Alignment.centerLeft,
@@ -73,7 +84,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
             color: Colors.redAccent,
             child: Icon(Icons.delete, color: Colors.white),
           ),
-          child: ItemPromo(datos, datos.promociones[index]),
+          child: ItemPromo(datos: datos, promo: datos.promociones[index]),
           );
       },
     );

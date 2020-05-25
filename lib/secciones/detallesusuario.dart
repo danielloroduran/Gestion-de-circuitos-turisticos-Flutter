@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/usuario.dart';
 
@@ -24,8 +25,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
   TextEditingController correoController;
   TextEditingController movilController;
   TextEditingController conexionController;
-  
-  
+  String _foto;
 
   void initState(){
     super.initState();
@@ -41,6 +41,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
     conexionController = new TextEditingController();
     conexionController.text = usuario.ultimaConexion;
 
+    _foto = usuario.foto;
 
   }
 
@@ -75,7 +76,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                 decoration: new BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
-                                    image: new ExactAssetImage(usuario.foto),
+                                    image: new ExactAssetImage(_foto),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -208,6 +209,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                   ),
                                   enabled: _editable,
                                   autocorrect: _editable,
+                                  keyboardType: TextInputType.emailAddress,
                                 ),
                               )
                             ],
@@ -250,6 +252,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                                     hintText: "Introduzca su móvil",
                                   ),
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                                   enabled: _editable,
                                   autocorrect: _editable,
                                 )
@@ -314,11 +317,6 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
   @override
   void dispose(){
     super.dispose();
-    nombreController.dispose();
-    correoController.dispose();
-    movilController.dispose();
-    conexionController.dispose();
-    
   }
 
   Widget getFotoButton(){
@@ -366,7 +364,15 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        Navigator.pop(context);
+                        if(nombreController.text != "" && correoController.text != "" && movilController.text != ""){
+                          usuario.nombreUsuario = nombreController.text;
+                          usuario.foto = _foto;
+                          usuario.correo = correoController.text;
+                          usuario.telefono = int.parse(movilController.text);
+                          Navigator.pop(context, usuario);
+                        }else{
+                          _mostrarError();
+                        }
                       });
                     },
                     shape: new RoundedRectangleBorder(
@@ -400,6 +406,30 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
           });
         },
       )
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
     );
   }
 

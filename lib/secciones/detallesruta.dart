@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/listapuntointeres.dart';
-import 'package:practica_ipo2/modelos/puntointeres.dart';
 
 class DetallesRuta extends StatefulWidget {
-  Ruta ruta;
+  
   DatosPrueba datos;
+  Ruta ruta;
 
   DetallesRuta({Key key, this.datos, this.ruta}) : super(key: key);
 
@@ -444,34 +444,39 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
   @override
   void dispose() {
     super.dispose();
+
   }
 
   Widget getListPuntoInteresButton() {
     return Padding(
-        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
                 child: Container(
-                    child: Container(
-                        child: new RaisedButton(
-              child: new Text("Puntos de interés en esta ruta"),
-              textColor: Colors.white,
-              color: Colors.cyan,
-              onPressed: () {
-                if(ruta == null){
-                  _mostrarConfirmacion();
-                }else{
-                  _esperarResultado(context);
-                }
-              },
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0)),
-            )))),
-          ],
-        ));
+                  child: new RaisedButton(
+                    child: new Text("Puntos de interés en esta ruta"),
+                    textColor: Colors.white,
+                    color: Colors.cyan,
+                    onPressed: () {
+                      if(ruta == null){
+                          _mostrarConfirmacion();
+                      }else{
+                        _esperarResultado(context);
+                      }
+                    },
+                    shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0)),
+                  )
+                )
+              )
+          ),
+        ],
+      )
+    );
   }
 
   Widget getHoraInicioButton() {
@@ -558,6 +563,8 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                       Ruta nuevaRuta = new Ruta(nombreController.text, estadoController.text, double.parse(precioController.text), "", "", localidadController.text, horaInicioController.text, horaFinController.text, _foto, fechaController.text, null, 0);
                       datos.rutas.add(nuevaRuta);
                       Navigator.pop(context, datos);
+                    }else{
+                      _mostrarError();
                     }
                   }else{
                     if(nombreController.text != "" && estadoController.text != "" && precioController.text != "" && localidadController.text != "" && horaInicioController.text != "" && horaFinController.text != "" && fechaController.text != "" && _foto != ""){
@@ -576,6 +583,8 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                         datos.rutas.insert(index, ruta);
                         Navigator.pop(context, datos);
                       }
+                    }else{
+                      _mostrarError();
                     }
                   }
                 });
@@ -704,7 +713,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar ruta?"),
+          title: new Text("Eliminar ruta"),
           content: new Text("Estás a punto de eliminar " + nombreController.text+ ". ¿Continuar?"),
           actions: <Widget>[
             new Row(
@@ -716,7 +725,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                   },
                 ),
                 new FlatButton(
-                  child: new Text("Continuar"),
+                  child: new Text("Eliminar"),
                   onPressed: (){
                     if(datos.rutas.contains(ruta)){
                       datos.rutas.remove(ruta);
@@ -739,7 +748,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
       builder: (BuildContext context){
         return AlertDialog(
           title: new Text("¿Salir y guardar?"),
-          content: new Text("Esta ruta no ha sido guardado aún. ¿Guardar y continuar con sus puntos?"),
+          content: new Text("Esta ruta es nueva y no ha sido guardado aún. ¿Guardar y continuar con sus puntos?"),
           actions: <Widget>[
             new Row(
               children: <Widget>[
@@ -766,6 +775,30 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                         datos = nuevosDatos;
                       }
                     });
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
+                    Navigator.pop(context);
                   }
                 )
               ],

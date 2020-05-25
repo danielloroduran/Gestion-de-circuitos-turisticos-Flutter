@@ -5,23 +5,27 @@ import 'package:practica_ipo2/modelos/usuario.dart';
 
 class VentanaLogin extends StatefulWidget {
 
-  final DatosPrueba datos;
-  VentanaLogin({Key key, @required this.datos}) : super(key: key);
+  final DatosPrueba datos = new DatosPrueba();
+  VentanaLogin({Key key}) : super(key: key);
   @override
   _VentanaLoginState createState() => _VentanaLoginState(datos: datos);
 }
 
-class _VentanaLoginState extends State<VentanaLogin> {
+class _VentanaLoginState extends State<VentanaLogin> with SingleTickerProviderStateMixin{
 
-  final DatosPrueba datos;
+  DatosPrueba datos;
   _VentanaLoginState({@required this.datos});
+  Usuario usuario;
 
   TextEditingController usuarioController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: new Container(
         child: new Stack(
           children: <Widget>[
@@ -86,7 +90,7 @@ class _VentanaLoginState extends State<VentanaLogin> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    //forgot password screen
+                    _mostrarDialogo();
                   },
                   textColor: Colors.blue,
                   child: Text('¿Olvidó la contraseña?'),
@@ -99,7 +103,6 @@ class _VentanaLoginState extends State<VentanaLogin> {
                       color: Colors.blue,
                       child: Text('Iniciar sesión'),
                       onPressed: () {
-                        Usuario usuario;
                         bool puedeEntrar = false;
 
                         for(int i = 0; i < datos.usuarios.length; i++){
@@ -113,16 +116,19 @@ class _VentanaLoginState extends State<VentanaLogin> {
                           DateTime ahora = DateTime.now();
                           String fecha = ahora.hour.toString()+":"+ahora.minute.toString()+", "+ahora.day.toString()+"/"+ahora.month.toString()+"/"+ahora.year.toString();
                           usuario.ultimaConexion = fecha;
-                          _enviarDatos(context, usuario);
+                          _esperarResultado(context, usuario);
+                        }else{
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              content: Text("Usuario o contraseña incorrectos"),
+                            )
+                          );
                         }
                       },
                     )),
                 Container(
                   padding: EdgeInsets.only(left: 135, top: 20, right: 20),
-                  child: new Text("O inicie sesión con:",
-                    style: TextStyle(
-                      
-                    )),
+                  child: new Text("O inicie sesión con:"),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -196,9 +202,92 @@ class _VentanaLoginState extends State<VentanaLogin> {
     );
   }
 
-    void _enviarDatos(BuildContext context, Usuario usuario){
-      usuarioController.text = "";
-      passwordController.text = "";
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(datos: datos, usuario: usuario)));
-    }
+  void _mostrarDialogo(){
+
+    TextEditingController tmpController = new TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: new Container(
+            height: 180,
+            child: new Column(
+              children: <Widget>[
+                new Text("Introduce el nombre de usuario o correo electróncio"),
+                SizedBox(height: 20),
+                new TextField(
+                  obscureText: true,
+                  controller: tmpController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Usuario/correo',
+                  ),
+                  autofocus: true,
+                ),
+                SizedBox(height: 20),
+                new Container(
+                  height: 40,
+                  width: 300,
+                  child: new RaisedButton(
+                    color: Colors.blue,
+                    child:  Text("Enviar", style: TextStyle(color: Colors.white)),
+                    onPressed: (){
+                      bool enviar = false;
+                      for(int i = 0; i < datos.usuarios.length; i++){
+                        if(tmpController.text == datos.usuarios.elementAt(i).nombreUsuario || datos.usuarios.elementAt(i).correo == tmpController.text){
+                          enviar = true;
+                        }
+                      }
+
+                      bool sBAbierta = false;
+
+                      if(enviar){
+
+                        if(!sBAbierta){
+                          _scaffoldKey.currentState.hideCurrentSnackBar();
+                          sBAbierta = true;
+                          _scaffoldKey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text("Mensaje para recuperar la contraseña enviado"),
+                          )).closed.then((SnackBarClosedReason reason){
+                          sBAbierta = false;
+                        });
+                      }
+                        Navigator.pop(context);
+                      }else{
+                        if(!sBAbierta){
+                          _scaffoldKey.currentState.hideCurrentSnackBar();
+                          _scaffoldKey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text("Usuario o correo no registrado"),
+                          )).closed.then((SnackBarClosedReason reason){
+                          sBAbierta = false;
+                        });
+                        }
+                      }                     
+                    },
+                  )
+                )
+              ],
+            )
+          )
+
+        );
+      }
+    );
+  }
+
+  void _esperarResultado(BuildContext context, Usuario usuario) async{
+    
+    final nuevosDatos = await Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => Home(datos: datos, usuario: usuario)));
+
+      setState(() {
+        if (nuevosDatos != null){
+          datos = nuevosDatos;
+        }
+      });
+  }
 }

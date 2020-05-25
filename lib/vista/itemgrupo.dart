@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/secciones/detallesgrupoturista.dart';
 
+class ItemGrupo extends StatefulWidget{
 
-class ItemGrupo extends StatelessWidget{
+  DatosPrueba datos;
+  GrupoTurista grupo;
 
-  final GrupoTurista _grupoTurista;
+  ItemGrupo({Key key, this.datos, this.grupo}) : super(key: key);
 
-  ItemGrupo(this._grupoTurista);
+  _ItemGrupoState createState() => _ItemGrupoState(datos, grupo);
+}
+
+class _ItemGrupoState extends State<ItemGrupo> with SingleTickerProviderStateMixin{
+
+  DatosPrueba _datos;
+  GrupoTurista _grupoTurista;
+
+  _ItemGrupoState(this._datos, this._grupoTurista);
 
   @override
   Widget build(BuildContext context){
@@ -47,12 +58,18 @@ class ItemGrupo extends StatelessWidget{
 
     void _esperarResultado(BuildContext context) async{
       
-    final grupoActualizado = await Navigator.push(
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesGrupo(grupo: this._grupoTurista),
+        builder: (context) => DetallesGrupo(datos: _datos, grupo: _grupoTurista),
       )
     );
+
+    setState(() {
+      if(nuevosDatos != null){
+        _datos = nuevosDatos;
+      }
+    });
   }
 
 }

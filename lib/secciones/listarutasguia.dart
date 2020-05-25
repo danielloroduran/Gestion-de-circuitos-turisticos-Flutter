@@ -43,8 +43,19 @@ class _ListaRutasAsignadasState extends State<ListaRutasAsignadas> with SingleTi
                     guia.rutasAsignadas.removeAt(index);
                   });
 
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(item.nombre + "eliminada para este guia")));
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(item.nombre + "eliminada para este guia"),
+                      action:  SnackBarAction(
+                        label: "Deshacer",
+                        onPressed: () {
+                          setState(() {
+                            guia.rutasAsignadas.insert(index, item);
+                          });
+                        },
+                      ),
+                    )
+                  );
                 },
                 background: Container(
                   alignment: Alignment.centerLeft,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
-import 'package:practica_ipo2/modelos/turista.dart';
 import 'package:practica_ipo2/secciones/listaturistas.dart';
 
 class DetallesGrupo extends StatefulWidget{
@@ -22,13 +21,13 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
   GrupoTurista grupo;
 
   _DetallesGrupoState({this.datos, this.grupo});
+
   bool _editable = false;
   TextEditingController nombreController;
   TextEditingController descripcionController;
   TextEditingController interesesController;
   TextEditingController restriccionesController;
   TextEditingController integrantesController;
-  List<Turista> _turistas;
   String _tipoGrupo;
   String _foto;
 
@@ -52,7 +51,6 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
       restriccionesController.text = grupo.restricciones;
       integrantesController.text = grupo.numIntegrantes.toString();
       _tipoGrupo = grupo.tipo;
-      _turistas = grupo.turistas;
       _foto = grupo.foto;
     }else{
       nombreController.text = "";
@@ -63,7 +61,6 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
       _tipoGrupo = _tiposDropdown[0].value;
       _foto = "imagenes/grupo.jpg";
       _editable = true;
-      _turistas = new List<Turista>();
     }
   }
 
@@ -467,10 +464,11 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                     textColor: Colors.white,
                     color: Colors.cyan,
                     onPressed: () {
-
-                      setState(() {
+                      if(grupo == null){
+                        _mostrarConfirmacion();
+                      }else{
                         _esperarResultado(context);
-                      });
+                      }
                     },
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(20.0)
@@ -500,7 +498,35 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        Navigator.pop(context);
+                        if(grupo == null){
+                          if(nombreController.text != "" && descripcionController.text != "" && _tipoGrupo != ""){
+                            GrupoTurista nuevoGrupo = new GrupoTurista(nombreController.text, _tipoGrupo, descripcionController.text, interesesController.text, restriccionesController.text, _foto);
+                            grupo.setNumIntegrantes();
+                            datos.grupoTurista.add(nuevoGrupo);
+                            Navigator.pop(context, datos);
+                          }else{
+                            _mostrarError();
+                          }
+                        }else{
+                          if(nombreController.text != "" && descripcionController.text != "" && _tipoGrupo != ""){
+                            if(datos.grupoTurista.contains(grupo)){
+                              int index = datos.grupoTurista.indexOf(grupo);
+                              grupo.nombreGrupo = nombreController.text;
+                              grupo.tipo = _tipoGrupo;
+                              grupo.descripcion = descripcionController.text;
+                              grupo.intereses = interesesController.text;
+                              grupo.restricciones = restriccionesController.text;
+                              grupo.foto = _foto;
+                              grupo.setNumIntegrantes();
+
+                              datos.grupoTurista.removeAt(index);
+                              datos.grupoTurista.insert(index, grupo);
+                              Navigator.pop(context, datos);
+                            }
+                          }else{
+                            _mostrarError();
+                          }
+                        }
                       });
                     },
                     shape: new RoundedRectangleBorder(
@@ -521,27 +547,13 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
     });
   }
 
-  void _esperarResultado(BuildContext context) async{
-
-    final listaTuristaActualizado = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ListadoTuristas(turistas: _turistas),)
-    );
-    setState((){
-      if(listaTuristaActualizado != null){
-        grupo.turistas = listaTuristaActualizado;
-        _turistas = listaTuristaActualizado;
-      }
-    });
-  }
-
-    void _mostrarDialogo(){
+  void _mostrarConfirmacion(){
     showDialog(
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar grupo?"),
-          content: new Text("Estás a punto de eliminar el grupo " + nombreController.text+ "y todos sus integrantes. ¿Continuar?"),
+          title: new Text("Grupo no guardado"),
+          content: new Text("Este grupo es nuevo y no ha sido guardado aún. ¿Guardar y continuar con sus integrantes?"),
           actions: <Widget>[
             new Row(
               children: <Widget>[
@@ -553,8 +565,99 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                 ),
                 new FlatButton(
                   child: new Text("Continuar"),
-                  onPressed: (){
+                  onPressed: () async{
                     Navigator.pop(context);
+                    grupo = new GrupoTurista(nombreController.text, _tipoGrupo, descripcionController.text, interesesController.text, restriccionesController.text, _foto);
+                    datos.grupoTurista.add(grupo);
+
+                    final nuevosDatos = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListadoTuristas(datos: datos, grupo: grupo))
+                    );
+
+                    setState(() {
+                      if(nuevosDatos != null){
+                        datos = nuevosDatos;
+                      }
+                    });
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _esperarResultado(BuildContext context) async{
+
+    final listaTuristaActualizado = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ListadoTuristas(datos: datos, grupo: grupo))
+    );
+    setState((){
+      if(listaTuristaActualizado != null){
+        grupo.turistas = listaTuristaActualizado;
+        grupo.setNumIntegrantes();
+        interesesController.text = grupo.numIntegrantes.toString();
+      }
+    });
+  }
+
+  void _mostrarDialogo(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("Eliminar grupo"),
+          content: new Text("Estás a punto de eliminar el grupo " + nombreController.text+ "y todos sus integrantes. ¿Continuar?"),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Cancelar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Eliminar"),
+                  onPressed: (){
+
+                    if(datos.grupoTurista.contains(grupo)){
+                      for(int i = 0; i < grupo.turistas.length; i++){
+                        if(datos.turistasGeneral.contains(grupo.turistas[i])){
+                          datos.turistasGeneral.remove(grupo.turistas[i]);
+                        }
+                      }
+                      datos.grupoTurista.remove(grupo);
+                    }
+                    Navigator.pop(context);
+                    Navigator.pop(context, datos);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables, salvo restricciones e intereses, son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
                     Navigator.pop(context);
                   }
                 )

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
-import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/vista/itemruta.dart';
 import 'package:practica_ipo2/secciones/detallesruta.dart';
 
@@ -56,7 +55,19 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
               datos.rutas.removeAt(index);
             });
 
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombre + " eliminada")));
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(item.nombre + " eliminada"),
+                action: SnackBarAction(
+                  label: "Deshacer",
+                  onPressed: () {
+                    setState(() {
+                      datos.rutas.insert(index, item);
+                    });
+                  },
+                ),
+              )
+            );
           },
           background: Container(
             alignment: Alignment.centerLeft,

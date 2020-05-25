@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
 import 'package:practica_ipo2/secciones/detallesturista.dart';
 
-class ItemTurista extends StatelessWidget{
+class ItemTurista extends StatefulWidget{
 
-  final Turista _turista;
+  DatosPrueba datos;
+  Turista turista;
+  GrupoTurista grupo;
 
-  ItemTurista(this._turista);
+  ItemTurista({Key key, this.datos, this.turista, this.grupo}) : super(key: key);
+
+  _ItemTuristaState createState() => _ItemTuristaState(datos, turista, grupo);
+
+}
+
+
+class _ItemTuristaState extends State<ItemTurista> with SingleTickerProviderStateMixin{
+
+  DatosPrueba _datos;
+  Turista _turista;
+  GrupoTurista _grupo;
+
+  _ItemTuristaState(this._datos, this._turista, this._grupo);
 
   @override
   Widget build(BuildContext context){
@@ -44,18 +61,25 @@ class ItemTurista extends StatelessWidget{
           ],
         ),
         onTap: () {
-          _enviarDatos(context);
+          _esperarResultado(context);
         },
       )
     );
   }
 
-  void _enviarDatos(BuildContext context){
-    Navigator.push(
+  void _esperarResultado(BuildContext context) async{
+    
+    final nuevosDatos = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetallesTurista(turista: this._turista)
+        builder: (context) => DetallesTurista(datos: _datos, turista: _turista, grupo: _grupo),
       )
     );
+
+    setState(() {
+      if(nuevosDatos != null){
+        _datos = nuevosDatos;
+      }
+    });
   }
 }

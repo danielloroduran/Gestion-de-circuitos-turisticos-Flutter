@@ -57,7 +57,19 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
               datos.grupoTurista.removeAt(index);
             });
 
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(item.nombreGrupo + " y sus integrantes eliminados")));
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(item.nombreGrupo + " y sus integrantes eliminados"),
+                action: SnackBarAction(
+                  label: "Deshacer",
+                  onPressed: () {
+                    setState(() {
+                      datos.grupoTurista.insert(index, item);
+                    });
+                  },
+                ),
+              )
+            );
           },
           background: Container(
             alignment: Alignment.centerLeft,
@@ -71,7 +83,7 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
             color: Colors.redAccent,
             child: Icon(Icons.delete, color: Colors.white),
           ),
-          child: ItemGrupo(datos.grupoTurista[index]),
+          child: ItemGrupo(datos: datos, grupo: datos.grupoTurista[index]),
           );
       },
     );

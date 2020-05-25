@@ -48,8 +48,19 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                     ruta.puntoInteres.removeAt(index);
                   });
 
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(item.nombre + "eliminado para esta ruta")));
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(item.nombre + "eliminado para esta ruta"),
+                      action: SnackBarAction(
+                        label: "Deshacer",
+                        onPressed: (){
+                          setState(() {
+                            ruta.puntoInteres.insert(index, item);
+                          });
+                        },
+                      ),
+                      )
+                    );
                 },
                 background: Container(
                   alignment: Alignment.centerLeft,
@@ -69,7 +80,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
           }),
       
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: new Icon(Icons.add),
         onPressed: () {
           _mostrarDialogo();
         },

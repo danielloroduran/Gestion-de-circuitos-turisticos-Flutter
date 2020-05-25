@@ -74,7 +74,9 @@ class _ItemGuiaState extends State<ItemGuia> with SingleTickerProviderStateMixin
     );
 
     setState(() {
-      _datos = nuevosDatos;
+      if(nuevosDatos != null){
+        _datos = nuevosDatos;
+      }
     });
 
   }

@@ -11,6 +11,17 @@ class GrupoTurista{
   String _restricciones;
   String _foto;
 
+  GrupoTurista.enBlanco(){
+    this._nombreGrupo = "";
+    this._tipo = "Estudiantes";
+    this._descripcion = "";
+    this._intereses = "";
+    this._restricciones = "";
+    this._foto = "imagenes/grupo.jpg";
+    this._turistas = new List<Turista>();
+    this._numIntegrantes = this._turistas.length;
+  }
+
   GrupoTurista(String nombreGrupo, String tipo, String descripcion, String intereses, String restricciones, String foto){
     this._nombreGrupo = nombreGrupo;
     this._tipo = tipo;

@@ -367,7 +367,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                             children: <Widget>[
                               Expanded(
                                 child: Container(
-                                  child: new Text("Precio por hora(€)",
+                                  child: new Text("Precio/hora (€)",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500),
@@ -377,7 +377,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                               ),
                               Expanded(
                                 child: Container(
-                                  child: new Text("Precio por día(€)",
+                                  child: new Text("Precio/día (€)",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500),
@@ -541,6 +541,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
   @override
   void dispose(){
     super.dispose();
+
   }
 
   Widget getFotoButton(){
@@ -643,6 +644,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                             Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, double.parse(precioHoraController.text), double.parse(precioDiaController.text), dniController.text, correoController.text);
                             datos.guias.add(nuevoGuia);
                             Navigator.pop(context, datos);
+                          }else{
+                            _mostrarError();
                           }
                         }else{
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
@@ -662,6 +665,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                               datos.guias.insert(index, guia);
                               Navigator.pop(context, datos);
                             }
+                          }else{
+                            _mostrarError();
                           }
                         }
                         
@@ -755,7 +760,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text("¿Eliminar guía?"),
+          title: new Text("Eliminar guía"),
           content: new Text("Estás a punto de eliminar a " + nombreController.text+ ". ¿Continuar?"),
           actions: <Widget>[
             new Row(
@@ -767,13 +772,37 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                   },
                 ),
                 new FlatButton(
-                  child: new Text("Continuar"),
+                  child: new Text("Eliminar"),
                   onPressed: (){
                     if(datos.guias.contains(guia)){
                       datos.guias.remove(guia);
                     }
                     Navigator.pop(context);
                     Navigator.pop(context, datos);
+                  }
+                )
+              ],
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void _mostrarError(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("¡Error!"),
+          content: new Text("Todos los campos editables son obligatorios, revíselos."),
+          actions: <Widget>[
+            new Row(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text("Aceptar"),
+                  onPressed: (){
+                    Navigator.pop(context);
                   }
                 )
               ],

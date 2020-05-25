@@ -109,7 +109,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           onTap:() {
             setState(() {
               Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pop(context, datos);
             });
           }
         )
@@ -186,12 +186,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
 
   void _esperarResultadoPerfil(context) async{
 
-    final perfilActualizado = await Navigator.push(
+    final usuarioActualizado = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetallesUsuario(datos: datos, usuario: usuario),
       )
     );
+
+    setState(() {
+      if(usuarioActualizado != null){
+        int index = datos.usuarios.indexOf(usuario);
+        usuario = usuarioActualizado;
+        datos.usuarios.removeAt(index);
+        datos.usuarios.insert(index, usuarioActualizado);
+      }
+    });
 
   }
 }
