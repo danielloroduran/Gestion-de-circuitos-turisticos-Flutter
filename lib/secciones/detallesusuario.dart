@@ -339,91 +339,6 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                             ],
                           ),
                         ),
-/*                        Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              new Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      new Text("Teléfono",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              new Flexible(
-                                child: new TextField(
-                                  controller: movilController,
-                                  decoration: const InputDecoration(
-                                    hintText: "Introduzca su móvil",
-                                  ),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                                  enabled: _editable,
-                                  autocorrect: _editable,
-                                )
-                              )
-                            ],
-                          )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              new Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      new Text("Última conexión",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              new Flexible(
-                                child: new TextField(
-                                  controller: conexionController,
-                                  enabled: false,
-                                  autocorrect: false,
-                                )
-                              )
-                            ],
-                          )
-                        ),*/
                         _editable ? getSaveButton() : new Container(),
                       ],
                     )
@@ -488,11 +403,12 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        if(nombreController.text != "" && correoController.text != "" && movilController.text != ""){
+                        if(nombreController.text != "" && correoController.text != "" && movilController.text != "" && passwordController.text != ""){
                           usuario.nombreUsuario = nombreController.text;
                           usuario.foto = _foto;
                           usuario.correo = correoController.text;
                           usuario.telefono = int.parse(movilController.text);
+                          usuario.contrasena = passwordController.text;
                           Navigator.pop(context, usuario);
                         }else{
                           _mostrarError();
