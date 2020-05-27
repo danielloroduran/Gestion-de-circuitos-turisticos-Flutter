@@ -98,4 +98,22 @@ class Ruta{
     }
   }
 
+Map<String, dynamic> toMap(){
+    return {
+      'nombre': _nombre,
+      'estado': _estado,
+      'coste': _coste,
+      'opiniones': _opiniones,
+      'sugerencias': _sugerencias,
+      'localidad': _localidad,
+      'horaInicio': _horaInicio,
+      'horaFin': _horaFin,
+      'foto': _foto,
+      'fecha': _fecha,
+      'reserva': _reserva,
+      'puntuacion': _puntuacion
+
+    };
+  }
+
 }

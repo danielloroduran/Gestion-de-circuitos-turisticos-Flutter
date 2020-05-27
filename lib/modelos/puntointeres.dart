@@ -42,4 +42,16 @@ class PuntoInteres{
   set foto(String foto) => _foto = foto;
   set seleccionado(bool seleccionado) => _seleccionado = seleccionado;
 
+ Map<String, dynamic> toMap(){
+    return {
+      'nombre': _nombre,
+      'tipo': _tipo,
+      'foto': _foto,
+      'entrada': _entrada,
+      'descripcion': _descripcion,
+      'direccion': _direccion,
+      'horario': _horario,
+      'duracionVisita': _duracionVisita,
+    };
+  }
 }

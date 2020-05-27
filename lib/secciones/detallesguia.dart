@@ -641,7 +641,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                       setState(() {
                         if(guia == null){
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
-                            Guia nuevoGuia = new Guia(nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, double.parse(precioHoraController.text), double.parse(precioDiaController.text), dniController.text, correoController.text);
+                            Guia nuevoGuia = new Guia(dniController.text, nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, double.parse(precioHoraController.text), double.parse(precioDiaController.text), correoController.text);
                             datos.guias.add(nuevoGuia);
                             Navigator.pop(context, datos);
                           }else{

@@ -31,7 +31,7 @@ class Guia{
     this._rutasHistorial = new List<Ruta>();
   }
 
-  Guia(String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, double precioHora, double precioDia, String dni, String correo){
+  Guia(String dni, String nombre, String apellidos, int movil, String foto, int puntuacion, String idiomas, String disponibilidad, double precioHora, double precioDia,  String correo){
     this._nombre = nombre;
     this._apellidos = apellidos;
     this._movil = movil;
@@ -74,5 +74,21 @@ class Guia{
   set correo(String correo) => _correo = correo;
   set rutasAsignadas(List<Ruta> rutasAsignadas) => _rutasAsignadas = rutasAsignadas;
   set rutasHistorial(List<Ruta> rutasHistorial) => _rutasHistorial = rutasHistorial;
+
+  Map<String, dynamic> toMap(){
+    return {
+      'DNI': _dni,
+      'nombre': _nombre,
+      'apellidos': _apellidos,
+      'movil': _movil,
+      'foto': _foto,
+      'puntuacion': _puntuacion,
+      'idiomas': _idiomas,
+      'disponibilidad': disponibilidad,
+      'precioHora': _precioHora,
+      'precioDia': _precioDia,
+      'correo': _correo,
+    };
+  }
 
 }

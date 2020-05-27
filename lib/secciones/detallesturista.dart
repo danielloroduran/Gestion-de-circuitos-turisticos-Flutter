@@ -451,7 +451,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                       setState(() {
                         if(turista == null){
                           if(nombreController.text != "" && apellidosController.text != "" && movilController.text != "" && dniController.text != "" && correoController.text != "" && edadController.text != "") {
-                            Turista nuevoTurista = new Turista(nombreController.text, apellidosController.text, int.parse(movilController.text), dniController.text, correoController.text, _foto, int.parse(edadController.text));
+                            Turista nuevoTurista = new Turista(dniController.text, nombreController.text, apellidosController.text, int.parse(movilController.text), correoController.text, _foto, int.parse(edadController.text));
                             datos.turistasGeneral.add(nuevoTurista);
                             if(datos.grupoTurista.contains(grupo)){
                               int index = datos.grupoTurista.indexOf(grupo);

@@ -37,4 +37,15 @@ class Promocion{
     this._precioFinal = precio-((descuento/100)*precio);
   }
 
+Map<String, dynamic> toMap(){
+    return {
+      'nombrePromo': _nombrePromo,
+      'mensaje': _mensaje,
+      'precio': _precio,
+      'descuento': _descuento,
+      'foto': _foto,
+      'localidad': _localidad,
+    };
+  }
+
 }

@@ -51,4 +51,15 @@ class GrupoTurista{
   set turistas(List<Turista> turistas) => _turistas = turistas;
 
   void setNumIntegrantes() => this._numIntegrantes = this._turistas.length;
+
+   Map<String, dynamic> toMap(){
+    return {
+      'nombreGrupo': _nombreGrupo,
+      'tipo': _tipo,
+      'descripcion': _descripcion,
+      'intereses': _intereses,
+      'restricciones': _restricciones,
+      'foto': _foto,
+    };
+  }
 }

@@ -9,7 +9,7 @@ class Turista{
   bool _seleccionado = false;
   int _edad; 
 
-  Turista(String nombre, String apellidos, int movil, String dni, String correo, String foto, int edad){
+  Turista(String dni, String nombre, String apellidos, int movil, String correo, String foto, int edad){
 
     this._nombre = nombre;
     this._apellidos = apellidos;
@@ -40,6 +40,18 @@ class Turista{
   set foto(String foto) => _foto = foto;
   set edad(int edad) => _edad = edad;
   set seleccionado(bool seleccionado) => _seleccionado = seleccionado;
+
+   Map<String, dynamic> toMap(){
+    return {
+      'DNI': _dni,
+      'nombre': _nombre,
+      'apellidos': _apellidos,
+      'movil': _movil,
+      'correo': _correo,
+      'foto': _foto,
+      'edad': _edad
+    };
+  }
 
 
 }

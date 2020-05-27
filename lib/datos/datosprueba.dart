@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/modelos/ayuda.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/modelos/guia.dart';
@@ -24,60 +25,56 @@ class DatosPrueba{
     cargarDatos();
   }
 
-  void cargarDatos(){
-
+  void cargarDatos() async{
+    baseDatos db = baseDatos();
+    await db.initdb();
+    
     usuarios = new List<Usuario>();
 
-    Usuario usuario1 = new Usuario("usuario1", "usuario1", "imagenes/usuario1.jpg", "usuario1@correo.com", 611111111);
-    Usuario usuario2 = new Usuario("admin", "admin", "imagenes/admin.png", "admin@correo.com", 622222222);
+    //Usuario usuario1 = new Usuario("usuario1", "usuario1", "imagenes/usuario1.jpg", "usuario1@correo.com", 611111111);
+    //Usuario usuario2 = new Usuario("admin", "admin", "imagenes/admin.png", "admin@correo.com", 622222222);
+    
+    //await db.insertUsuario(usuario2);
+    
+    //usuarios.add(usuario1);
+    //usuarios.add(usuario2);
 
-    usuarios.add(usuario1);
-    usuarios.add(usuario2);
+    usuarios = await db.getUsuarios();
+    for(int i = 0; i < usuarios.length; i++){
+      print(usuarios.elementAt(i).nombreUsuario);
+    }
 
     guias = new List<Guia>();
-
-    Guia guia1 = new Guia("Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", 3, 20, "11111111-H", "antonio@correo.es");
-    Guia guia2 = new Guia("Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", 4, 30, "22222222-J", "laura@correo.es");
-
-    guias.add(guia1);
-    guias.add(guia2);
+    
+    Guia guia1 = new Guia("11111111-H","Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", 3, 20,  "antonio@correo.es");
+    Guia guia2 = new Guia("22222222-J","Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", 4, 30,  "laura@correo.es");
+    guias = await db.getGuias();
 
     puntoInteres = new List<PuntoInteres>();
-
+    puntoInteres = await db.getPuntosInteres();
     PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita",  "Descripción de la iglesia", "Calle Nueva, 5", "Sábados, de 8:00 a 22:00", "30 minutos");
 		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Calle Vieja, 7", "Sin horario", "5 minutos");
 		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Calle Doctora, 55", "Todos los días de 8:00 a 22:00", "2 horas");
 		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galeria.jpg", "Gratuita", "Descripción de la exposición", "Calle Licenciada", "Martes y Domingo, de 9:00 a 14:00", "3 horas");
 
-    puntoInteres.add(pi1);
-		puntoInteres.add(pi2);
-		puntoInteres.add(pi3);
-		puntoInteres.add(pi4);
-
-    turistasGeneral = new List<Turista>();
-
     
-		Turista turista1 = new Turista("Antonia", "Lopez",  655555555, "44444444-I", "antonia@correo.es", "imagenes/cara5.jpg", 23);
-		Turista turista2 = new Turista("Ana", "Rosa", 666666666, "55555555-I", "rosa@correo.es", "imagenes/cara6.png", 50);
-		Turista turista3 = new Turista("Pepe", "Lopez", 677777777, "66666666-K", "pepe@correo.es", "imagenes/cara1.jpg", 65);
-		Turista turista4 = new Turista("Roberto", "Asín", 688888888, "77777777-L", "roberto@correo.es", "imagenes/personagenerica.png", 43);
-		Turista turista5 = new Turista("Elena", "Jimenez",  699999999, "88888888-N", "elena@correo.es", "imagenes/personagenerica.png", 20);
-		Turista turista6 = new Turista("Roberta", "Gonzalez", 699999991, "99999999-M", "roberta@correo.es", "imagenes/personagenerica.png", 72);
-		Turista turista7 = new Turista("José", "Domingo", 611111112, "11111112-D", "jose@correo.es", "imagenes/personagenerica.png", 30);
-		Turista turista8 = new Turista("Lolo", "Cañiz", 123456789, "12345678-H", "lolo@correo.es", "imagenes/personagenerica.png", 47);
-		Turista turista9 = new Turista("Pepa", "Diez", 987654321, "12345678-Q", "pepa@correo.es", "imagenes/personagenerica.png", 32);
-		Turista turista10 = new Turista("Angel", "Ortega", 623232323, "23232323-A", "angel@correo.es", "imagenes/cara1.jpg", 41);
+    turistasGeneral = new List<Turista>();
+    turistasGeneral = await db.getTuristas();
+    
+		Turista turista1 = new Turista("44444444-I","Antonia", "Lopez",  655555555,  "antonia@correo.es", "imagenes/cara5.jpg", 23);
+		Turista turista2 = new Turista("55555555-I","Ana", "Rosa", 666666666,  "rosa@correo.es", "imagenes/cara6.png", 50);
+		Turista turista3 = new Turista("66666666-K","Pepe", "Lopez", 677777777,  "pepe@correo.es", "imagenes/cara1.jpg", 65);
+		Turista turista4 = new Turista("77777777-L","Roberto", "Asín", 688888888,  "roberto@correo.es", "imagenes/personagenerica.png", 43);
+		Turista turista5 = new Turista("88888888-N","Elena", "Jimenez",  699999999,  "elena@correo.es", "imagenes/personagenerica.png", 20);
+		Turista turista6 = new Turista("99999999-M","Roberta", "Gonzalez", 699999991,  "roberta@correo.es", "imagenes/personagenerica.png", 72);
+		Turista turista7 = new Turista("11111112-D","José", "Domingo", 611111112,  "jose@correo.es", "imagenes/personagenerica.png", 30);
+		Turista turista8 = new Turista("12345678-H","Lolo", "Cañiz", 123456789,  "lolo@correo.es", "imagenes/personagenerica.png", 47);
+		Turista turista9 = new Turista("12345678-Q","Pepa", "Diez", 987654321,  "pepa@correo.es", "imagenes/personagenerica.png", 32);
+		Turista turista10 = new Turista("23232323-A","Angel", "Ortega", 623232323,  "angel@correo.es", "imagenes/cara1.jpg", 41);
 
-    turistasGeneral.add(turista1);
-		turistasGeneral.add(turista2);
-		turistasGeneral.add(turista3);
-		turistasGeneral.add(turista4);
-		turistasGeneral.add(turista5);
-		turistasGeneral.add(turista6);
-		turistasGeneral.add(turista7);
-		turistasGeneral.add(turista8);
-		turistasGeneral.add(turista9);
-		turistasGeneral.add(turista10);
+
+  //Falta GrupoTurista
+
 
     grupoTurista = new List<GrupoTurista>();
 
@@ -102,15 +99,10 @@ class DatosPrueba{
 		gt2.setNumIntegrantes();
 		grupoTurista.add(gt1);
 		grupoTurista.add(gt2);
-
+    // --------------------------------------- 
     promociones = new List<Promocion>();
-
-    Promocion promo1 = new Promocion("Promocion 1", "Para nuestros clientes mas veteranos llega una oferta del 30% en la ruta de Miguelturra", 100, 30,"imagenes/miguelturra.jpg", "Miguelturra");
-		Promocion promo2 = new Promocion("Promocion 2", "Para todos los turistas, esta semana se hará una oferta del 50% en el precio de la ruta de Ciudad Real", 50, 40,"imagenes/ciudadreal.jpg", "Ciudad Real");		
-		
-    promociones.add(promo1);
-		promociones.add(promo2);
-
+    promociones = await db.getPromociones();
+    //Faltan Rutas
     rutas = new List<Ruta>();
 
     Ruta ruta1 = new Ruta("Ruta turística", "Contratada", 50, "Opiniones de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 25554, 0);

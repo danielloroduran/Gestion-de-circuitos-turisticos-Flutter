@@ -15,6 +15,17 @@ class Usuario{
     this._correo = correo;
     this._telefono = telefono;
   }
+  
+  Map<String, dynamic> toMap(){
+    return {
+      'usuario': _nombreUsuario,
+      'contraseña': _contrasena,
+      'foto': _foto,
+      'correo': _correo,
+      'telefono': _telefono,
+      'ultimaConexion': _ultimaConexion,
+    };
+  }
 
   String get nombreUsuario => _nombreUsuario;
   String get contrasena => _contrasena;
