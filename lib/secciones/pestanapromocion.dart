@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/secciones/detallespromo.dart';
 import 'package:practica_ipo2/vista/itempromo.dart';
 
@@ -18,12 +21,13 @@ class ListadoPromo extends StatefulWidget{
 class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderStateMixin{
   
   DatosPrueba datos;
-
+  BaseDatos bd;
   _ListadoPromoState({@required this.datos});
 
   @override
   void initState(){
     super.initState();
+    bd = new BaseDatos();
   }
 
   @override
@@ -55,6 +59,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
 
           onDismissed: (direction){
             setState(() {
+              eliminarBBDD(bd, datos.promociones.elementAt(index).nombrePromo);
               datos.promociones.removeAt(index);
             });
 
@@ -65,6 +70,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
                   label: "Deshacer",
                   onPressed: () {
                     setState(() {
+                      insertarBBDD(bd, datos.promociones.elementAt(index));
                       datos.promociones.insert(index, item);
                     });
                   },
@@ -105,5 +111,12 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
     });
 
   }
-
+ void insertarBBDD(BaseDatos db, Promocion promo) async{
+    await db.initdb();
+    db.insertPromociones(promo);
+  }
+  void eliminarBBDD(BaseDatos db, String nombrePromo) async{
+    await db.initdb();
+    db.deletePromociones(nombrePromo);
+  }
 }

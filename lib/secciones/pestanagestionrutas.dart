@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/vista/itemruta.dart';
 import 'package:practica_ipo2/secciones/detallesruta.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 
 class ListadoRutas extends StatefulWidget{
 
@@ -14,13 +16,14 @@ class ListadoRutas extends StatefulWidget{
 }
 
 class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderStateMixin{
-
+  BaseDatos bd;
   DatosPrueba datos;
   _ListadoRutasState({@required this.datos});
 
   @override
   void initState(){
     super.initState();
+    bd = BaseDatos();
   }
 
   @override
@@ -53,6 +56,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
           onDismissed: (direction){
             setState(() {
               datos.rutas.removeAt(index);
+              eliminarBBDD(bd, item.nombre);
             });
 
             Scaffold.of(context).showSnackBar(
@@ -63,6 +67,7 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
                   onPressed: () {
                     setState(() {
                       datos.rutas.insert(index, item);
+                      insertarBBDD(bd, item);
                     });
                   },
                 ),
@@ -102,5 +107,16 @@ class _ListadoRutasState extends State<ListadoRutas> with SingleTickerProviderSt
       }
     });
   }
-
+  void insertarBBDD(BaseDatos db, Ruta ruta) async{
+    await db.initdb();
+    db.insertRutas(ruta);
+  }
+  void modificarBBDD(BaseDatos db, String nombreRuta, Ruta ruta) async{
+    await db.initdb();
+    db.updateRutas(nombreRuta, ruta);
+  }
+  void eliminarBBDD(BaseDatos db, String ruta) async{
+    await db.initdb();
+    db.deleteRutas(ruta);
+  }
 }

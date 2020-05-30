@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/modelos/promocion.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
@@ -19,6 +20,7 @@ class _DetallesPromoState extends State<DetallesPromo>
     with SingleTickerProviderStateMixin {
   DatosPrueba datos;
   Promocion promo;
+  BaseDatos bd;
 
   _DetallesPromoState({this.datos, this.promo});
 
@@ -33,7 +35,7 @@ class _DetallesPromoState extends State<DetallesPromo>
 
   void initState() {
     super.initState();
-
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     mensajeController = new TextEditingController();
     precioController = new TextEditingController();
@@ -427,10 +429,23 @@ class _DetallesPromoState extends State<DetallesPromo>
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
+                        bool repetido = false;
                         if(promo == null){
                           if(nombreController.text != "" && mensajeController.text != "" && precioController.text != "" && descuentoController.text != "" && localidadController.text != ""){
                             Promocion nuevaPromo = new Promocion(nombreController.text, mensajeController.text, double.parse(precioController.text), int.parse(descuentoController.text), _foto, localidadController.text);
-                            datos.promociones.add(nuevaPromo);
+                            
+                            for(int i = 0; i < datos.promociones.length; i++){
+                              if(datos.promociones.elementAt(i).nombrePromo == nuevaPromo.nombrePromo){
+                                repetido = true;
+                              }
+                            }
+                            if(repetido){
+                              print("Objeto repetido en la BBDD");
+                            }
+                            else{
+                              datos.promociones.add(nuevaPromo);
+                              insertarBBDD(bd, nuevaPromo);
+                            }
                             Navigator.pop(context, datos);
                           }else{
                             _mostrarError();
@@ -439,6 +454,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                           if(nombreController.text != "" && mensajeController.text != "" && precioController.text != "" && descuentoController.text != "" && localidadController.text != ""){
                             if(datos.promociones.contains(promo)){
                               int index = datos.promociones.indexOf(promo);
+                              String nombrePromo = promo.nombrePromo;
                               promo.nombrePromo = nombreController.text;
                               promo.mensaje = mensajeController.text;
                               promo.precio = double.parse(precioController.text);
@@ -446,9 +462,12 @@ class _DetallesPromoState extends State<DetallesPromo>
                               promo.foto = _foto;
                               promo.localidad = localidadController.text;
                               promo.setPrecioFinal();
-
-                              datos.promociones.removeAt(index);
-                              datos.promociones.insert(index, promo);
+                              
+                                modificarBBDD(bd, nombrePromo, promo);
+                                datos.promociones.removeAt(index);
+                                datos.promociones.insert(index, promo);
+                              
+                              Navigator.pop(context);
                               Navigator.pop(context, datos);
 
                             }
@@ -602,6 +621,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                   onPressed: (){
                     if(datos.promociones.contains(promo)){
                       datos.promociones.remove(promo);
+                      eliminarBBDD(bd, promo.nombrePromo);
                     }
                     Navigator.pop(context);
                     Navigator.pop(context, datos);
@@ -628,7 +648,7 @@ class _DetallesPromoState extends State<DetallesPromo>
                 new FlatButton(
                   child: new Text("Aceptar"),
                   onPressed: (){
-                    Navigator.pop(context);
+                    
                   }
                 )
               ],
@@ -638,5 +658,18 @@ class _DetallesPromoState extends State<DetallesPromo>
       }
     );
   }
-
+  
+    void insertarBBDD(BaseDatos db, Promocion promo) async{
+    await db.initdb();
+    db.insertPromociones(promo);
+  }
+  void modificarBBDD(BaseDatos db, String nombrePromo,Promocion promo) async{
+    await db.initdb();
+    db.updatePromo(nombrePromo, promo);
+  }
+    void eliminarBBDD(BaseDatos db, String nombrePromo) async{
+    await db.initdb();
+    db.deletePromociones(nombrePromo);
+  }
+    
 }

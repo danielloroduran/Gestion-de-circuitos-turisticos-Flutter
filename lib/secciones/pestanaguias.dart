@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/vista/itemguia.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/detallesguia.dart';
@@ -17,12 +18,14 @@ class ListadoGuias extends StatefulWidget{
 class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderStateMixin{
 
   DatosPrueba datos;
+  BaseDatos bd = new BaseDatos();
 
   _ListadoGuiasState({@required this.datos});
 
   @override
   void initState(){
     super.initState();
+    bd.initdb();
   }
 
   @override
@@ -53,8 +56,10 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
           key: Key(item.nombre),
 
           onDismissed: (direction){
-            setState(() {
+            setState(() {              
+              bd.deleteGuias(datos.guias.elementAt(index).dni);
               datos.guias.removeAt(index);
+             
             });
 
             Scaffold.of(context).showSnackBar(

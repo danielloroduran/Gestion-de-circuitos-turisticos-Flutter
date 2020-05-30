@@ -26,120 +26,46 @@ class DatosPrueba{
   }
 
   void cargarDatos() async{
-    baseDatos db = baseDatos();
+    BaseDatos db = BaseDatos();
     await db.initdb();
     
     usuarios = new List<Usuario>();
-
-    //Usuario usuario1 = new Usuario("usuario1", "usuario1", "imagenes/usuario1.jpg", "usuario1@correo.com", 611111111);
-    //Usuario usuario2 = new Usuario("admin", "admin", "imagenes/admin.png", "admin@correo.com", 622222222);
-    
-    //await db.insertUsuario(usuario2);
-    
-    //usuarios.add(usuario1);
-    //usuarios.add(usuario2);
-
     usuarios = await db.getUsuarios();
-    for(int i = 0; i < usuarios.length; i++){
-      print(usuarios.elementAt(i).nombreUsuario);
-    }
 
     guias = new List<Guia>();
-    
-    Guia guia1 = new Guia("11111111-H","Antonio", "Pérez", 666666666, "imagenes/cara1.jpg", 3, "Español", "Todos los días", 3, 20,  "antonio@correo.es");
-    Guia guia2 = new Guia("22222222-J","Laura", "Moreno", 677777777, "imagenes/cara5.jpg", 5, "Español e Inglés", "Todos los días", 4, 30,  "laura@correo.es");
     guias = await db.getGuias();
 
     puntoInteres = new List<PuntoInteres>();
     puntoInteres = await db.getPuntosInteres();
-    PuntoInteres pi1 = new PuntoInteres("Iglesia de Santa María", "Iglesia", "imagenes/iglesia.jpg", "Gratuita",  "Descripción de la iglesia", "Calle Nueva, 5", "Sábados, de 8:00 a 22:00", "30 minutos");
-		PuntoInteres pi2 = new PuntoInteres("Estatua de piedra", "Estatua", "imagenes/estatua.jpg", "Gratuita", "Descripción de la estatua", "Calle Vieja, 7", "Sin horario", "5 minutos");
-		PuntoInteres pi3 = new PuntoInteres("Museo de aviación", "Museo", "imagenes/museo.jpg", "2€/persona", "Descripción del museo", "Calle Doctora, 55", "Todos los días de 8:00 a 22:00", "2 horas");
-		PuntoInteres pi4 = new PuntoInteres("Cuadro & arte", "Exposición", "imagenes/galeria.jpg", "Gratuita", "Descripción de la exposición", "Calle Licenciada", "Martes y Domingo, de 9:00 a 14:00", "3 horas");
 
-    
     turistasGeneral = new List<Turista>();
     turistasGeneral = await db.getTuristas();
-    
-		Turista turista1 = new Turista("44444444-I","Antonia", "Lopez",  655555555,  "antonia@correo.es", "imagenes/cara5.jpg", 23);
-		Turista turista2 = new Turista("55555555-I","Ana", "Rosa", 666666666,  "rosa@correo.es", "imagenes/cara6.png", 50);
-		Turista turista3 = new Turista("66666666-K","Pepe", "Lopez", 677777777,  "pepe@correo.es", "imagenes/cara1.jpg", 65);
-		Turista turista4 = new Turista("77777777-L","Roberto", "Asín", 688888888,  "roberto@correo.es", "imagenes/personagenerica.png", 43);
-		Turista turista5 = new Turista("88888888-N","Elena", "Jimenez",  699999999,  "elena@correo.es", "imagenes/personagenerica.png", 20);
-		Turista turista6 = new Turista("99999999-M","Roberta", "Gonzalez", 699999991,  "roberta@correo.es", "imagenes/personagenerica.png", 72);
-		Turista turista7 = new Turista("11111112-D","José", "Domingo", 611111112,  "jose@correo.es", "imagenes/personagenerica.png", 30);
-		Turista turista8 = new Turista("12345678-H","Lolo", "Cañiz", 123456789,  "lolo@correo.es", "imagenes/personagenerica.png", 47);
-		Turista turista9 = new Turista("12345678-Q","Pepa", "Diez", 987654321,  "pepa@correo.es", "imagenes/personagenerica.png", 32);
-		Turista turista10 = new Turista("23232323-A","Angel", "Ortega", 623232323,  "angel@correo.es", "imagenes/cara1.jpg", 41);
 
-
-  //Falta GrupoTurista
-
-
-    grupoTurista = new List<GrupoTurista>();
-
-    GrupoTurista gt1 = new GrupoTurista("Grupo 1", "Estudiantes", "Descripción del grupo 1", "Intereses del grupo 1", "Restricciones del grupo 1", "imagenes/grupo.jpg");
-		GrupoTurista gt2 = new GrupoTurista("Grupo 2", "Jubilados", "Descripción del grupo 2", "Intereses del grupo 2", "Restricciones del grupo 2", "imagenes/grupo.jpg");
-    GrupoTurista gt3 = new GrupoTurista("Grupo 3", "Familiar", "Descripción del grupo 3", "Intereses del grupo 3", "Restricciones del grupo 3", "imagenes/grupo.jpg");
-
-    gt1.turistas.add(turista1);
-		gt1.turistas.add(turista2);
-		gt1.turistas.add(turista3);
-		
-    gt2.turistas.add(turista4);
-		gt2.turistas.add(turista5);
-		gt2.turistas.add(turista6);
-
-    gt3.turistas.add(turista7);
-    gt3.turistas.add(turista8);
-    gt3.turistas.add(turista9);
-    gt3.turistas.add(turista10);
-
-		gt1.setNumIntegrantes();
-		gt2.setNumIntegrantes();
-		grupoTurista.add(gt1);
-		grupoTurista.add(gt2);
-    // --------------------------------------- 
     promociones = new List<Promocion>();
     promociones = await db.getPromociones();
-    //Faltan Rutas
+    
     rutas = new List<Ruta>();
+    rutas = await db.getRutas();
 
-    Ruta ruta1 = new Ruta("Ruta turística", "Contratada", 50, "Opiniones de ruta 1", "Sugerencias de ruta 1", "Ciudad Real", "10:00", "14:00", "imagenes/ciudadreal.jpg", "21/05/2020", 25554, 0);
-		Ruta ruta2 = new Ruta("Ruta grastronómica", "Realizada", 100, "Opiniones de ruta 2", "Sugerencias de ruta 2", "Malagón", "9:00", "15:00", "imagenes/malagon.jpg", "20/05/2020", 34111, 4);
-		Ruta ruta3 = new Ruta("Ruta cultural", "Nueva", 50, "Opiniones de ruta 3", "Sugerencias de ruta 3", "Miguelturra", "8:00", "12:00", "imagenes/miguelturra.jpg", "19/05/2020", null, 3);
-		Ruta ruta4 = new Ruta("Ruta relajada", "Nueva", 100, "Opiniones de ruta 4", "Sugerencias de ruta 4", "Puertollano", "16:00", "20:00", "imagenes/puertollano.jpg", "18/05/2020", null, 2);
-		Ruta ruta5 = new Ruta("Ruta cultural", "Nueva", 50, "Opiniones de ruta 5", "Sugerencias de ruta 5", "Fuente el Fresno", "15:00", "21:00", "imagenes/fuenteelfresno.jpg", "17/05/2020", null, 1);
-		Ruta ruta6 = new Ruta("Ruta cultural", "Contratada", 100, "Opiniones de ruta 6", "Sugerencias de ruta 6", "Los Cortijos", "8:30", "12:30", "imagenes/loscortijos.jpg", "16/05/2020", 35412, 0);
+    grupoTurista = new List<GrupoTurista>();
+    grupoTurista = await db.getGrupoTuristas();
 
-    ruta1.grupoTurista.add(gt1);
-    ruta1.setTuristasTotal();
-    ruta1.puntoInteres.add(pi1);
-    ruta1.puntoInteres.add(pi2);
-    guia1.rutasAsignadas.add(ruta1);
-    guia1.rutasAsignadas.add(ruta2);
-    guia1.rutasHistorial.add(ruta3);
-
-    ruta2.grupoTurista.add(gt2);
-    ruta2.setTuristasTotal();
-    ruta2.puntoInteres.add(pi3);
-    ruta2.puntoInteres.add(pi4);
-    guia2.rutasAsignadas.add(ruta3);
-    guia2.rutasAsignadas.add(ruta4);
-    guia2.rutasHistorial.add(ruta1);
-
-    ruta6.grupoTurista.add(gt2);
-    ruta6.setTuristasTotal();
-    ruta6.puntoInteres.add(pi2);
-    guia2.rutasAsignadas.add(ruta6);
-
-    rutas.add(ruta1);
-		rutas.add(ruta2);
-		rutas.add(ruta3);
-		rutas.add(ruta4);
-		rutas.add(ruta5);
-		rutas.add(ruta6);
-
+    for(int i = 0; i < grupoTurista.length; i++){
+      grupoTurista.elementAt(i).turistas = await db.selectGT(grupoTurista.elementAt(i).nombreGrupo);
+      grupoTurista.elementAt(i).setNumIntegrantes();
+    }
+ 
+    for(int i = 0; i < rutas.length; i++){
+      rutas.elementAt(i).puntoInteres = await db.selectRutaPT(rutas.elementAt(i).nombre);
+      rutas.elementAt(i).grupoTurista = await db.selectRutaGT(rutas.elementAt(i).nombre);
+      rutas.elementAt(i).setTuristasTotal();
+    }
+    
+    for(int i = 0; i < guias.length; i++){
+      guias.elementAt(i).rutasAsignadas = await db.selectGuiaRutasAsignadas(guias.elementAt(i).dni);
+      guias.elementAt(i).rutasHistorial = await db.selectGuiaRutasHistorial(guias.elementAt(i).dni);
+    }
+    
     ayuda = new List<Ayuda>();
 
     Ayuda ayuda1 = new Ayuda(Icons.home, "Historial y reservas", "En esta pestaña se visualiza el historial y las reservas", "En esta pestaña el usuario podrá visualizar las estadísticas como el número de usuarios, número de rutas realizadas, la valoración media de las rutas, guías y opiniones, los lugares de España donde se utiliza la aplicación.");

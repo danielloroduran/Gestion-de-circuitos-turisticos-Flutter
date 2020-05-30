@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/listaturistas.dart';
@@ -16,7 +17,7 @@ class DetallesGrupo extends StatefulWidget{
 }
 
 class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProviderStateMixin{
-
+  BaseDatos bd;
   DatosPrueba datos;
   GrupoTurista grupo;
 
@@ -36,7 +37,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
 
   void initState(){
     super.initState();
-
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     descripcionController = new TextEditingController();
     interesesController = new TextEditingController();
@@ -498,11 +499,23 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
+                        bool repetido = false;
                         if(grupo == null){
                           if(nombreController.text != "" && descripcionController.text != "" && _tipoGrupo != ""){
                             GrupoTurista nuevoGrupo = new GrupoTurista(nombreController.text, _tipoGrupo, descripcionController.text, interesesController.text, restriccionesController.text, _foto);
-                            grupo.setNumIntegrantes();
-                            datos.grupoTurista.add(nuevoGrupo);
+                            for(int i = 0; i < datos.grupoTurista.length; i++){
+                                if(datos.grupoTurista.elementAt(i).nombreGrupo == nuevoGrupo.nombreGrupo){
+                                repetido = true;
+                                }
+                              }
+                              if(repetido){
+                                print("Objeto repetido en la BBDD");
+                              }
+                              else{
+                                insertarBBDD(bd, nuevoGrupo);
+                                grupo.setNumIntegrantes();
+                                datos.grupoTurista.add(nuevoGrupo);
+                              }
                             Navigator.pop(context, datos);
                           }else{
                             _mostrarError();
@@ -511,6 +524,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                           if(nombreController.text != "" && descripcionController.text != "" && _tipoGrupo != ""){
                             if(datos.grupoTurista.contains(grupo)){
                               int index = datos.grupoTurista.indexOf(grupo);
+                              String nombreGrupoViejo = grupo.nombreGrupo;
                               grupo.nombreGrupo = nombreController.text;
                               grupo.tipo = _tipoGrupo;
                               grupo.descripcion = descripcionController.text;
@@ -518,9 +532,11 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                               grupo.restricciones = restriccionesController.text;
                               grupo.foto = _foto;
                               grupo.setNumIntegrantes();
-
+                              
+                              modificarBBDD(bd, nombreGrupoViejo, grupo);
                               datos.grupoTurista.removeAt(index);
                               datos.grupoTurista.insert(index, grupo);
+                              
                               Navigator.pop(context, datos);
                             }
                           }else{
@@ -569,6 +585,7 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
                     Navigator.pop(context);
                     grupo = new GrupoTurista(nombreController.text, _tipoGrupo, descripcionController.text, interesesController.text, restriccionesController.text, _foto);
                     datos.grupoTurista.add(grupo);
+                    insertarBBDD(bd, grupo);
 
                     final nuevosDatos = await Navigator.push(
                       context,
@@ -668,5 +685,16 @@ class _DetallesGrupoState extends State<DetallesGrupo> with SingleTickerProvider
       }
     );
   }  
-
+  void insertarBBDD(BaseDatos db, GrupoTurista grupo) async{
+    await db.initdb();
+    db.insertGrupoTuristas(grupo);
+  }
+  void modificarBBDD(BaseDatos db, String nombreGrupoViejo, GrupoTurista grupo) async{
+    await db.initdb();
+    db.updateGruposTuristas(nombreGrupoViejo, grupo);
+  }
+  void eliminarBBDD(BaseDatos db, String grupo) async{
+    await db.initdb();
+    db.deleteGrupoTuristas(grupo);
+  }
 }

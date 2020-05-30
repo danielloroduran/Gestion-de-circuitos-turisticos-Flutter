@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/secciones/listapuntointeres.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 
 class DetallesRuta extends StatefulWidget {
   
@@ -18,7 +19,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
   
   DatosPrueba datos;
   Ruta ruta;
-
+  BaseDatos bd;
   _DetallesRutaState({this.datos, this.ruta});
 
   bool _editable = false;
@@ -36,7 +37,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
 
   void initState() {
     super.initState();
-
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     estadoController = new TextEditingController();
     precioController = new TextEditingController();
@@ -558,10 +559,22 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
               color: Colors.green,
               onPressed: () {
                 setState(() {
+                  bool repetido = false;
                   if(ruta == null){
                     if(nombreController.text != "" && estadoController.text != "" && precioController.text != "" && localidadController.text != "" && horaInicioController.text != "" && horaFinController.text != "" && fechaController.text != "" && _foto != ""){
                       Ruta nuevaRuta = new Ruta(nombreController.text, estadoController.text, double.parse(precioController.text), "", "", localidadController.text, horaInicioController.text, horaFinController.text, _foto, fechaController.text, null, 0);
-                      datos.rutas.add(nuevaRuta);
+                      for(int i = 0; i < datos.puntoInteres.length; i++){
+                                if(datos.rutas.elementAt(i).nombre == nuevaRuta.nombre){
+                                repetido = true;
+                                }
+                              }
+                              if(repetido){
+                                print("Objeto repetido en la BBDD");
+                              }
+                              else{
+                                datos.rutas.add(nuevaRuta);
+                                insertarBBDD(bd, nuevaRuta);
+                              }
                       Navigator.pop(context, datos);
                     }else{
                       _mostrarError();
@@ -570,6 +583,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                     if(nombreController.text != "" && estadoController.text != "" && precioController.text != "" && localidadController.text != "" && horaInicioController.text != "" && horaFinController.text != "" && fechaController.text != "" && _foto != ""){
                       if(datos.rutas.contains(ruta)){
                         int index = datos.rutas.indexOf(ruta);
+                        String nombreRutaVieja = ruta.nombre;
                         ruta.nombre = nombreController.text;
                         ruta.estado = estadoController.text;
                         ruta.coste = double.parse(precioController.text);
@@ -579,6 +593,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                         ruta.fecha = fechaController.text;
                         ruta.foto = _foto;
 
+                        modificarBBDD(bd, nombreRutaVieja, ruta);
                         datos.rutas.removeAt(index);
                         datos.rutas.insert(index, ruta);
                         Navigator.pop(context, datos);
@@ -728,6 +743,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                   child: new Text("Eliminar"),
                   onPressed: (){
                     if(datos.rutas.contains(ruta)){
+                      eliminarBBDD(bd, ruta.nombre);
                       datos.rutas.remove(ruta);
                     }
                     Navigator.pop(context);
@@ -764,6 +780,7 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
                     Navigator.pop(context);
                     ruta = new Ruta(nombreController.text, estadoController.text, double.parse(precioController.text), "", "", localidadController.text, horaInicioController.text, horaFinController.text, _foto, fechaController.text, null, 0);
                     datos.rutas.add(ruta);
+                    insertarBBDD(bd, ruta);
 
                     final nuevosDatos = await Navigator.push(
                       context,
@@ -821,6 +838,18 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
       }
     });
   }
-
+ void insertarBBDD(BaseDatos db, Ruta ruta) async{
+    await db.initdb();
+    db.insertRutas(ruta);
+  }
+  void modificarBBDD(BaseDatos db, String nombreRuta, Ruta ruta) async{
+    await db.initdb();
+    db.updateRutas(nombreRuta, ruta);
+  }
+  void eliminarBBDD(BaseDatos db, String ruta) async{
+    await db.initdb();
+    db.deleteRutas(ruta);
+  }
 
 }
+

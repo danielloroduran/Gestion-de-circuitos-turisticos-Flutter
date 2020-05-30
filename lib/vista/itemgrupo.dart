@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/secciones/detallesgrupoturista.dart';
@@ -17,7 +18,8 @@ class _ItemGrupoState extends State<ItemGrupo> with SingleTickerProviderStateMix
 
   DatosPrueba _datos;
   GrupoTurista _grupoTurista;
-
+  BaseDatos _db =  BaseDatos();
+  
   _ItemGrupoState(this._datos, this._grupoTurista);
 
   @override

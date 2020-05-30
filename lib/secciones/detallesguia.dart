@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:practica_ipo2/modelos/guia.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 
+import '../datos/baseDatos.dart';
 import 'listarutasguia.dart';
 
 
@@ -10,11 +11,11 @@ class DetallesGuia extends StatefulWidget{
 
   DatosPrueba datos;
   Guia guia;
-
-  DetallesGuia({Key key,  this.datos, this.guia}) : super(key: key);
+  BaseDatos bd = BaseDatos();
+  DetallesGuia({Key key,  this.datos, this.guia, this.bd}) : super(key: key);
 
   @override
-  _DetallesGuiaState createState() => _DetallesGuiaState(datos: datos, guia: guia);
+  _DetallesGuiaState createState() => _DetallesGuiaState(datos: datos, guia: guia, bd:bd);
 
 }
 
@@ -22,8 +23,8 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
 
   DatosPrueba datos;
   Guia guia;
-
-  _DetallesGuiaState({ this.datos, this.guia});
+  BaseDatos bd;
+  _DetallesGuiaState({ this.datos, this.guia, this.bd});
   bool _editable = false;
   TextEditingController nombreController;
   TextEditingController apellidosController;
@@ -39,7 +40,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
 
   void initState(){
     super.initState();
-
+    bd = BaseDatos();
     nombreController = new TextEditingController();
     apellidosController = new TextEditingController();
     movilController = new TextEditingController();
@@ -636,14 +637,27 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                   child: new RaisedButton(
                     child: new Text("Guardar y salir"),
                     textColor: Colors.white,
-                    color: Colors.green,
+                    color: Colors.green,                   
                     onPressed: () {
                       setState(() {
+                        bool repetido =false;
                         if(guia == null){
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
                             Guia nuevoGuia = new Guia(dniController.text, nombreController.text, apellidosController.text, int.parse(movilController.text), _foto, 0, idiomasController.text, disponibilidadController.text, double.parse(precioHoraController.text), double.parse(precioDiaController.text), correoController.text);
-                            datos.guias.add(nuevoGuia);
-                            Navigator.pop(context, datos);
+                            for(int i = 0; i < datos.guias.length; i++){
+                                if(datos.guias.elementAt(i).dni == nuevoGuia.dni){
+                                repetido = true;
+                                }
+                              }
+                              if(repetido){
+                                print("Objeto repetido en la BBDD");
+                              }
+                              else{
+                                datos.guias.add(nuevoGuia);
+                                insertarBBDD(bd, nuevoGuia);
+                                }
+                                Navigator.pop(context, datos);
+                              
                           }else{
                             _mostrarError();
                           }
@@ -651,6 +665,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                           if(nombreController.text != "" && apellidosController.text!= "" && movilController.text != "" && idiomasController.text != "" && disponibilidadController.text != "" && precioHoraController.text != "" && precioDiaController.text != "" && dniController.text != "" && correoController.text != ""){
                             if(datos.guias.contains(guia)){
                               int index = datos.guias.indexOf(guia);
+                              String dniGuia = guia.dni;
                               guia.nombre = nombreController.text;
                               guia.apellidos = apellidosController.text;
                               guia.movil = int.parse(movilController.text);
@@ -660,9 +675,11 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                               guia.precioHora = double.parse(precioHoraController.text);
                               guia.dni = dniController.text;
                               guia.correo = correoController.text;
-
+                              
+                              modificarBBDD(bd, dniGuia, guia);
                               datos.guias.removeAt(index);
                               datos.guias.insert(index, guia);
+                              
                               Navigator.pop(context, datos);
                             }
                           }else{
@@ -678,6 +695,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                   )
                 )
               )
+          
           ),
         ],
       )
@@ -776,6 +794,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                   onPressed: (){
                     if(datos.guias.contains(guia)){
                       datos.guias.remove(guia);
+                      eliminarBBDD(bd, guia.dni);
                     }
                     Navigator.pop(context);
                     Navigator.pop(context, datos);
@@ -822,5 +841,17 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
       estrellas.trim();
       return Text(estrellas);
 
+  }
+  void insertarBBDD(BaseDatos db, Guia guia) async{
+    await db.initdb();
+    db.insertGuias(guia);
+  }
+  void modificarBBDD(BaseDatos db, String dni,Guia guia) async{
+    await db.initdb();
+    db.updateGuias(dni, guia);
+  }
+    void eliminarBBDD(BaseDatos db, String dni) async{
+    await db.initdb();
+    db.deleteGuias(dni);
   }
 }

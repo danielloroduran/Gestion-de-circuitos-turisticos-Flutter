@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/puntointeres.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
@@ -20,12 +21,12 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
 
   DatosPrueba datos;
   Ruta ruta;
-
+  BaseDatos bd;
   _ListadoPuntoInteresRutaState({this.datos, this.ruta});
 
   void initState(){
     super.initState();
-
+    bd = new BaseDatos();
     if(ruta == null){
       ruta = new Ruta.enBlanco();
     }
@@ -45,6 +46,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                 key: Key(item.nombre),
                 onDismissed: (direction) {
                   setState(() {
+                    eliminarPuntoRuta(bd, ruta.puntoInteres.elementAt(index).nombre, ruta.nombre);
                     ruta.puntoInteres.removeAt(index);
                   });
 
@@ -55,6 +57,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                         label: "Deshacer",
                         onPressed: (){
                           setState(() {
+                            insertarPuntoRuta(bd, item.nombre, ruta.nombre);
                             ruta.puntoInteres.insert(index, item);
                           });
                         },
@@ -146,6 +149,19 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
       }
     );
   }
+  void insertarPuntoRuta(BaseDatos db, String punto, String ruta) async{
+    await db.initdb();
+    db.insertRutaPT(ruta, punto);
+  }
+  void eliminarBBDD(BaseDatos db, String nombrePunto) async{
+    await db.initdb();
+    db.deletePuntosInteres(nombrePunto);
+  }
+  void eliminarPuntoRuta(BaseDatos db, String nombrePunto, String ruta) async{
+    await db.initdb();
+    db.deleteRutaPT(nombrePunto, ruta);
+  }
+
 }
 
 class ListadoPuntoInteres extends StatefulWidget{
@@ -261,6 +277,7 @@ class _ListadoPuntoInteresState extends State<ListadoPuntoInteres> with SingleTi
         )
     );
   }
+  
 }
 
 

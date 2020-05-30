@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
+import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/secciones/detallesgrupoturista.dart';
 import 'package:practica_ipo2/vista/itemgrupo.dart';
 
@@ -17,12 +19,13 @@ class ListadoGrupoTuristas extends StatefulWidget{
 class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with SingleTickerProviderStateMixin{
 
   DatosPrueba datos;
-
+  BaseDatos bd;
   _ListadoGrupoTuristasState({@required this.datos});
 
   @override
   void initState(){
     super.initState();
+    bd = new BaseDatos();
   }
 
   @override
@@ -54,6 +57,7 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
 
           onDismissed: (direction){
             setState(() {
+              eliminarBBDD(bd, item.nombreGrupo);
               datos.grupoTurista.removeAt(index);
             });
 
@@ -65,6 +69,7 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
                   onPressed: () {
                     setState(() {
                       datos.grupoTurista.insert(index, item);
+                      insertarBBDD(bd, item);
                     });
                   },
                 ),
@@ -105,7 +110,18 @@ class _ListadoGrupoTuristasState extends State<ListadoGrupoTuristas> with Single
     });
 
   }
-
+  void insertarBBDD(BaseDatos db, GrupoTurista grupo) async{
+    await db.initdb();
+    db.insertGrupoTuristas(grupo);
+  }
+  void modificarBBDD(BaseDatos db, String nombreGrupoViejo, GrupoTurista grupo) async{
+    await db.initdb();
+    db.updateGruposTuristas(nombreGrupoViejo, grupo);
+  }
+  void eliminarBBDD(BaseDatos db, String grupo) async{
+    await db.initdb();
+    db.deleteGrupoTuristas(grupo);
+  }
 }
 
 

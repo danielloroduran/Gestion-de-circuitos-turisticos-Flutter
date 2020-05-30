@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
 import 'package:practica_ipo2/modelos/turista.dart';
@@ -10,7 +11,6 @@ class DetallesTurista extends StatefulWidget{
   DatosPrueba datos;
   Turista turista;
   GrupoTurista grupo;
-
   DetallesTurista({Key key, this.datos, this.turista, this.grupo}) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
   DatosPrueba datos;
   Turista turista;
   GrupoTurista grupo;
-
+  BaseDatos bd;
   _DetallesGuiaState(this.datos, this.turista, this.grupo);
 
   bool _editable = false;
@@ -37,7 +37,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
 
   void initState(){
     super.initState();
-
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     apellidosController = new TextEditingController();
     movilController = new TextEditingController();
@@ -449,15 +449,30 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
+                        bool repetido =false;
                         if(turista == null){
                           if(nombreController.text != "" && apellidosController.text != "" && movilController.text != "" && dniController.text != "" && correoController.text != "" && edadController.text != "") {
                             Turista nuevoTurista = new Turista(dniController.text, nombreController.text, apellidosController.text, int.parse(movilController.text), correoController.text, _foto, int.parse(edadController.text));
-                            datos.turistasGeneral.add(nuevoTurista);
+                            for(int i = 0; i < datos.puntoInteres.length; i++){
+                                if(datos.turistasGeneral.elementAt(i).nombre == nuevoTurista.nombre){
+                                repetido = true;
+                                }
+                              }
+                              if(repetido){
+                                print("Objeto repetido en la BBDD");
+                              }
+                              else{
+                                datos.turistasGeneral.add(nuevoTurista);
+                                insertarBBDD(bd, nuevoTurista);
+                              }
                             if(datos.grupoTurista.contains(grupo)){
                               int index = datos.grupoTurista.indexOf(grupo);
                               datos.grupoTurista.elementAt(index).turistas.add(nuevoTurista);
+                              insertarBBDDGrupos(bd, grupo, nuevoTurista);
                             }else{
                               grupo.turistas.add(nuevoTurista);
+                              insertarBBDD(bd, turista);
+                             
                             }
                             Navigator.pop(context, datos);
                           }else{
@@ -467,6 +482,7 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                           if(nombreController.text != "" && apellidosController.text != "" && movilController.text != "" && dniController.text != "" && correoController.text != "" && edadController.text != "") {
                             if(datos.turistasGeneral.contains(turista)){
                               int index = datos.turistasGeneral.indexOf(turista);
+                              String dniTurista = turista.dni;
                               turista.nombre = nombreController.text;
                               turista.apellidos = apellidosController.text;
                               turista.movil = int.parse(movilController.text);
@@ -474,12 +490,15 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                               turista.foto = _foto;
                               turista.edad = int.parse(edadController.text);
 
+                              modificarBBDD(bd, dniTurista, turista);
                               datos.turistasGeneral.removeAt(index);
                               datos.turistasGeneral.insert(index, turista);
 
                               if(datos.grupoTurista.contains(grupo)){
                                 int index = datos.grupoTurista.indexOf(grupo);
                                 int indexT = datos.grupoTurista.elementAt(index).turistas.indexOf(turista);
+                                
+                                modificarBBDDGrupos(bd, datos.grupoTurista.elementAt(index).nombreGrupo, turista);
                                 datos.grupoTurista.elementAt(index).turistas.removeAt(indexT);
                                 datos.grupoTurista.elementAt(index).turistas.insert(indexT, turista);
                                 Navigator.pop(context, datos);
@@ -600,9 +619,11 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
                       int index = datos.grupoTurista.indexOf(grupo);
                       int indexT = datos.grupoTurista.elementAt(index).turistas.indexOf(turista);
                       datos.grupoTurista.elementAt(index).turistas.removeAt(indexT);
+                      eliminarBBDDGrupos(bd, turista.dni,datos.grupoTurista.elementAt(index).nombreGrupo);
 
                       if(datos.turistasGeneral.contains(turista)){
                         datos.turistasGeneral.removeAt(index);
+                        eliminarBBDD(bd, datos.turistasGeneral.elementAt(index).dni);
                       }
                       Navigator.pop(context);
                       Navigator.pop(context, datos);
@@ -616,5 +637,28 @@ class _DetallesGuiaState extends State<DetallesTurista> with SingleTickerProvide
       }
     );
   }
-
+  void insertarBBDD(BaseDatos db, Turista turista) async{
+    await db.initdb();
+    db.insertTuristas(turista);
+  }
+  void modificarBBDD(BaseDatos db, String dni, Turista turista) async{
+    await db.initdb();
+    db.updateTuristas(dni, turista);
+  }
+  void eliminarBBDD(BaseDatos db, String dni) async{
+    await db.initdb();
+    db.deleteTuristas(dni);
+  }
+  void insertarBBDDGrupos(BaseDatos db, GrupoTurista gp,Turista turista) async{
+    await db.initdb();
+    db.insertGTTuristas(gp.nombreGrupo, turista.dni);
+  }
+  void modificarBBDDGrupos(BaseDatos db, String dni, Turista turista) async{
+    await db.initdb();
+    db.updateGTTuristas(dni, turista);
+  }
+  void eliminarBBDDGrupos(BaseDatos db, String dni, String grupo) async{
+    await db.initdb();
+    db.deleteGTTuristas(dni, grupo);
+  }
 }

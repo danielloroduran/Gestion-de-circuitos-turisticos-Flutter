@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/modelos/puntointeres.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/ruta.dart';
@@ -21,7 +22,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
   DatosPrueba datos;
   PuntoInteres puntoInteres;
   Ruta ruta;
-
+  BaseDatos bd;
   _DetallesPuntoInteresState(this.datos, this.puntoInteres, this.ruta);
 
   bool _editable = false;
@@ -39,7 +40,7 @@ class _DetallesPuntoInteresState extends State<DetallesPuntoInteres> with Single
 
   void initState(){
     super.initState();
-
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     entradaController = new TextEditingController();
     descripcionController = new TextEditingController();
@@ -530,14 +531,28 @@ Widget getSaveButton(){
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
+                        bool repetido = false;
                         if(puntoInteres == null){
                           if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
                             PuntoInteres nuevoPunto = new PuntoInteres(nombreController.text, _tipoPuntoInteres, _foto, entradaController.text, descripcionController.text, direccionController.text, horarioController.text, duracionVisitaController.text);
-                            datos.puntoInteres.add(nuevoPunto);
+                            for(int i = 0; i < datos.puntoInteres.length; i++){
+                                if(datos.puntoInteres.elementAt(i).nombre == nuevoPunto.nombre){
+                                repetido = true;
+                                }
+                              }
+                              if(repetido){
+                                print("Objeto repetido en la BBDD");
+                              }
+                              else{
+                                insertarBBDD(bd, nuevoPunto);
+                                datos.puntoInteres.add(nuevoPunto);
+                              }
                             if(datos.rutas.contains(ruta)){
                               int index = datos.rutas.indexOf(ruta);
                               datos.rutas.elementAt(index).puntoInteres.add(nuevoPunto);
+                              insertarPuntoRuta(bd, datos.rutas.elementAt(index).nombre, ruta.nombre);
                             }else{
+                              insertarPuntoRuta(bd, nuevoPunto.nombre, ruta.nombre);
                               ruta.puntoInteres.add(nuevoPunto);
                             }
                             Navigator.pop(context, datos);
@@ -548,6 +563,7 @@ Widget getSaveButton(){
                           if(nombreController.text != "" && _tipoPuntoInteres != "" && entradaController.text != "" && descripcionController.text != "" && horarioController.text != "" && duracionVisitaController.text != "" && direccionController.text != ""){
                             if(datos.puntoInteres.contains(puntoInteres)){
                               int index = datos.puntoInteres.indexOf(puntoInteres);
+                              String nombrePunto = puntoInteres.nombre;
                               puntoInteres.nombre = nombreController.text;
                               puntoInteres.tipo = _tipoPuntoInteres;
                               puntoInteres.foto = _foto;
@@ -556,13 +572,15 @@ Widget getSaveButton(){
                               puntoInteres.direccion = direccionController.text;
                               puntoInteres.horario = horarioController.text;
                               puntoInteres.duracionVisita = duracionVisitaController.text;
-
+                              
+                              modificarBBDD(bd, nombrePunto, puntoInteres);
                               datos.puntoInteres.removeAt(index);
                               datos.puntoInteres.insert(index, puntoInteres);
-
+                              
                               if(datos.rutas.contains(ruta)){
                                 int index = datos.rutas.indexOf(ruta);
                                 int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
+                                modificarPuntoRuta(bd, puntoInteres.nombre, ruta, nombrePunto);
                                 datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
                                 datos.rutas.elementAt(index).puntoInteres.insert(indexP, puntoInteres);
                                 Navigator.pop(context, datos);
@@ -616,7 +634,7 @@ Widget getSaveButton(){
                       int index = datos.rutas.indexOf(ruta);
                       int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
                       datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
-
+                      eliminarPuntoRuta(bd, puntoInteres.nombre, ruta.nombre);
                       Navigator.pop(context);
                       Navigator.pop(context, datos);
                     }
@@ -629,8 +647,10 @@ Widget getSaveButton(){
                       int index = datos.rutas.indexOf(ruta);
                       int indexP = datos.rutas.elementAt(index).puntoInteres.indexOf(puntoInteres);
                       datos.rutas.elementAt(index).puntoInteres.removeAt(indexP);
+                      eliminarPuntoRuta(bd, puntoInteres.nombre, ruta.nombre);
                       if(datos.puntoInteres.contains(puntoInteres)){
                         datos.puntoInteres.removeAt(index);
+                        eliminarBBDD(bd, datos.puntoInteres.elementAt(index).nombre);
                       }
                       Navigator.pop(context);
                       Navigator.pop(context, datos);
@@ -668,5 +688,29 @@ Widget getSaveButton(){
         );
       }
     );
+  }
+  void insertarBBDD(BaseDatos db, PuntoInteres puntoInteres) async{
+    await db.initdb();
+    db.insertPuntosInteres(puntoInteres);
+  }
+  void modificarBBDD(BaseDatos db, String nombrePunto, PuntoInteres puntoInteres) async{
+    await db.initdb();
+    db.updatePuntoInteres(nombrePunto, puntoInteres);
+  }
+  void eliminarBBDD(BaseDatos db, String nombrePunto) async{
+    await db.initdb();
+    db.deletePuntosInteres(nombrePunto);
+  }
+  void insertarPuntoRuta(BaseDatos db, String punto, String ruta) async{
+    await db.initdb();
+    db.insertRutaPT(ruta, punto);
+  }
+  void modificarPuntoRuta(BaseDatos db, String nombrePunto, Ruta ruta, String viejoPunto) async{
+    await db.initdb();
+    db.updateRutaPT(nombrePunto, ruta, viejoPunto);
+  }
+  void eliminarPuntoRuta(BaseDatos db, String nombrePunto, String ruta) async{
+    await db.initdb();
+    db.deleteRutaPT(nombrePunto, ruta);
   }
 }

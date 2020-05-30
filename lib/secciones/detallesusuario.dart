@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/usuario.dart';
 
 
 class DetallesUsuario extends StatefulWidget{
-  
+
   DatosPrueba datos;
   Usuario usuario;
 
@@ -16,7 +17,7 @@ class DetallesUsuario extends StatefulWidget{
 }
 
 class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProviderStateMixin{
-
+  BaseDatos bd;
   DatosPrueba datos;
   Usuario usuario;
 
@@ -33,6 +34,7 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
 
   void initState(){
     super.initState();
+    bd = new BaseDatos();
     nombreController = new TextEditingController();
     nombreController.text = usuario.nombreUsuario;
 
@@ -404,11 +406,13 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
                     onPressed: () {
                       setState(() {
                         if(nombreController.text != "" && correoController.text != "" && movilController.text != "" && passwordController.text != ""){
+                          String nombreUsuarioViejo = usuario.nombreUsuario;
                           usuario.nombreUsuario = nombreController.text;
                           usuario.foto = _foto;
                           usuario.correo = correoController.text;
                           usuario.telefono = int.parse(movilController.text);
                           usuario.contrasena = passwordController.text;
+                          modificarBBDD(bd, nombreUsuarioViejo, usuario);
                           Navigator.pop(context, usuario);
                         }else{
                           _mostrarError();
@@ -473,5 +477,8 @@ class _DetallesUsuarioState extends State<DetallesUsuario> with SingleTickerProv
     );
   }
 
-
+void modificarBBDD(BaseDatos db, String nombreUsuarioViejo, Usuario usuario) async{
+    await db.initdb();
+    db.updateUsuario(nombreUsuarioViejo, usuario);
+  }
 }

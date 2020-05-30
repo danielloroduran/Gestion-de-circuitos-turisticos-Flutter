@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
 import 'package:practica_ipo2/modelos/grupoturista.dart';
+import 'package:practica_ipo2/modelos/turista.dart';
 import 'package:practica_ipo2/vista/itemturista.dart';
 import 'package:practica_ipo2/secciones/detallesturista.dart';
+import 'package:practica_ipo2/datos/baseDatos.dart';
 
 class ListadoTuristas extends StatefulWidget{
 
@@ -21,13 +23,13 @@ class _ListadoTuristasState extends State<ListadoTuristas> with SingleTickerProv
 
   DatosPrueba datos;
   GrupoTurista grupo;
-
+  BaseDatos bd;
   _ListadoTuristasState({this.datos, this.grupo});
   Widget listaTuristas;
 
   void initState(){
     super.initState();
-
+    bd  = new BaseDatos();
     if(grupo == null){
       grupo = new GrupoTurista.enBlanco();
     }
@@ -50,6 +52,8 @@ class _ListadoTuristasState extends State<ListadoTuristas> with SingleTickerProv
             key: Key(item.nombre),
             onDismissed: (direction) {
               setState(() {
+                eliminarBBDDGrupos(bd, datos.turistasGeneral.elementAt(item).dni, grupo.nombreGrupo);
+                eliminarBBDD(bd, datos.turistasGeneral.elementAt(item).dni);
                 grupo.turistas.removeAt(index);
                 datos.turistasGeneral.removeAt(item);
               });
@@ -61,6 +65,8 @@ class _ListadoTuristasState extends State<ListadoTuristas> with SingleTickerProv
                     label: "Deshacer",
                     onPressed: () {
                       setState(() {
+                        insertarBBDDGrupos(bd, grupo, item);
+                        insertarBBDD(bd, item);
                         grupo.turistas.insert(index, item);
                         datos.turistasGeneral.add(item);
                       });
@@ -112,5 +118,21 @@ class _ListadoTuristasState extends State<ListadoTuristas> with SingleTickerProv
     });
 
   }
+  void insertarBBDD(BaseDatos db, Turista turista) async{
+    await db.initdb();
+    db.insertTuristas(turista);
+  }
 
+  void eliminarBBDD(BaseDatos db, String dni) async{
+    await db.initdb();
+    db.deleteTuristas(dni);
+  }
+  void insertarBBDDGrupos(BaseDatos db, GrupoTurista gp,Turista turista) async{
+    await db.initdb();
+    db.insertGTTuristas(gp.nombreGrupo, turista.dni);
+  }
+  void eliminarBBDDGrupos(BaseDatos db, String dni, String grupo) async{
+    await db.initdb();
+    db.deleteGTTuristas(dni, grupo);
+  }
 }
