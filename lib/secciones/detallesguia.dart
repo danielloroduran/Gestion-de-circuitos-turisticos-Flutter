@@ -472,10 +472,7 @@ class _DetallesGuiaState extends State<DetallesGuia> with SingleTickerProviderSt
                                 ),
                                 flex: 2,
                               ),
-                              new Flexible(
-                                child: _crearEstrellas(),
-                                flex: 2,
-                              ),
+                              _puntuacion == 0 ? new Flexible(child: Text("No disponible"), flex: 2) : new Flexible(child: _crearEstrellas(), flex: 2)
                             ],
                           )
                         ),
