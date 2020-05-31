@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:practica_ipo2/datos/datosprueba.dart';
-import 'package:practica_ipo2/modelos/turista.dart';
 
 class ListadoTuristasPromo extends StatefulWidget{
 

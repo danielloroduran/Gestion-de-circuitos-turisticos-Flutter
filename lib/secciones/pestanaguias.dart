@@ -70,6 +70,7 @@ class _ListadoGuiasState extends State<ListadoGuias> with SingleTickerProviderSt
                   onPressed: () {
                     setState(() {
                       datos.guias.insert(index, item);
+                      bd.insertGuias(item);
                     });
                   },
                 ),

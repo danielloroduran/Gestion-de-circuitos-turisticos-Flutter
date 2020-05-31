@@ -104,7 +104,7 @@ class _ListadoPromoState extends State<ListadoPromo> with SingleTickerProviderSt
         builder: (context) => DetallesPromo(datos: datos),
       )
     );
-  setState((){
+    setState((){
       if(nuevosDatos != null){
         datos = nuevosDatos;
       }
