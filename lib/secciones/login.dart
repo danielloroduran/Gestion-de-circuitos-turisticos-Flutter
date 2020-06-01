@@ -217,7 +217,6 @@ class _VentanaLoginState extends State<VentanaLogin> with SingleTickerProviderSt
                 new Text("Introduce el nombre de usuario o correo electróncio"),
                 SizedBox(height: 20),
                 new TextField(
-                  obscureText: true,
                   controller: tmpController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
