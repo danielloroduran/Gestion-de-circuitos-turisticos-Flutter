@@ -68,7 +68,7 @@ class DatosPrueba{
     
     ayuda = new List<Ayuda>();
 
-    Ayuda ayuda1 = new Ayuda(Icons.home, "Historial y reservas", "En esta pestaña se visualiza el historial y las reservas", "En esta pestaña el usuario podrá visualizar las estadísticas como el número de usuarios, número de rutas realizadas, la valoración media de las rutas, guías y opiniones, los lugares de España donde se utiliza la aplicación.");
+    Ayuda ayuda1 = new Ayuda(Icons.home, "Inicio", "En esta pestaña se visualiza el historial y las reservas", "En esta pestaña el usuario podrá visualizar las estadísticas como el número de usuarios, número de rutas realizadas, la valoración media de las rutas, guías y opiniones, los lugares de España donde se utiliza la aplicación.");
     Ayuda ayuda2 = new Ayuda(Icons.directions_walk, "Gestión de rutas", "En esta pestaña se gestionan las rutas", "En esta pestaña el usuario podrá visualizar las rutas existentes, crear una nueva ruta, modificar y eliminar una ruta ya existente.");
     Ayuda ayuda3 = new Ayuda(Icons.people, "Turistas", "En esta pestaña se visualizan los turistas", "En esta pestaña el usuario podrá visualizar los turistas existentes, añadir un nuevo turista, modificar y eliminar un turista ya existente.");
     Ayuda ayuda4 = new Ayuda(Icons.person, "Guías", "En esta pestaña se visualizan los guías", "En esta pestaña el usuario podrá visualizar los guías existentes, añadir un nuevo guía, modificar y eliminar un guía ya existente.");

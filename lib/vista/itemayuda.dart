@@ -21,7 +21,7 @@ class ItemAyuda extends StatelessWidget{
           new Text(_ayuda.nombreAyuda,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 22.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.w500),
             ),
         ],

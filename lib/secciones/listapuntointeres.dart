@@ -52,7 +52,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
 
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(item.nombre + "eliminado para esta ruta"),
+                      content: Text(item.nombre + " eliminado para esta ruta"),
                       action: SnackBarAction(
                         label: "Deshacer",
                         onPressed: (){
@@ -105,6 +105,7 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
         datos = nuevosDatos;
       }
     });
+    Navigator.pop(context);
   }
 
   void _mostrarDialogo(){
@@ -121,7 +122,6 @@ class _ListadoPuntoInteresRutaState extends State<ListadoPuntoInteresRuta> with 
                   child: new Text("Nuevo punto"),
                   onPressed: () {
                     _esperarResultado(context);
-                    Navigator.pop(context);
                   },
                 ),
                 new FlatButton(

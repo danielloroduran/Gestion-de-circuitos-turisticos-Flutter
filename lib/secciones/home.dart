@@ -64,6 +64,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             setState((){
               Navigator.pop(context);
               controlador.index = 0;
+              titulo = "Inicio";
             });
           }
         ),
@@ -154,7 +155,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               });
             }else if (indedx == 1){
               setState((){
-                titulo = "Gestión de rutas";
+                titulo = "Rutas";
               });
             }else if(indedx == 2){
               setState((){

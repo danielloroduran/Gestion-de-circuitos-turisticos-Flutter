@@ -63,7 +63,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                 Stack(
                   children: <Widget>[
                     new Container(
-                      height: MediaQuery.of(context).size.width * 0.45,
+                      height: MediaQuery.of(context).size.width * 0.30,
                       width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
@@ -96,6 +96,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 1.2,
+                                backgroundColor: Colors.black45,
                               ),
                             ),
                             Row(
@@ -105,6 +106,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 20.0,
+                                    backgroundColor: Colors.black
                                   )
                                 )
                               ],
@@ -220,7 +222,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                     Expanded(
                                       child: Container(
                                         child: new Text(
-                                          "Coste",
+                                          "Precio/persona (€)",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500),
@@ -345,6 +347,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                       child: new TextField(
                                         controller: opinionesController,
                                         enabled: false,
+                                        maxLines: 2,
                                       ),
                                     )
                                   ],
@@ -387,6 +390,7 @@ class _DetallesReservaState extends State<DetallesReserva> with SingleTickerProv
                                       child: new TextField(
                                         controller: sugerenciasController,
                                         enabled: false,
+                                        maxLines: 2,
                                       ),
                                     )
                                   ],
