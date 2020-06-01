@@ -691,7 +691,12 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
     );
 
     setState(() {
-      horaInicioController.text = _horaInicio.hour.toString() + ":" + _horaInicio.minute.toString();
+
+      if(_horaInicio != null){
+        horaInicioController.text = _horaInicio.hour.toString() + ":" + _horaInicio.minute.toString();
+      }else{
+        _horaInicio = TimeOfDay.now();
+      }      
     });
 
   }
@@ -704,7 +709,12 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
     );
 
     setState(() {
-      horaFinController.text = _horaFin.hour.toString() + ":" + _horaFin.minute.toString();
+
+      if(_horaFin != null){
+        horaFinController.text = _horaFin.hour.toString() + ":" + _horaFin.minute.toString();
+      }else{
+        _horaFin = TimeOfDay.now();
+      }
     });
 
   }
@@ -719,7 +729,13 @@ class _DetallesRutaState extends State<DetallesRuta> with SingleTickerProviderSt
     );
 
     setState(() {
-      fechaController.text = _fecha.day.toString() + "/" + _fecha.month.toString() + "/" + _fecha.year.toString();
+
+      if(_fecha != null){
+        fechaController.text = _fecha.day.toString() + "/" + _fecha.month.toString() + "/" + _fecha.year.toString();
+      }else{
+        _fecha = DateTime.now();
+      }
+
     });
   } 
 
